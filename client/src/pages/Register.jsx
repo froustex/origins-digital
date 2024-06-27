@@ -68,7 +68,6 @@ function Register() {
           className="h-6 mr-4 cursor-pointer text-primary"
           icon={faArrowLeft}
         />{" "}
-        go back home
       </Link>
       <Link to="/">
         <img
@@ -92,7 +91,7 @@ function Register() {
         <form className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]">
           <div>
             <label htmlFor="username">
-              Username:
+              Username
               <span className={validName ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
@@ -125,7 +124,7 @@ function Register() {
 
           <div className="flex flex-col">
             <label htmlFor="email">
-              Email:
+              Email
               <span className={validEmail ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
@@ -155,7 +154,7 @@ function Register() {
 
           <div className="flex flex-col">
             <label htmlFor="password">
-              Password:
+              Password
               <span className={validPwd ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
@@ -183,7 +182,7 @@ function Register() {
 
           <div className="flex flex-col">
             <label htmlFor="confirm_pwd">
-              Confirm Password:
+              Confirm Password
               <span className={validMatch && matchPwd ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>

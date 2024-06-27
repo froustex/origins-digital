@@ -22,7 +22,7 @@
   input[type="email"],
   button,
   textarea {
-    @apply text-xl p-2 border-0 outline-none;
+    @apply text-xl p-2.5 border-0 outline-none rounded-lg;
   }
 
   .img-container {
@@ -34,7 +34,7 @@
   }
 
   .formInput {
-    @apply text-2xl min-h-[50] mt-2;
+    @apply text-2xl min-h-[50px] mt-2 rounded-lg;
   }
 
   label {
@@ -47,7 +47,7 @@
   }
 
   form > button {
-    @apply bg-primary min-h-[55px] lg:min-h-[65px] text-white text-2xl sm:text-3xl font-semibold md:font-bold;
+    @apply bg-primary min-h-[50px] text-white text-2xl font-semibold md:font-bold;
   }
 
   .instructions {
