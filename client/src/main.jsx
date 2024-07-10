@@ -11,6 +11,7 @@ import {
 import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/register",
       },
       {
         path: "/videos",
@@ -53,9 +51,12 @@ const router = createBrowserRouter([
       } catch (err) {
         console.error(err);
       }
-      return redirect("/");
-    },
-  },
+     return redirect("/");
+   },
+   {
+     path: "/register",
+     element: <Register />,
+   }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
