@@ -51,12 +51,43 @@ const router = createBrowserRouter([
       } catch (err) {
         console.error(err);
       }
-     return redirect("/");
-   },
-   {
-     path: "/register",
-     element: <Register />,
-   }
+      return redirect("/");
+    },
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    action: async ({ request }) => {
+      const formData = await request.formData();
+      const username = formData.get("username");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+              isAdmin: false,
+              avatar:
+                "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
+            }),
+          }
+        );
+        if (!response.ok) {
+          console.error(response);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      return redirect("/login");
+    },
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

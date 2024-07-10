@@ -1,69 +1,68 @@
-create table user (
-  id int unsigned primary key auto_increment not null,
-  username varchar(50) not null unique,
-  email varchar(255) not null unique,
-  hashed_password varchar(255) not null,
-  role varchar(50) not null,
-  avatar varchar(255),
-  created_at date
+CREATE TABLE user (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    hashed_password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL,
+    avatar VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
-create table video {
-  id int unsigned primary key auto_increment not null,
-  title varchar(100) not null,
-  decription text not null,
-  thumbnail varchar(255) not null,
-  isPrivate boolean not null,
-  source varchar(255) not null,
-  created_at date
-};
-
-create table commenting {
-  id int unsigned primary key auto_increment not null,
-  comment varchar(255),
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id),
-  video_id int unsigned not null,
-  foreign key(video_id) references video(id),
-  created_at date
-}
-
-create table rating {
-  rating int,
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id),
-  video_id int unsigned not null,
-  foreign key(video_id) references video(id),
-  created_at date
-}
-
-create table add_favorite {
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id),
-  video_id int unsigned not null,
-  foreign key(video_id) references video(id),
-  created_at date
-}
-
-create table category {
-id int unsigned primary key auto_increment not null,
-name varchar(50) not null  
-}
-
-create table add_category {
-  id int unsigned primary key auto_increment not null,
-  category_id int unsigned not null,
-  foreign key(category_id) references category(id),
-  video_id int unsigned not null,
-  foreign key(video_id) references video(id)
-}
-
-
-create table item (
-  id int unsigned primary key auto_increment not null,
-  title varchar(255) not null,
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id)
+CREATE TABLE video (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL, -- Correction de "decription" en "description"
+    thumbnail VARCHAR(255) NOT NULL,
+    isPrivate BOOLEAN NOT NULL,
+    source VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
+CREATE TABLE commenting (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    comment VARCHAR(255),
+    user_id INT UNSIGNED NOT NULL,
+    video_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (video_id) REFERENCES video (id)
+);
 
+CREATE TABLE rating (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL, -- Ajout de la clé primaire
+    rating INT,
+    user_id INT UNSIGNED NOT NULL,
+    video_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (video_id) REFERENCES video (id)
+);
+
+CREATE TABLE add_favorite (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL, -- Ajout de la clé primaire
+    user_id INT UNSIGNED NOT NULL,
+    video_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (video_id) REFERENCES video (id)
+);
+
+CREATE TABLE category (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE add_category (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    video_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category (id),
+    FOREIGN KEY (video_id) REFERENCES video (id)
+);
+
+CREATE TABLE item (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
