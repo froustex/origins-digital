@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Gugi&display=swap");
+
+* {
+  font-family: "Gugi", sans-serif;
+}
+
 @tailwind base;
 
 @layer base {
@@ -26,7 +32,7 @@
   }
 
   .img-container {
-    @apply w-[65%] hidden lg:block lg:h-full lg:bg-form-image lg:bg-left lg:bg-cover lg:bg-no-repeat lg:clip-path-myPolygon;
+    @apply w-[65%] hidden lg:block lg:h-full lg:bg-form-image lg:bg-left lg:bg-cover lg:bg-no-repeat lg:clip-path-myPolygon before:absolute before:bg-black before:w-full before:h-full before:content-[""] before:bg-opacity-50;
   }
 
   form > div {
