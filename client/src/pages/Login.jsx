@@ -10,11 +10,11 @@ function Login() {
   }, []);
 
   return (
-    <main className="flex flex-col relative items-center justify-center lg:flex-row h-screen bg-black overflow-hidden">
+    <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden bg-black lg:flex-row">
       <Link to="/" className="mt-16">
         <img
           src={logo}
-          className="block lg:hidden h-auto  w-36 smallScreen:w-44 mt-4"
+          className="block h-auto mt-4 lg:hidden w-36 smallScreen:w-44"
           alt="origin digital logo"
         />
       </Link>
@@ -51,15 +51,15 @@ function Login() {
         </Form>
         <p className="text-white">
           Don't you have an accout ?{" "}
-          <Link className="text-primary" to="/login">
-            Sign Up
+          <Link className="text-primary" to="/register">
+            Register
           </Link>
         </p>
       </section>
       <div className="img-container">
         <div className="absolute right-[260px] top-[100px] w-[200px]">
           <img src={logo} alt="origin digital logo" />
-          <span className="inline-block text-primary text-4xl font-bold mt-8">
+          <span className="inline-block mt-8 text-4xl font-bold text-primary">
             Ready <br />
             To Watch
           </span>

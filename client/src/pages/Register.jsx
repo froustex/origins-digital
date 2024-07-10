@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Form } from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -59,9 +59,9 @@ function Register() {
   }, [user, email, pwd, matchPwd]);
 
   return (
-    <main className="flex flex-col relative items-center justify-center lg:flex-row h-screen bg-black">
+    <main className="relative flex flex-col items-center justify-center h-screen bg-black lg:flex-row">
       <Link
-        className="hidden text-primary absolute top-4 left-10 lg:flex lg:items-center"
+        className="absolute hidden text-primary top-4 left-10 lg:flex lg:items-center"
         to="/"
       >
         <FontAwesomeIcon
@@ -72,7 +72,7 @@ function Register() {
       <Link to="/">
         <img
           src={logo}
-          className="block lg:hidden h-auto  w-36 smallScreen:w-44 mt-4"
+          className="block h-auto mt-4 lg:hidden w-36 smallScreen:w-44"
           alt="origin digital logo"
         />
       </Link>
@@ -88,7 +88,10 @@ function Register() {
         >
           {errMsg}
         </p>
-        <form className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]">
+        <Form
+          method="post"
+          className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]"
+        >
           <div>
             <label htmlFor="username">
               Username
@@ -103,6 +106,7 @@ function Register() {
               className="formInput"
               type="text"
               id="username"
+              name="username"
               ref={userRef}
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
@@ -136,6 +140,7 @@ function Register() {
               className="formInput"
               type="email"
               id="email"
+              name="email"
               autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -166,6 +171,7 @@ function Register() {
               className="formInput"
               type="password"
               id="password"
+              name="password"
               onChange={(e) => setPwd(e.target.value)}
               required
               onFocus={() => setPwdFocus(true)}
@@ -193,6 +199,7 @@ function Register() {
             <input
               className="formInput"
               type="password"
+              name="password"
               id="confirm_pwd"
               onChange={(e) => setMatchPwd(e.target.value)}
               required
@@ -205,12 +212,12 @@ function Register() {
             </p>
           </div>
           <button
-            type="button"
+            type="submit"
             disabled={!validName || !validEmail || !validPwd || !validMatch}
           >
-            Sign Up
+            Register
           </button>
-        </form>
+        </Form>
         <p className="text-white">
           Already have an accout ?{" "}
           <Link className="text-primary" to="/login">
