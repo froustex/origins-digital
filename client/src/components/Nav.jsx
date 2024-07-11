@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/images/origins-digital-logo.png";
 import avatar from "../assets/images/avatar.png";
 import NavModal from "./NavModal";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
 
+  const { auth, setAuth } = useAuth();
+
   return (
     <>
-      <NavModal showModal={showModal} setShowModal={setShowModal} />
+      <NavModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        key={location.pathname}
+      />
       <nav className="flex items-center justify-between px-5 py-5">
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
@@ -38,7 +45,7 @@ export default function Nav() {
         </div>
         <div className="hidden smallScreen:flex smallScreen:items-center">
           <NavLink className="mr-4 nav-link" to="/profil">
-            username
+            {auth?.username}
           </NavLink>
           <img className="w-10 h-10" src={avatar} alt="profil avatar" />
         </div>
