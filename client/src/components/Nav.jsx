@@ -8,15 +8,13 @@ import { useAuth } from "../hooks/useAuth";
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
 
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
+
+  useEffect(() => {}, [auth]);
 
   return (
     <>
-      <NavModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        key={location.pathname}
-      />
+      <NavModal showModal={showModal} setShowModal={setShowModal} />
       <nav className="flex items-center justify-between px-5 py-5">
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
