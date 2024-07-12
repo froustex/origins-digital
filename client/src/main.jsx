@@ -13,6 +13,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+import AuthProvider from "./hooks/useAuth";
+
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -40,14 +42,26 @@ const router = createBrowserRouter([
       const email = formData.get("email");
       const password = formData.get("password");
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/login`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          }
+        );
         if (!response.ok) {
           console.error(response);
         }
+        const data = await response.json();
+        localStorage.setItem(
+          "username",
+          JSON.stringify({
+            id: data?.user?.id,
+            username: data?.user?.username,
+            isAdmin: data?.user?.is_admin,
+          })
+        );
       } catch (err) {
         console.error(err);
       }
@@ -94,6 +108,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-black;
+    @apply min-h-screen;
   }
   #root {
     @apply min-h-screen;
@@ -44,7 +44,7 @@
   }
 
   label {
-    @apply text-white text-xl smallScreen:text-2xl;
+    @apply text-xl text-white smallScreen:text-2xl;
   }
 
   label,

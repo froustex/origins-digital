@@ -5,6 +5,9 @@ const router = express.Router();
 /* ************************************************************************* */
 // Import And Use Routers Here
 /* ************************************************************************* */
+const authActions = require("../../controllers/authActions");
+
+router.post("/login", authActions.login);
 
 const itemsRouter = require("./items/router");
 
