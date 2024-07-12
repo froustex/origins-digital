@@ -1,13 +1,52 @@
 import { useEffect, useRef } from "react";
-import { Link, Form } from "react-router-dom";
+import { Link, Form, useNavigate, useActionData } from "react-router-dom";
 import logo from "../assets/images/origins-digital-logo.png";
+import { useAuth } from "../hooks/useAuth";
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const email = formData.get("email");
+  const password = formData.get("password");
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      console.error(response);
+    }
+    const data = await response.json();
+    const userData = {
+      id: data?.user?.id,
+      username: data?.user?.username,
+      isAdmin: data?.user?.is_admin,
+    };
+    localStorage.setItem("username", JSON.stringify(userData));
+    return userData;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
 
 function Login() {
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+  const actionData = useActionData();
+
   const emailRef = useRef();
 
   useEffect(() => {
     emailRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    if (actionData) {
+      setAuth(actionData);
+      navigate("/", { replace: true });
+    }
+  }, [actionData, setAuth, navigate]);
 
   return (
     <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden bg-black lg:flex-row">
