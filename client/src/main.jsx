@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 import AuthProvider from "./hooks/useAuth";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Users from "./pages/dashboard/Users";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +103,16 @@ const router = createBrowserRouter([
       }
       return redirect("/login");
     },
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "",
+        element: <Users />,
+      },
+    ],
   },
 ]);
 

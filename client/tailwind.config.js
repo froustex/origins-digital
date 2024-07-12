@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         primary: "#00A3FF",
+        background: "#353535",
       },
       screens: {
         smallScreen: "500px",
