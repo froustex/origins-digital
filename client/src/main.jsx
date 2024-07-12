@@ -10,7 +10,7 @@ import {
 
 import App from "./App";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login, { action as loginAction } from "./pages/Login";
 import Register from "./pages/Register";
 
 import AuthProvider from "./hooks/useAuth";
@@ -37,36 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-    action: async ({ request }) => {
-      const formData = await request.formData();
-      const email = formData.get("email");
-      const password = formData.get("password");
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/login`,
-          {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          }
-        );
-        if (!response.ok) {
-          console.error(response);
-        }
-        const data = await response.json();
-        localStorage.setItem(
-          "username",
-          JSON.stringify({
-            id: data?.user?.id,
-            username: data?.user?.username,
-            isAdmin: data?.user?.is_admin,
-          })
-        );
-      } catch (err) {
-        console.error(err);
-      }
-      return redirect("/");
-    },
+    action: loginAction,
   },
   {
     path: "/register",
