@@ -1,6 +1,6 @@
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import video from "../../assets/video.mp4";
+// import video from "../../assets/video.mp4";
 
 export default function VideoCard() {
   return (
@@ -8,7 +8,7 @@ export default function VideoCard() {
       <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black/50">
         <FontAwesomeIcon className="text-gray-900" icon={faLock} />
       </div>
-      <video className="object-cover w-full h-full" src={video} muted />
+      <video className="object-cover w-full h-full" muted />
     </div>
   );
 }

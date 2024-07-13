@@ -29,7 +29,12 @@ export default function Dashboard() {
                 </NavLink>
               </li>
               <li>
-                <NavLink className="hover:text-primary">Add video</NavLink>
+                <NavLink
+                  className="hover:text-primary"
+                  to="/dashboard/addVideo"
+                >
+                  Add video
+                </NavLink>
               </li>
             </ul>
           </div>

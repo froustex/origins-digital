@@ -21,7 +21,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         <li>
           <NavLink
             className="hover:text-primary"
-            to=""
+            to="/dashboard"
             onClick={() => setOpenNavModal(false)}
           >
             Users
@@ -30,7 +30,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         <li>
           <NavLink
             className="hover:text-primary"
-            to=""
+            to="/dashboard/videos"
             onClick={() => setOpenNavModal(false)}
           >
             Videos
@@ -39,7 +39,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         <li>
           <NavLink
             className="hover:text-primary"
-            to=""
+            to="/dashboard/addVideo"
             onClick={() => setOpenNavModal(false)}
           >
             Add video
