@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   faArrowUpFromBracket,
   faRightFromBracket,
@@ -7,12 +7,23 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../../hooks/useAuth";
 import Header from "../../components/dashboard/Header";
 import NavModal from "../../components/dashboard/NavModal";
 import logo from "../../assets/images/origins-digital-logo.png";
 
 export default function Dashboard() {
   const [openNavModal, setOpenNavModal] = useState(false);
+
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuth();
+    localStorage.clear();
+    setOpenNavModal(false);
+    navigate("/");
+  };
 
   return (
     <>
@@ -28,7 +39,7 @@ export default function Dashboard() {
               <li>
                 <NavLink className="hover:text-primary/60" to="/dashboard">
                   <FontAwesomeIcon className="mr-4 text-xl" icon={faUser} />
-                  <span className="hidden sm:inline">Users</span>
+                  <span className="hidden md:inline">Users</span>
                 </NavLink>
               </li>
               <li>
@@ -37,7 +48,7 @@ export default function Dashboard() {
                   to="/dashboard/videos"
                 >
                   <FontAwesomeIcon className="mr-4 text-xl" icon={faTv} />
-                  <span className="hidden sm:inline">Videos</span>
+                  <span className="hidden md:inline">Videos</span>
                 </NavLink>
               </li>
               <li>
@@ -49,7 +60,7 @@ export default function Dashboard() {
                     className="mr-4 text-xl"
                     icon={faArrowUpFromBracket}
                   />
-                  <span className="hidden sm:inline">Add video</span>
+                  <span className="hidden md:inline">Add video</span>
                 </NavLink>
               </li>
             </ul>
@@ -57,6 +68,7 @@ export default function Dashboard() {
           <button
             className="p-0 text-base text-white hover:text-black text-start"
             type="button"
+            onClick={handleLogout}
           >
             <FontAwesomeIcon
               className="mr-4 text-xl"

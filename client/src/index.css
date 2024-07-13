@@ -31,7 +31,7 @@
   input[type="email"],
   button,
   textarea {
-    @apply text-xl p-2.5 border-0 outline-none rounded-lg;
+    @apply p-2.5 border-0 outline-none rounded-lg;
   }
 
   .img-container {

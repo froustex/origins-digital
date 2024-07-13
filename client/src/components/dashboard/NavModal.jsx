@@ -1,9 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function NavModal({ openNavModal, setOpenNavModal }) {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuth();
+    localStorage.clear();
+    setOpenNavModal(false);
+    navigate("/");
+  };
+
   return (
     <div
       className={
@@ -49,6 +60,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
       <button
         className="inline-block mt-8 text-2xl text-white hover:text-black"
         type="button"
+        onClick={handleLogout}
       >
         Logout
       </button>
