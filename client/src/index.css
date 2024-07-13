@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Gugi&display=swap");
 
-* {
+/* * {
   font-family: "Gugi", sans-serif;
-}
+} */
 
 @tailwind base;
 
 @layer base {
   body {
-    @apply min-h-screen;
+    @apply min-h-screen overflow-y-hidden;
   }
   #root {
-    @apply min-h-screen;
+    @apply min-h-screen overflow-y-hidden;
   }
 }
 
@@ -20,7 +20,7 @@
 
 @layer utilities {
   .page {
-    @apply flex flex-col h-fit w-full p-4 gap-6 sm:w-[85%] sm:flex-row sm:flex-wrap;
+    @apply bg-[#f3f3f3] min-h-full flex flex-col h-fit w-full p-4 gap-6 sm:w-[85%] sm:flex-wrap;
   }
   .nav-link {
     @apply hover:text-primary;

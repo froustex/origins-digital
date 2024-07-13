@@ -3,7 +3,7 @@ import Nav from "./Nav";
 
 export default function Header({ openNavModal, setOpenNavModal }) {
   return (
-    <header className="block sm:hidden">
+    <header className="z-40 block shadow-2xl sm:hidden">
       <Nav openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
     </header>
   );

@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#00A3FF",
-        background: "#353535",
+        primary: "#19457a",
+        background: "#081225",
       },
       screens: {
         smallScreen: "500px",
