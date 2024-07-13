@@ -19,10 +19,14 @@ export default function Dashboard() {
             </div>
             <ul className="flex flex-col items-center justify-center gap-8 text-sm text-white md:text-lg">
               <li>
-                <NavLink className="hover:text-primary">Users</NavLink>
+                <NavLink className="hover:text-primary" to="/dashboard">
+                  Users
+                </NavLink>
               </li>
               <li>
-                <NavLink className="hover:text-primary">Videos</NavLink>
+                <NavLink className="hover:text-primary" to="/dashboard/videos">
+                  Videos
+                </NavLink>
               </li>
               <li>
                 <NavLink className="hover:text-primary">Add video</NavLink>

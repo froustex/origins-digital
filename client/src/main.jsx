@@ -15,7 +15,8 @@ import Register from "./pages/Register";
 
 import AuthProvider from "./hooks/useAuth";
 import Dashboard from "./pages/dashboard/Dashboard";
-import Users from "./pages/dashboard/Users";
+import DashboardUsers from "./pages/dashboard/DashboardUsers";
+import DashboardVideos from "./pages/dashboard/DashboardVideos";
 
 const router = createBrowserRouter([
   {
@@ -110,7 +111,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Users />,
+        element: <DashboardUsers />,
+      },
+      {
+        path: "videos",
+        element: <DashboardVideos />,
       },
     ],
   },
