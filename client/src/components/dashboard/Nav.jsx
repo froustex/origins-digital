@@ -1,8 +1,22 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export default function Nav({ setOpenNavModal, title }) {
+export default function Nav({ setOpenNavModal }) {
+  const [title, setTitle] = useState();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/dashboard") {
+      setTitle("users");
+    } else {
+      setTitle(location.pathname.slice(11));
+    }
+  }, [location.pathname]);
+
   return (
     <nav className="flex items-center justify-between p-4">
       <FontAwesomeIcon
@@ -18,5 +32,4 @@ export default function Nav({ setOpenNavModal, title }) {
 
 Nav.propTypes = {
   setOpenNavModal: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
 };

@@ -1,26 +1,15 @@
-import { useEffect, useState } from "react";
-import { Outlet, useLocation, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, NavLink } from "react-router-dom";
 import Header from "../../components/dashboard/Header";
 import NavModal from "../../components/dashboard/NavModal";
 
 export default function Dashboard() {
   const [openNavModal, setOpenNavModal] = useState(false);
-  const [title, setTitle] = useState();
-
-  const location = useLocation();
-
-  useEffect(() => {
-    setTitle(location.pathname.slice(11));
-  }, []);
 
   return (
     <>
       <NavModal openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
-      <Header
-        openNavModal={openNavModal}
-        setOpenNavModal={setOpenNavModal}
-        title={title}
-      />
+      <Header openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
       <main className="flex h-screen">
         <aside className="hidden sm:w-[15%] sm:p-4 sm:py-6 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
           <div className="flex flex-col items-center justify-center">

@@ -19,6 +19,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  .page {
+    @apply flex flex-col h-fit w-full p-4 gap-8 sm:w-[85%] sm:flex-row sm:flex-wrap;
+  }
   .nav-link {
     @apply hover:text-primary;
   }

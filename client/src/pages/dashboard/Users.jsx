@@ -1,3 +1,12 @@
+import UserCard from "../../components/dashboard/UserCard";
+
 export default function Users() {
-  return <div className=""> users</div>;
+  return (
+    <div className="page">
+      <UserCard />
+      <UserCard />
+      <UserCard />
+      <UserCard />
+    </div>
+  );
 }
