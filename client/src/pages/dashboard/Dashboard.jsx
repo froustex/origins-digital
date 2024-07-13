@@ -33,7 +33,7 @@ export default function Dashboard() {
         <aside className="hidden sm:w-[15%] sm:py-6 sm:px-4 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
           <div className="flex flex-col items-start justify-center">
             <div className="mb-16 ">
-              <img src={logo} alt="log" />
+              <img className="w-auto h-20" src={logo} alt="log" />
             </div>
             <ul className="flex flex-col justify-center gap-8 text-sm font-semibold text-white">
               <li>
