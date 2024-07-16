@@ -1,6 +1,5 @@
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import video from "../../assets/video.mp4";
 
 export default function VideoCard() {
   return (

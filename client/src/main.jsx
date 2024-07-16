@@ -16,7 +16,9 @@ import Register from "./pages/Register";
 import AuthProvider from "./hooks/useAuth";
 import Dashboard from "./pages/dashboard/Dashboard";
 import DashboardUsers from "./pages/dashboard/DashboardUsers";
-import DashboardVideos from "./pages/dashboard/DashboardVideos";
+import DashboardVideos, {
+  loader as dashboardVideosLoard,
+} from "./pages/dashboard/DashboardVideos";
 import DashboardAddVideo from "./pages/dashboard/DashboardAddVideo";
 
 const router = createBrowserRouter([
@@ -88,6 +90,7 @@ const router = createBrowserRouter([
       {
         path: "videos",
         element: <DashboardVideos />,
+        loader: dashboardVideosLoard,
       },
       {
         path: "addVideo",

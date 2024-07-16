@@ -1,6 +1,22 @@
+import { useLoaderData } from "react-router-dom";
 import VideoCard from "../../components/dashboard/VideoCard";
 
+export const loader = async () => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`);
+    const data = await res.json();
+    if (res.status !== 200) {
+      throw new Error("Problem while fetching videos");
+    } else {
+      return data;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export default function DashboardVideos() {
+  const videos = useLoaderData();
   return (
     <div className="page">
       <select
@@ -10,11 +26,9 @@ export default function DashboardVideos() {
         <option value="">category</option>
       </select>
       <div className="flex flex-wrap w-full gap-8 h-fit">
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
+        {videos.map((video) => (
+          <VideoCard key={video.id} video={video} />
+        ))}
       </div>
     </div>
   );
