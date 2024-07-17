@@ -14,16 +14,18 @@ export default function DashboardVideo() {
     <section className="page">
       <div>
         <h1 className="mb-4 sm:mb-8">{state.title}</h1>
-        <div className="mb-4 overflow-hidden rounded-lg sm:mb-8 max-w-[50rem] ">
+        <div className="w-full mb-4 overflow-hidden rounded-lg sm:mb-8">
           <video className="w-full h-full" controls>
             <track kind={state.description} />
             <source src={state.source} />
           </video>
         </div>
         <section className="flex flex-col p-4 mb-4 bg-gray-200 rounded-lg sm:mb-6">
-          <h2 className="mb-2 text-lg font-semibold">Description</h2>
-          <p>{state.description}</p>
-          <p className="mt-6 text-gray-500">{formatedDate}</p>
+          <h2 className="mb-2 text-sm font-semibold sm:text-lg">Description</h2>
+          <p className="text-sm sm:text-base">{state.description}</p>
+          <p className="mt-4 text-sm text-gray-500 sm:mt-6 sm:text-base">
+            {formatedDate}
+          </p>
         </section>
       </div>
     </section>
