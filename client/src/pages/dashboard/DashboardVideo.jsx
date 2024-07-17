@@ -11,7 +11,7 @@ export default function DashboardVideo() {
   }, []);
 
   return (
-    <section className="overflow-y-scroll page">
+    <section className="page">
       <div>
         <h1 className="mb-4 sm:mb-8">{state.title}</h1>
         <div className="mb-4 overflow-hidden rounded-lg sm:mb-8 max-w-[50rem] ">

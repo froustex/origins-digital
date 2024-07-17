@@ -30,10 +30,10 @@ export default function Dashboard() {
       <NavModal openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
       <Header openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
       <main className="flex h-screen pb-16 sm:pb-0">
-        <aside className="hidden overflow-y-hidden sm:w-[15%] sm:py-6 sm:px-4 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
+        <aside className="hidden sm:w-[15%] sm:py-6 sm:px-4 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
           <div className="flex flex-col items-start justify-center">
             <div className="mb-16 ">
-              <img className="w-auto h-20" src={logo} alt="log" />
+              <img className="w-auto h-16" src={logo} alt="log" />
             </div>
             <ul className="flex flex-col justify-center gap-8 text-sm font-semibold text-white">
               <li>
@@ -77,7 +77,9 @@ export default function Dashboard() {
             Log out
           </button>
         </aside>
-        <Outlet />
+        <div className="overflow-y-scroll sm:w-[85%]">
+          <Outlet />
+        </div>
       </main>
     </>
   );
