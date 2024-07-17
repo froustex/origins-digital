@@ -1,5 +1,5 @@
-import { useLoaderData } from "react-router-dom";
-import VideoCard from "../../components/dashboard/VideoCard";
+// import { useLoaderData } from "react-router-dom";
+// import VideoCard from "../../components/VideoCard";
 
 export const loader = async () => {
   try {
@@ -16,7 +16,7 @@ export const loader = async () => {
 };
 
 export default function DashboardVideos() {
-  const videos = useLoaderData();
+  // const videos = useLoaderData();
   return (
     <div className="page">
       <select
@@ -26,9 +26,9 @@ export default function DashboardVideos() {
         <option value="">category</option>
       </select>
       <div className="flex flex-wrap w-full gap-8 h-fit">
-        {videos.map((video) => (
+        {/* {videos.map((video) => (
           <VideoCard key={video.id} video={video} />
-        ))}
+        ))} */}
       </div>
     </div>
   );
