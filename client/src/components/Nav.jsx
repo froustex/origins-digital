@@ -19,7 +19,7 @@ export default function Nav() {
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
           <input
-            className="hidden md:block sm:self-center sm:p-1 sm:px-4 sm:placeholder-white sm:rounded-lg sm:bg-primary"
+            className="hidden text-white md:block sm:h-fit sm:self-center sm:p-1 sm:px-4 sm:placeholder-white sm:rounded-lg sm:bg-primary"
             type="text"
             placeholder="Search"
           />
@@ -41,12 +41,23 @@ export default function Nav() {
             </li>
           </ul>
         </div>
-        <div className="hidden smallScreen:flex smallScreen:items-center">
-          <NavLink className="mr-4 nav-link" to="/profil">
-            {auth?.username}
-          </NavLink>
-          <img className="w-10 h-10" src={avatar} alt="profil avatar" />
-        </div>
+        {auth ? (
+          <div className="hidden smallScreen:flex smallScreen:items-center">
+            <NavLink className="mr-4 nav-link" to="/profil">
+              {auth?.username}
+            </NavLink>
+            <img className="w-10 h-10" src={avatar} alt="profil avatar" />
+          </div>
+        ) : (
+          <div className="hidden smallScreen:flex smallScreen:items-center">
+            <NavLink className="mr-4 nav-link" to="/login">
+              Login
+            </NavLink>
+            <NavLink className="mr-4 nav-link" to="/register">
+              Register
+            </NavLink>
+          </div>
+        )}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32"
