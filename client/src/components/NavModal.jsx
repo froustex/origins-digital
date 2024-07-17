@@ -1,12 +1,22 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PropType from "prop-types";
+import { useAuth } from "../hooks/useAuth";
 
 export default function NavModal({ showModal, setShowModal }) {
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuth();
+    localStorage.clear();
+    setShowModal(false);
+    navigate("/");
+  };
   return (
     <div
       className={
         showModal
-          ? `absolute z-50 flex items-center justify-center w-screen h-screen bg-white`
+          ? `absolute z-50 flex items-center justify-center w-screen h-screen text-xl font-semibold bg-white`
           : `hidden`
       }
     >
@@ -23,7 +33,7 @@ export default function NavModal({ showModal, setShowModal }) {
           d="m12 13.4l-2.917 2.925q-.277.275-.704.275t-.704-.275q-.275-.275-.275-.7t.275-.7L10.6 12L7.675 9.108Q7.4 8.831 7.4 8.404t.275-.704q.275-.275.7-.275t.7.275L12 10.625L14.892 7.7q.277-.275.704-.275t.704.275q.3.3.3.713t-.3.687L13.375 12l2.925 2.917q.275.277.275.704t-.275.704q-.3.3-.712.3t-.688-.3z"
         />
       </svg>
-      <ul className="flex flex-col gap-5">
+      <ul className="flex flex-col justify-center gap-5">
         <li>
           <NavLink
             className="nav-link"
@@ -51,6 +61,41 @@ export default function NavModal({ showModal, setShowModal }) {
             About Us
           </NavLink>
         </li>
+        {auth ? (
+          <div className="flex flex-col gap-5">
+            <NavLink className="hover:text-primary" to="/profil">
+              {auth?.username}
+            </NavLink>
+            <button
+              type="button"
+              className="inline-block p-0 m-0 font-semibold hover:text-black/50 text-start"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-5">
+            <li>
+              <NavLink
+                className="nav-link"
+                to="/login"
+                onClick={() => setShowModal(false)}
+              >
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="nav-link"
+                to="/register"
+                onClick={() => setShowModal(false)}
+              >
+                Register
+              </NavLink>
+            </li>
+          </div>
+        )}
       </ul>
     </div>
   );

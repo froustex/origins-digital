@@ -10,6 +10,14 @@ import Login, { action as loginAction } from "./pages/Login";
 import Register, { action as registerAction } from "./pages/Register";
 
 import AuthProvider from "./hooks/useAuth";
+import Dashboard from "./pages/dashboard/Dashboard";
+import DashboardUsers, {
+  loader as dashboardUsersLoader,
+} from "./pages/dashboard/DashboardUsers";
+import DashboardVideos, {
+  loader as dashboardVideosLoard,
+} from "./pages/dashboard/DashboardVideos";
+import DashboardAddVideo from "./pages/dashboard/DashboardAddVideo";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +47,26 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
     action: registerAction,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "",
+        element: <DashboardUsers />,
+        loader: dashboardUsersLoader,
+      },
+      {
+        path: "videos",
+        element: <DashboardVideos />,
+        loader: dashboardVideosLoard,
+      },
+      {
+        path: "addVideo",
+        element: <DashboardAddVideo />,
+      },
+    ],
   },
 ]);
 
