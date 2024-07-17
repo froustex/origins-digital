@@ -25,6 +25,7 @@
       {
         "assert": "either"
       }
-    ]
+    ],
+    "jsx-a11y/media-has-caption": "off"
   }
 }

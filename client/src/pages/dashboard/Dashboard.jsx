@@ -29,8 +29,8 @@ export default function Dashboard() {
     <>
       <NavModal openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
       <Header openNavModal={openNavModal} setOpenNavModal={setOpenNavModal} />
-      <main className="flex h-screen pb-16 overflow-y-scroll sm:pb-0">
-        <aside className="hidden sm:w-[15%] sm:py-6 sm:px-4 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
+      <main className="flex h-screen pb-16 sm:pb-0">
+        <aside className="hidden overflow-y-hidden sm:w-[15%] sm:py-6 sm:px-4 sm:flex sm:flex-col sm:justify-between sm:h-full sm:bg-background">
           <div className="flex flex-col items-start justify-center">
             <div className="mb-16 ">
               <img className="w-auto h-20" src={logo} alt="log" />

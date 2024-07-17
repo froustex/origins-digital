@@ -24,7 +24,7 @@ export default function DashboardVideos() {
       >
         <option value="">category</option>
       </select>
-      <div className="flex flex-wrap w-full gap-8 h-fit">
+      <div className="flex flex-wrap w-full gap-8 overflow-y-scroll h-fit ">
         {videos.map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}

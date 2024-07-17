@@ -13,6 +13,12 @@
   #root {
     @apply min-h-screen overflow-y-hidden;
   }
+  h1 {
+    @apply text-2xl font-semibold sm:text-4xl;
+  }
+  main {
+    @apply overflow-y-scroll;
+  }
 }
 
 @tailwind components;
@@ -20,7 +26,7 @@
 
 @layer utilities {
   .page {
-    @apply bg-[#f3f3f3] min-h-full flex flex-col h-fit w-full px-6 py-8 gap-6 sm:w-[85%] sm:flex-wrap;
+    @apply bg-[#f3f3f3] min-h-full flex flex-col h-fit w-full px-6 py-8 gap-6 sm:w-[85%] sm:flex-wrap overflow-y-scroll;
   }
   .nav-link {
     @apply hover:text-primary;
