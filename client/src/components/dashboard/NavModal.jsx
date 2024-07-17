@@ -24,7 +24,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
       }
     >
       <FontAwesomeIcon
-        className="absolute text-white cursor-pointer top-5 right-5 hover:text-primary"
+        className="absolute text-white cursor-pointer top-5 left-5 hover:text-primary"
         icon={faXmark}
         onClick={() => setOpenNavModal(false)}
       />
