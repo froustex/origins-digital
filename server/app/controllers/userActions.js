@@ -59,7 +59,7 @@ const add = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    // const affectedRow = await tables.user.delete(req.body.id);
+    await tables.user.delete(req.params.id);
     res.sendStatus(204);
   } catch (err) {
     next(err);
