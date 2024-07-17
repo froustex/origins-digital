@@ -31,7 +31,7 @@ class UserRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `select username, email, hashed_password, is_admin, avatar from ${this.table} where id = ?`,
       [id]
     );
 
