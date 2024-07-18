@@ -15,7 +15,7 @@ export default function Nav() {
   return (
     <>
       <NavModal showModal={showModal} setShowModal={setShowModal} />
-      <nav className="flex items-center justify-between px-5 py-5">
+      <nav className="flex items-center justify-between px-5 py-5 text-white bg-black/80 backdro-blur-sm">
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
           <input

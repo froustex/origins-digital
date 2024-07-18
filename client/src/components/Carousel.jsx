@@ -1,7 +1,10 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const settings = {
   // autoplay: true,
@@ -18,38 +21,51 @@ const settings = {
 };
 
 export default function Carousel({ videos }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-4/5 px-10 mt-7">
-      <div className="mt-8">
-        <Slider
-          speed={settings.speed}
-          infinite={settings.infinite}
-          slidesToShow={settings.slidesToShow}
-          slidesToScroll={settings.slidesToScroll}
-        >
-          {videos.map((video) => (
-            <div key={video.id} className="rounded">
-              <div className="flex flex-col items-center justify-center h-56 rounded">
-                <video className="rounded max-h-64 w-80" controls>
-                  <source src={video.source} />
-                </video>
-                <p className="font-semibold text-white text-l">{video.title}</p>
+    <div className="w-full px-10">
+      <Slider
+        speed={settings.speed}
+        infinite={settings.infinite}
+        slidesToShow={settings.slidesToShow}
+        slidesToScroll={settings.slidesToScroll}
+        className="px-6"
+      >
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            id={video.id}
+            className="relative shadow-lg rounded-xl h-[10rem] w-full sm:min-w-[16rem] overflow-hidden cursor-pointer overflow-y-scroll mx-8"
+            onClick={() => navigate(`/videos/${video.id}`, { state: video })}
+            style={{ marginRight: "40px" }}
+            role="presentation"
+          >
+            {video.isPrivate ? (
+              <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black/70">
+                <FontAwesomeIcon className="text-white" icon={faLock} />
               </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
+            ) : null}
+            <video
+              className="object-cover w-full h-full"
+              src={video.source}
+              muted
+            />
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }
+
 Carousel.propTypes = {
   videos: PropTypes.arrayOf({
-    created_at: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isPrivate: PropTypes.number.isRequired,
-    source: PropTypes.string.isRequired,
+    created_at: PropTypes.string,
+    description: PropTypes.string,
+    id: PropTypes.number,
+    isPrivate: PropTypes.number,
+    source: PropTypes.string,
     thumbnail: PropTypes.string,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
   }).isRequired,
 };

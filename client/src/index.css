@@ -8,10 +8,10 @@
 
 @layer base {
   body {
-    @apply min-h-screen overflow-y-hidden;
+    @apply min-h-screen bg-zinc-900;
   }
   #root {
-    @apply h-full overflow-y-hidden;
+    @apply min-h-screen;
   }
   h1 {
     @apply text-2xl font-semibold sm:text-4xl;
