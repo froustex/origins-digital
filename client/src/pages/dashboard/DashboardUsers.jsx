@@ -20,9 +20,11 @@ export default function DashboardUsers() {
   return (
     <div className="page">
       <div className="flex flex-wrap w-full gap-8 h-fit">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
+        {users
+          .filter((user) => !user.is_admin)
+          .map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
       </div>
     </div>
   );

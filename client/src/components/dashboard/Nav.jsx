@@ -11,9 +11,9 @@ export default function Nav({ setOpenNavModal }) {
 
   useEffect(() => {
     if (location.pathname === "/dashboard") {
-      setTitle("users");
-    } else {
-      setTitle(location.pathname.slice(11));
+      setTitle("Users");
+    } else if (location.pathname === "/dashboard/videos") {
+      setTitle("Videos");
     }
   }, [location.pathname]);
 
