@@ -2,16 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  redirect,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
-import Home from "./pages/Home";
+import Home, { loader as homeLoader } from "./pages/Home";
 import Login, { action as loginAction } from "./pages/Login";
-import Register from "./pages/Register";
+import Register, { action as registerAction } from "./pages/Register";
 
 import AuthProvider from "./hooks/useAuth";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -31,6 +27,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: homeLoader,
       },
       {
         path: "/videos",
@@ -51,36 +48,7 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-    action: async ({ request }) => {
-      const formData = await request.formData();
-      const username = formData.get("username");
-      const email = formData.get("email");
-      const password = formData.get("password");
-
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              username,
-              email,
-              password,
-              isAdmin: false,
-              avatar:
-                "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
-            }),
-          }
-        );
-        if (!response.ok) {
-          console.error(response);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-      return redirect("/login");
-    },
+    action: registerAction,
   },
   {
     path: "/dashboard",

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, Form } from "react-router-dom";
+import { Link, Form, redirect } from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -8,6 +8,34 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/origins-digital-logo.png";
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const username = formData.get("username");
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        isAdmin: false,
+        avatar:
+          "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
+      }),
+    });
+    if (!response.ok) {
+      console.error(response);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  return redirect("/login");
+}
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
