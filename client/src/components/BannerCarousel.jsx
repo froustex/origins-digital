@@ -6,7 +6,6 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PropTypes from "process";
 
 export default function BannerCarousel({ videos }) {
   const [currentVideo, setCurrentVideo] = useState(0);
@@ -54,7 +53,7 @@ export default function BannerCarousel({ videos }) {
                   </p>
                 </div>
                 <FontAwesomeIcon
-                  className="self-center text-4xl sm:text-6xl text-primary"
+                  className="self-center text-4xl text-white sm:text-6xl"
                   icon={faPlay}
                 />
               </div>
@@ -78,15 +77,3 @@ export default function BannerCarousel({ videos }) {
     </div>
   );
 }
-
-BannerCarousel.propTypes = {
-  videos: PropTypes.arrayOf({
-    created_at: PropTypes.string,
-    description: PropTypes.string,
-    id: PropTypes.number,
-    isPrivate: PropTypes.number,
-    source: PropTypes.string,
-    thumbnail: PropTypes.string,
-    title: PropTypes.string,
-  }).isRequired,
-};

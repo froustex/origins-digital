@@ -21,9 +21,19 @@ export default function Home() {
   return (
     <div className="relative px-6 py-6 bg-zinc-900 sm:py-8">
       <BannerCarousel videos={videos} />
+      <section className="w-full mb-8 sm:mb-12">
+        <h2 className="mb-4 text-xl text-white sm:mb-6">Last added videos</h2>
+        <Carousel videos={videos} autoplaying />
+      </section>
       <section className="w-full">
-        <h1 className="mb-4 text-xl text-white sm:mb-6">Suggested Videos</h1>
-        <Carousel videos={videos} />
+        <select
+          className="p-1 mb-4 border-2 border-gray-200 rounded-lg h-fit w-fit"
+          name="filter"
+        >
+          <option value="">category</option>
+        </select>
+        <h2 className="mb-4 text-xl text-white sm:mb-6">Filtered Category</h2>
+        <Carousel videos={videos} autoplaying={false} />
       </section>
     </div>
   );
