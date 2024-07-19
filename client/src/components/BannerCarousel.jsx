@@ -58,10 +58,9 @@ export default function BannerCarousel({ videos }) {
                 />
               </div>
 
-              <video
+              <img
                 className="object-cover w-full h-full"
-                src={video.source}
-                muted
+                src={video.thumbnail}
               />
             </div>
           ))

@@ -86,3 +86,12 @@
     @apply bg-pink-300 text-red-800 text-xs font-bold p-[0.5rem] mt-[0.8rem];
   }
 }
+
+/* the slides */
+.slick-slide > div {
+  margin: 0 10px;
+}
+/* the parent */
+/* .slick-list {
+  margin: 0 -10px;
+}  */
