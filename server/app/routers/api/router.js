@@ -9,17 +9,26 @@ const authActions = require("../../controllers/authActions");
 
 router.post("/login", authActions.login);
 
+// items
+
 const itemsRouter = require("./items/router");
 
 router.use("/items", itemsRouter);
 
+// users
 const userRouter = require("./users/router");
 
 router.use("/users", userRouter);
 
+// videos
 const videosRouter = require("./videos/router");
 
 router.use("/videos", videosRouter);
+
+// categories
+const categoriesRouter = require("./categories/router");
+
+router.use("/categories", categoriesRouter);
 
 /* ************************************************************************* */
 
