@@ -1,7 +1,8 @@
-import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Slider from "react-slick";
+import { useAuth } from "../hooks/useAuth";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -33,6 +34,8 @@ const settings = {
 export default function Carousel({ videos, autoplaying }) {
   const navigate = useNavigate();
 
+  const { auth } = useAuth();
+
   return (
     <div className="w-full px-10">
       <Slider
@@ -55,16 +58,20 @@ export default function Carousel({ videos, autoplaying }) {
             role="presentation"
             style={{ marginRight: "40px" }}
           >
-            {video.isPrivate ? (
-              <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black/70">
+            {video.isPrivate && !auth ? (
+              <div className="absolute top-0 left-0 z-40 flex items-center justify-center w-full h-full bg-black">
                 <FontAwesomeIcon className="text-white" icon={faLock} />
               </div>
             ) : null}
-            <div className="relative w-full h-full">
-              <div className="absolute top-0 left-0 z-40 flex min-w-full min-h-full p-4 bg-custom"></div>
+            <div className="w-full h-full ">
+              <p className="absolute z-20 text-xs font-semibold text-white sm:text-md md:text-base bottom-2 left-2 sm:bottom-4 sm:left-4">
+                {video.title}
+              </p>
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black" />
               <img
-                className="relative object-cover w-full h-full after:absolute after:content-[''] after:w-full after:h-full after:bg-red-500 after:top-0 after:left-0 after:z-40"
+                className="object-cover w-full h-full"
                 src={video.thumbnail}
+                alt={`${video.title} thumbnail`}
               />
             </div>
           </div>
