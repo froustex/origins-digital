@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
+import avatar from "../assets/images/avatar.png";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,7 @@ export default function Nav() {
               {auth?.username}
             </NavLink>
             <div
-              className="w-8 h-8 rounded-full cursor-pointer"
+              className="w-8 h-8 overflow-hidden rounded-full cursor-pointer"
               onKeyDown={(e) =>
                 e.key === "Enter" ? setShowOptions(true) : null
               }
@@ -55,11 +56,7 @@ export default function Nav() {
               role="button"
               tabIndex={0}
             >
-              <img
-                className="w-full h-full"
-                src={auth?.avatar}
-                alt="profil avatar"
-              />
+              <img className="w-full h-full" src={avatar} alt="profil avatar" />
             </div>
             <div
               className={
