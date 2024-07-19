@@ -14,7 +14,6 @@ const settings = {
   focusOnSelect: true,
   useTransform: true,
   cssEase: "linear",
-  lazylaod: true,
   responsive: [
     {
       breakpoint: 500,
@@ -45,7 +44,6 @@ export default function Carousel({ videos, autoplaying }) {
         responsive={settings.responsive}
         useTransform={settings.useTransform}
         cssEase={settings.cssEase}
-        lazyload={settings.lazylaod}
         className="px-6"
       >
         {videos.map((video) => (
@@ -61,11 +59,7 @@ export default function Carousel({ videos, autoplaying }) {
                 <FontAwesomeIcon className="text-white" icon={faLock} />
               </div>
             ) : null}
-            <video
-              className="object-cover w-full h-full"
-              src={video.source}
-              muted
-            />
+            <video className="object-cover w-full h-full" src={video.source} />
           </div>
         ))}
       </Slider>
