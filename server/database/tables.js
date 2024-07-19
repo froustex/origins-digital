@@ -2,6 +2,7 @@
 const ItemRepository = require("./models/ItemRepository");
 const UserRepository = require("./models/UserRepository");
 const VideoRepository = require("./models/VideoRepository");
+const CategoryRepository = require("./models/CategoryRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -14,6 +15,7 @@ const tables = {};
 tables.item = new ItemRepository();
 tables.user = new UserRepository();
 tables.video = new VideoRepository();
+tables.category = new CategoryRepository();
 
 /* ************************************************************************* */
 
