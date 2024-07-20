@@ -40,9 +40,7 @@ export default function BannerCarousel({ videos }) {
                   ? `block h-full w-screen overflow-hidden cursor-pointer overflow-y-scroll ease-in-out`
                   : `hidden`
               }
-              onClick={() =>
-                navigate(`/dashboard/videos/${video.id}`, { state: video })
-              }
+              onClick={() => navigate(`/videos/${video.id}`, { state: video })}
               role="presentation"
             >
               <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full gap-6 px-6 sm:gap-0 sm:justify-around bg-black/60 sm:px-0">
@@ -61,6 +59,7 @@ export default function BannerCarousel({ videos }) {
               <img
                 className="object-cover w-full h-full"
                 src={video.thumbnail}
+                alt={`${video.title} thumbnail`}
               />
             </div>
           ))

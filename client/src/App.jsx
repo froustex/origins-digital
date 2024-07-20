@@ -1,12 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 function App() {
+  const { pathname } = useLocation();
+
   return (
     <div className="flex flex-col justify-between min-h-screen sm:block">
       <Header />
-      <main className="min-h-full overflow-y-scroll ">
+      <main
+        className={
+          pathname === "/"
+            ? `min-h-full overflow-scroll sm:block`
+            : `flex grow min-h-full overflow-scroll sm:block`
+        }
+      >
         <Outlet />
       </main>
       <Footer />

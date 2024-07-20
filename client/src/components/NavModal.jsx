@@ -1,10 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import PropType from "prop-types";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import avatar from "../assets/images/avatar.png";
 
 export default function NavModal({ showModal, setShowModal }) {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleLogout = () => {
     setAuth();
@@ -63,7 +64,11 @@ export default function NavModal({ showModal, setShowModal }) {
         </li>
         {auth ? (
           <div className="flex flex-col gap-5">
-            <NavLink className="hover:text-primary" to="/profil">
+            <NavLink
+              className="flex items-center hover:text-primary"
+              to="/profil"
+            >
+              <img className="w-6 h-6 mr-2 rounded-full" src={avatar} alt="" />
               {auth?.username}
             </NavLink>
             <button
@@ -80,6 +85,7 @@ export default function NavModal({ showModal, setShowModal }) {
               <NavLink
                 className="nav-link"
                 to="/login"
+                state={{ from: pathname }}
                 onClick={() => setShowModal(false)}
               >
                 Login
@@ -100,8 +106,3 @@ export default function NavModal({ showModal, setShowModal }) {
     </div>
   );
 }
-
-NavModal.propTypes = {
-  showModal: PropType.bool.isRequired,
-  setShowModal: PropType.func.isRequired,
-};
