@@ -21,11 +21,6 @@ export default function VideoCard({ video }) {
       onKeyDown={handleKeyDown}
       role="presentation"
     >
-      {video?.isPrivate ? (
-        <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black/50">
-          <FontAwesomeIcon className="text-gray-900" icon={faLock} />
-        </div>
-      ) : null}
       <video className="object-cover w-full h-full" src={video.source} muted />
     </div>
   );

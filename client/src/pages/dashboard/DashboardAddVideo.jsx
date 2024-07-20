@@ -1,5 +1,11 @@
-import { useLoaderData } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import AddCategory from "../../components/AddCategory";
+import { useEffect, useRef, useState } from "react";
 
 export const loader = async () => {
   try {
@@ -15,14 +21,51 @@ export const loader = async () => {
   }
 };
 
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
+      method: "POST",
+      body: formData,
+    });
+    if (res.status !== 201) {
+      throw new Error("Error while uploading video");
+    }
+    return "Video uploaded Successfully";
+  } catch (error) {
+    console.error(error);
+  }
+  return null;
+};
+
 export default function DashboardAddVideo() {
+  const [successMsg, setSuccessMsg] = useState();
+  const result = useActionData();
+
+  const formRef = useRef();
+
+  useEffect(() => {
+    setSuccessMsg(result);
+    if (result) {
+      formRef.current.reset();
+    }
+  }, [result]);
+
   const categories = useLoaderData();
   return (
     <div className="page">
-      <form className="flex flex-col w-full gap-8 mt-8">
+      {successMsg && <p>{successMsg}</p>}
+      <Form
+        ref={formRef}
+        method="post"
+        className="flex flex-col w-full gap-8 mt-8"
+        encType="multipart/form-data"
+      >
         <input
           className="px-2 py-2 rounded-lg"
           type="text"
+          name="title"
           placeholder="title"
         />
         <textarea
@@ -38,7 +81,11 @@ export default function DashboardAddVideo() {
             <option value="">category</option>
             {categories &&
               categories.map((category) => (
-                <option key={category.id} value={category.name}>
+                <option
+                  key={category.id}
+                  value={category.name}
+                  id={category.id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -56,7 +103,7 @@ export default function DashboardAddVideo() {
         >
           Add
         </button>
-      </form>
+      </Form>
     </div>
   );
 }
