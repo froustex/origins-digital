@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import avatar from "../assets/images/avatar.png";
 
 export default function UserCard({ user }) {
   const [formatedDate, setFormatedDate] = useState();
@@ -34,7 +35,7 @@ export default function UserCard({ user }) {
       <div className="flex items-center">
         <img
           className="w-8 h-8 rounded-full bg-primary"
-          src={user.avatar}
+          src={avatar}
           alt="avatar"
         />
         <div className="ml-2">
