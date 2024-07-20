@@ -10,23 +10,33 @@ const router = express.Router();
 const {
   browse,
   read,
+  readFavorites,
+  readComments,
+  readRates,
   add,
+  addFavoriteVideo,
   destroy,
+  destroyFavorite,
 } = require("../../../controllers/userActions");
 
 const { hashPassword } = require("../../../services/auth");
 
-// Route to get a list of users
 router.get("/", browse);
 
-// Route to get a specific user by ID
 router.get("/:id", read);
 
-// Route to add a new user
 router.post("/", hashPassword, add);
 
 router.delete("/:id", destroy);
 
-/* ************************************************************************* */
+router.get("/:id/favorites", readFavorites);
+
+router.get("/:id/comments", readComments);
+
+router.get("/:id/rates", readRates);
+
+router.post("/:id/favorites", addFavoriteVideo);
+
+router.delete("/:id/favorites/:id", destroyFavorite);
 
 module.exports = router;

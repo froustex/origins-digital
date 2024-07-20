@@ -19,6 +19,22 @@ class VideoRepository extends AbstractRepository {
     return result.insertId;
   }
 
+  async createRate(rate) {
+    const [result] = await this.database.query(
+      `insert into rating (rating, user_id, video_id) values(?,?,?)`,
+      [rate.rating, rate.user_id, rate.video_id]
+    );
+    return result.insertId;
+  }
+
+  async createComment(comment) {
+    const [result] = await this.database.query(
+      `insert into commenting (comment, user_id, video_id) values(?,?,?)`,
+      [comment.comment, comment.user_id, comment.video_id]
+    );
+    return result.insertId;
+  }
+
   async readAll() {
     const [rows] = await this.database.query(`select * from ${this.table}`);
     return rows;
@@ -32,6 +48,34 @@ class VideoRepository extends AbstractRepository {
     return rows[0];
   }
 
+  async readByAverageRate(id) {
+    const [rows] = await this.database.query(
+      `select avg(rating) from rating join video on rating.video_id = video.id where video.id = ?`,
+      [id]
+    );
+    return rows[0];
+  }
+
+  async readCommentsByVideo(id) {
+    const [rows] = await this.database.query(
+      `select c.id, c.comment, u.username, c.created_at from commenting c 
+      join user u on u.id=c.user_id 
+      join video v on v.id=c.video_id where v.id = ? order by c.created_at desc`,
+      [id]
+    );
+    return [rows];
+  }
+
+  async readCategoriesByVideo(id) {
+    const [rows] = await this.database.query(
+      `select distinct v.title, c.name, ad.id from add_category ad 
+      join category c on c.id = ad.category_id
+      join video v on v.id = ad.video_id where v.id= ? order by c.name`,
+      [id]
+    );
+    return [rows];
+  }
+
   async update(video, id) {
     const [result] = await this.database.query(
       `update ${this.table} set ? where id = ?`,
@@ -40,9 +84,33 @@ class VideoRepository extends AbstractRepository {
     return result.affectedRows;
   }
 
+  async updateCategoriesByVideo(data, id) {
+    const [result] = await this.database.query(
+      `update add_category set ? where id = ?`,
+      [data, id]
+    );
+    return result.affectedRows;
+  }
+
   async delete(id) {
     const [result] = await this.database.query(
       `delete from ${this.table} where id = ?`,
+      [id]
+    );
+    return result.affectedRows;
+  }
+
+  async deleteVideoComment(id) {
+    const [result] = await this.database.query(
+      `delete from commenting where id = ?`,
+      [id]
+    );
+    return result.affectedRows;
+  }
+
+  async deleteVideoCategory(id) {
+    const [result] = await this.database.query(
+      `delete from add_category where id = ?`,
       [id]
     );
     return result.affectedRows;
