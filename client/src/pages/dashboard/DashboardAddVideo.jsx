@@ -1,11 +1,11 @@
+import { useEffect, useRef, useState } from "react";
 import {
   Form,
   useActionData,
   useLoaderData,
-  useNavigate,
+  useNavigation,
 } from "react-router-dom";
 import AddCategory from "../../components/AddCategory";
-import { useEffect, useRef, useState } from "react";
 
 export const loader = async () => {
   try {
@@ -41,9 +41,11 @@ export const action = async ({ request }) => {
 
 export default function DashboardAddVideo() {
   const [successMsg, setSuccessMsg] = useState();
-  const result = useActionData();
 
+  const result = useActionData();
   const formRef = useRef();
+  const navigation = useNavigation();
+  const isSubmiting = navigation.state === "submitting";
 
   useEffect(() => {
     setSuccessMsg(result);
@@ -98,10 +100,15 @@ export default function DashboardAddVideo() {
         </select>
         <input type="file" name="file" />
         <button
-          className="text-white bg-primary hover:bg-primary/80"
+          className={
+            isSubmiting
+              ? `bg-gray-300`
+              : `text-white bg-primary hover:bg-primary/80`
+          }
           type="submit"
+          disabled={isSubmiting}
         >
-          Add
+          {isSubmiting ? "Uploading..." : "Add"}
         </button>
       </Form>
     </div>
