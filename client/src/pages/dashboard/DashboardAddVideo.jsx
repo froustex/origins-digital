@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   Form,
   useActionData,
   useLoaderData,
   useNavigation,
 } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AddCategory from "../../components/AddCategory";
 
 export const loader = async () => {
@@ -30,9 +32,14 @@ export const action = async ({ request }) => {
       body: formData,
     });
     if (res.status !== 201) {
-      throw new Error("Error while uploading video");
+      return toast.error("Video uploaded successfully", {
+        position: "bottom-right",
+      });
     }
-    return "Video uploaded Successfully";
+
+    return toast.success("Video uploaded successfully", {
+      position: "bottom-right",
+    });
   } catch (error) {
     console.error(error);
   }
@@ -40,24 +47,21 @@ export const action = async ({ request }) => {
 };
 
 export default function DashboardAddVideo() {
-  const [successMsg, setSuccessMsg] = useState();
-
   const result = useActionData();
   const formRef = useRef();
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
 
   useEffect(() => {
-    setSuccessMsg(result);
     if (result) {
       formRef.current.reset();
     }
   }, [result]);
 
   const categories = useLoaderData();
+
   return (
     <div className="page">
-      {successMsg && <p>{successMsg}</p>}
       <Form
         ref={formRef}
         method="post"
@@ -111,6 +115,7 @@ export default function DashboardAddVideo() {
           {isSubmiting ? "Uploading..." : "Add"}
         </button>
       </Form>
+      <ToastContainer />
     </div>
   );
 }
