@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
 export default function VideoCard({ video }) {
@@ -21,7 +19,15 @@ export default function VideoCard({ video }) {
       onKeyDown={handleKeyDown}
       role="presentation"
     >
-      <video className="object-cover w-full h-full" src={video.source} muted />
+      <p className="absolute z-20 text-xs font-semibold text-white sm:text-md md:text-base bottom-2 left-2 sm:bottom-4 sm:left-4">
+        {video.title}
+      </p>
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black" />
+      <img
+        className="object-cover w-full h-full"
+        src={video.thumbnail}
+        alt={`${video.title} thumbnail`}
+      />
     </div>
   );
 }
