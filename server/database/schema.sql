@@ -54,8 +54,8 @@ CREATE TABLE category (
 
 CREATE TABLE add_category (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    category_id INT UNSIGNED,
-    video_id INT UNSIGNED,
+    category_id INT UNSIGNED NOT NULL,
+    video_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE,
     FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
