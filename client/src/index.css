@@ -17,7 +17,7 @@
 
 @layer utilities {
   .page {
-    @apply bg-[#f3f3f3] min-h-full min-w-full flex flex-col h-fit w-full px-6 py-8 gap-6 sm:w-[85%] sm:flex-wrap sm:overflow-y-hidden;
+    @apply bg-[#f3f3f3] grow min-h-full min-w-full flex flex-col px-6 py-8 gap-6 sm:w-[85%] sm:flex-wrap sm:overflow-y-hidden;
   }
   .nav-link {
     @apply hover:text-primary;

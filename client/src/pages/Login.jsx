@@ -42,6 +42,7 @@ function Login() {
   const navigate = useNavigate();
   const actionData = useActionData();
 
+  const actionData = useActionData();
   const emailRef = useRef();
   const navigation = useNavigation();
   const isSbumitting = navigation.state === "submitting";
