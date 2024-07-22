@@ -100,18 +100,18 @@ class VideoRepository extends AbstractRepository {
     return result.affectedRows;
   }
 
-  async deleteVideoComment(id) {
+  async deleteVideoComment(videoId, id) {
     const [result] = await this.database.query(
-      `delete from commenting where id = ?`,
-      [id]
+      `delete from commenting where video_id = ? and id = ?`,
+      [videoId, id]
     );
     return result.affectedRows;
   }
 
-  async deleteVideoCategory(id) {
+  async deleteVideoCategory(videoId, id) {
     const [result] = await this.database.query(
-      `delete from add_category where id = ?`,
-      [id]
+      `delete from add_category where video_id = ? and id = ?`,
+      [videoId, id]
     );
     return result.affectedRows;
   }

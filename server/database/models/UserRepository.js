@@ -97,10 +97,10 @@ class UserRepository extends AbstractRepository {
     return rows.affectedRows;
   }
 
-  async deleteFavorite(id) {
+  async deleteFavorite(userId, id) {
     const [rows] = await this.database.query(
-      `delete from add_favorite where id = ?`,
-      [id]
+      `delete from add_favorite where user_id = ? and id = ?`,
+      [userId, id]
     );
     return rows.affectedRows;
   }

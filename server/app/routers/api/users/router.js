@@ -37,6 +37,6 @@ router.get("/:id/rates", readRates);
 
 router.post("/:id/favorites", addFavoriteVideo);
 
-router.delete("/:id/favorites/:id", destroyFavorite);
+router.delete("/:userId/favorites/:id", destroyFavorite);
 
 module.exports = router;

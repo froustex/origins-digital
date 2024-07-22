@@ -119,8 +119,10 @@ const destroy = async (req, res, next) => {
 };
 
 const destroyComment = async (req, res, next) => {
+  const { videoId } = req.params;
+  const { id } = req.params;
   try {
-    await tables.video.deleteVideoComment(req.params.id);
+    await tables.video.deleteVideoComment(videoId, id);
     res.sendStatus(204);
   } catch (err) {
     next(err);
@@ -128,8 +130,10 @@ const destroyComment = async (req, res, next) => {
 };
 
 const destroyCategory = async (req, res, next) => {
+  const { videoId } = req.params;
+  const { id } = req.params;
   try {
-    await tables.video.deleteVideoCategory(req.params.id);
+    await tables.video.deleteVideoCategory(videoId, id);
     res.sendStatus(204);
   } catch (err) {
     next(err);

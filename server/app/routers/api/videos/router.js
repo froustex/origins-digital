@@ -36,11 +36,11 @@ router.get("/:id/comments", readComments);
 
 router.post("/comments", addComment);
 
-router.delete("/comments/:id", destroyComment);
+router.delete("/:videoId/comments/:id", destroyComment);
 
 router.get("/:id/categories", readCategories);
 
-router.delete("/:id/categories/:id", destroyCategory);
+router.delete("/:videoId/categories/:id", destroyCategory);
 
 router.put("/:id/categories/:id", editCategoriesByVideo);
 

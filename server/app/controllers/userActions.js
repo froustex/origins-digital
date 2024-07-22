@@ -80,8 +80,9 @@ const destroy = async (req, res, next) => {
 };
 
 const destroyFavorite = async (req, res, next) => {
+  const { userId, id } = req.params;
   try {
-    await tables.user.deleteFavorite(req.params.id);
+    await tables.user.deleteFavorite(userId, id);
     res.sendStatus(204);
   } catch (err) {
     next(err);
