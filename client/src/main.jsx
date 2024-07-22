@@ -21,6 +21,7 @@ import DashboardVideo from "./pages/dashboard/DashboardVideo";
 import DashboardAddVideo, {
   loader as dashboardAddVideoLoader,
 } from "./pages/dashboard/DashboardAddVideo";
+import Profil, { loader as profilLoader } from "./pages/Profil";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/profil",
+        element: <Profil />,
+        loader: profilLoader,
       },
     ],
   },
