@@ -1,55 +1,82 @@
+import { useNavigate } from "react-router-dom";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Slider from "react-slick";
+import { useAuth } from "../hooks/useAuth";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-import PropTypes from "prop-types";
 
 const settings = {
-  // autoplay: true,
-  // autoplaySpeed: 10,
-  speed: 500,
+  autoplay: true,
+  autoplaySpeed: 4000,
   infinite: true,
   slidesToShow: 4,
   slidesToScroll: 1,
-  // pauseOnHover: true,
-  // focusOnSelect: true,
-  // adaptiveHeight: true,
-  // useTransform: true,
-  // cssEase: "linear",
+  focusOnSelect: true,
+  useTransform: true,
+  cssEase: "linear",
+  responsive: [
+    {
+      breakpoint: 500,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 800,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+  ],
 };
 
-export default function Carousel({ videos }) {
+export default function Carousel({ videos, autoplaying }) {
+  const navigate = useNavigate();
+
+  const { auth } = useAuth();
+
   return (
-    <div className="w-4/5 px-10 mt-7">
-      <div className="mt-8">
-        <Slider
-          speed={settings.speed}
-          infinite={settings.infinite}
-          slidesToShow={settings.slidesToShow}
-          slidesToScroll={settings.slidesToScroll}
-        >
-          {videos.map((video) => (
-            <div key={video.id} className="rounded">
-              <div className="flex flex-col items-center justify-center h-56 rounded">
-                <video className="rounded max-h-64 w-80" controls>
-                  <source src={video.source} />
-                </video>
-                <p className="font-semibold text-white text-l">{video.title}</p>
+    <div className="w-full px-10">
+      <Slider
+        autoplay={autoplaying}
+        autoplaySpeed={settings.autoplaySpeed}
+        infinite={settings.infinite}
+        slidesToShow={settings.slidesToShow}
+        slidesToScroll={settings.slidesToScroll}
+        responsive={settings.responsive}
+        useTransform={settings.useTransform}
+        cssEase={settings.cssEase}
+        className="px-6"
+      >
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            id={video.id}
+            className="relative shadow-lg rounded-xl h-[10rem] w-full sm:min-w-[16rem] overflow-hidden cursor-pointer overflow-y-scroll mr-[100px] box-border inline-block sm:mx-4"
+            onClick={() => navigate(`/videos/${video.id}`, { state: video })}
+            role="presentation"
+            style={{ marginRight: "40px" }}
+          >
+            {video.isPrivate && !auth ? (
+              <div className="absolute top-0 left-0 z-40 flex items-center justify-center w-full h-full bg-black">
+                <FontAwesomeIcon className="text-white" icon={faLock} />
               </div>
+            ) : null}
+            <div className="w-full h-full ">
+              <p className="absolute z-20 text-xs font-semibold text-white sm:text-md md:text-base bottom-2 left-2 sm:bottom-4 sm:left-4">
+                {video.title}
+              </p>
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black" />
+              <img
+                className="object-cover w-full h-full"
+                src={video.thumbnail}
+                alt={`${video.title} thumbnail`}
+              />
             </div>
-          ))}
-        </Slider>
-      </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }
-Carousel.propTypes = {
-  videos: PropTypes.arrayOf({
-    created_at: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isPrivate: PropTypes.number.isRequired,
-    source: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
-};

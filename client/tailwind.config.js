@@ -8,6 +8,10 @@ export default {
         primary: "#19457a",
         background: "#081225",
       },
+      backgroundImage: {
+        custom:
+          "linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,1) 100%)",
+      },
       screens: {
         smallScreen: "500px",
       },

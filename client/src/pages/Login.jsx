@@ -21,6 +21,7 @@ export async function action({ request }) {
       id: data?.user?.id,
       username: data?.user?.username,
       isAdmin: data?.user?.is_admin,
+      avatar: data?.user?.avatar,
     };
     localStorage.setItem("username", JSON.stringify(userData));
     return userData;

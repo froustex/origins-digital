@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
 import avatar from "../assets/images/avatar.png";
-import NavModal from "./NavModal";
-import { useAuth } from "../hooks/useAuth";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
-  const { auth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   useEffect(() => {}, [auth]);
+
+  const handleLogout = () => {
+    setAuth();
+    localStorage.clear();
+  };
 
   return (
     <>
       <NavModal showModal={showModal} setShowModal={setShowModal} />
-      <nav className="flex items-center justify-between px-5 py-5">
+      <nav className="relative flex items-center justify-between px-5 py-5 text-white bg-black/80 backdro-blur-sm">
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
           <input
-            className="hidden text-white md:block sm:h-fit sm:self-center sm:p-1 sm:px-4 sm:placeholder-white sm:rounded-lg sm:bg-primary"
+            className="hidden py-2 text-black placeholder:text-black md:block sm:h-fit sm:self-center sm:p-1 sm:px-4 sm:placeholder-white sm:rounded-lg"
             type="text"
             placeholder="Search"
           />
@@ -27,11 +33,6 @@ export default function Nav() {
             <li>
               <NavLink className="nav-link" to="/">
                 Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className="nav-link" to="/videos">
-                Videos
               </NavLink>
             </li>
             <li>
@@ -46,7 +47,39 @@ export default function Nav() {
             <NavLink className="mr-4 nav-link" to="/profil">
               {auth?.username}
             </NavLink>
-            <img className="w-10 h-10" src={avatar} alt="profil avatar" />
+            <div
+              className="w-8 h-8 overflow-hidden rounded-full cursor-pointer"
+              onKeyDown={(e) =>
+                e.key === "Enter" ? setShowOptions(true) : null
+              }
+              onClick={() => setShowOptions(true)}
+              role="button"
+              tabIndex={0}
+            >
+              <img className="w-full h-full" src={avatar} alt="profil avatar" />
+            </div>
+            <div
+              className={
+                showOptions
+                  ? `absolute z-50 right-5 top-20 h-fit w-[5rem] bg-gray-200 rounded-lg py-2`
+                  : `hidden`
+              }
+            >
+              <Link
+                className="inline-block w-full px-2 text-black hover:text-primary"
+                to="/profil"
+                onClick={() => setShowOptions(false)}
+              >
+                Profil
+              </Link>
+              <button
+                type="button"
+                className="px-2 py-0 m-0 text-black w-fit hover:text-primary"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </div>
           </div>
         ) : (
           <div className="hidden smallScreen:flex smallScreen:items-center">
