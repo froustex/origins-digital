@@ -19,7 +19,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
     <div
       className={
         openNavModal
-          ? `absolute top-0 left-0 z-50 flex flex-col items-center justify-center w-screen h-screen py-4 text-2xl bg-background`
+          ? `absolute top-0 left-0 z-50 flex flex-col items-center justify-center w-screen h-screen py-4 text-2xl bg-zinc-900`
           : `hidden`
       }
     >

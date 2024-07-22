@@ -20,6 +20,7 @@ import DashboardVideos, {
 import DashboardVideo from "./pages/dashboard/DashboardVideo";
 import DashboardAddVideo, {
   loader as dashboardAddVideoLoader,
+  action as dashboardAddVideoAction
 } from "./pages/dashboard/DashboardAddVideo";
 import Video from "./pages/Video";
 
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
         path: "addVideo",
         element: <DashboardAddVideo />,
         loader: dashboardAddVideoLoader,
+        action: dashboardAddVideoAction
       },
     ],
   },

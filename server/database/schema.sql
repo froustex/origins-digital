@@ -11,7 +11,7 @@ CREATE TABLE user (
 CREATE TABLE video (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     title VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL, -- Correction de "decription" en "description"
+    description TEXT NOT NULL,
     thumbnail VARCHAR(255) NOT NULL,
     isPrivate BOOLEAN NOT NULL,
     source VARCHAR(255) NOT NULL,
@@ -24,27 +24,27 @@ CREATE TABLE commenting (
     user_id INT UNSIGNED NOT NULL,
     video_id INT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-    FOREIGN KEY (user_id) REFERENCES user (id),
-    FOREIGN KEY (video_id) REFERENCES video (id)
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
 
 CREATE TABLE rating (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL, -- Ajout de la clé primaire
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL, 
     rating INT,
     user_id INT UNSIGNED NOT NULL,
     video_id INT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-    FOREIGN KEY (user_id) REFERENCES user (id),
-    FOREIGN KEY (video_id) REFERENCES video (id)
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
 
 CREATE TABLE add_favorite (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL, -- Ajout de la clé primaire
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     video_id INT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-    FOREIGN KEY (user_id) REFERENCES user (id),
-    FOREIGN KEY (video_id) REFERENCES video (id)
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
 
 CREATE TABLE category (
@@ -56,8 +56,8 @@ CREATE TABLE add_category (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     category_id INT UNSIGNED NOT NULL,
     video_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES category (id),
-    FOREIGN KEY (video_id) REFERENCES video (id)
+    FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE,
+    FOREIGN KEY (video_id) REFERENCES video (id) ON DELETE CASCADE
 );
 
 CREATE TABLE item (

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, Form, redirect } from "react-router-dom";
+import { Link, Form, redirect, useNavigation } from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -44,8 +44,10 @@ const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 function Register() {
   const userRef = useRef();
-
   const errRef = useRef();
+
+  const navigation = useNavigation();
+  const isSubmiting = navigation.state === "submitting";
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -241,9 +243,16 @@ function Register() {
           </div>
           <button
             type="submit"
-            disabled={!validName || !validEmail || !validPwd || !validMatch}
+            disabled={
+              !validName ||
+              !validEmail ||
+              !validPwd ||
+              !validMatch ||
+              isSubmiting
+            }
+            className={isSubmiting ? `bg-gray-300` : `bg-primary`}
           >
-            Register
+            {isSubmiting ? "Registering in..." : "Register"}
           </button>
         </Form>
         <p className="text-white">

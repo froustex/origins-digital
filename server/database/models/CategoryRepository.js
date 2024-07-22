@@ -13,6 +13,15 @@ class CategoryRepository extends AbstractCategory {
     return rows.insertId;
   }
 
+
+  async readByName(name) {
+    const [rows] = await this.database.query(
+      `select id from ${this.table} where name = ?`,
+      [name]
+    );
+    return rows[0];
+  }
+
   async readAll() {
     const [rows] = await this.database.query(`select * from ${this.table}`);
     return rows;
