@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
@@ -10,6 +10,7 @@ export default function Nav() {
   const [showOptions, setShowOptions] = useState(false);
 
   const { setAuth, auth } = useAuth();
+  const { pathname } = useLocation();
 
   useEffect(() => {}, [auth]);
 
@@ -83,7 +84,11 @@ export default function Nav() {
           </div>
         ) : (
           <div className="hidden smallScreen:flex smallScreen:items-center">
-            <NavLink className="mr-4 nav-link" to="/login">
+            <NavLink
+              className="mr-4 nav-link"
+              to="/login"
+              state={{ from: pathname }}
+            >
               Login
             </NavLink>
             <NavLink className="mr-4 nav-link" to="/register">

@@ -34,8 +34,8 @@ export async function action({ request }) {
 function Login() {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
-  const actionData = useActionData();
 
+  const actionData = useActionData();
   const emailRef = useRef();
 
   useEffect(() => {
