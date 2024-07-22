@@ -2,15 +2,10 @@ const AbstractRepository = require("./AbstractRepository");
 
 class UserRepository extends AbstractRepository {
   constructor() {
-    // Call the constructor of the parent class (AbstractRepository)
-    // and pass the table name "item" as configuration
     super({ table: "user" });
   }
 
-  // The C of CRUD - Create operation
-
   async create(user) {
-    // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
       `insert into ${this.table} (username, email, hashed_password, is_admin, avatar) values (?, ?, ?, ?, ?)`,
       [
@@ -22,30 +17,31 @@ class UserRepository extends AbstractRepository {
       ]
     );
 
-    // Return the ID of the newly inserted user
     return result.insertId;
   }
 
-  // The Rs of CRUD - Read operations
+  async createFavorite(favorite) {
+    const [result] = await this.database.query(
+      `insert into add_favorite (user_id, video_id) values (?, ?)`,
+      [favorite.userId, favorite.videoId]
+    );
+    return result.insertId;
+  }
 
   async read(id) {
-    // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await this.database.query(
       `select id, username, email, hashed_password, is_admin, avatar from ${this.table} where id = ?`,
       [id]
     );
 
-    // Return the first row of the result, which represents the item
     return rows[0];
   }
 
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all users from the "user" table
     const [rows] = await this.database.query(
       `select id, username, email, avatar, created_at from ${this.table}`
     );
 
-    // Return the array of users
     return rows;
   }
 
@@ -57,20 +53,54 @@ class UserRepository extends AbstractRepository {
     return rows[0];
   }
 
-  // The U of CRUD - Update operation
-  // TODO: Implement the update operation to modify an existing user
+  async readFavorites(id) {
+    const [rows] = await this.database.query(
+      `select v.title, u.username, ad.id, ad.created_at from add_favorite ad
+       join user u on u.id=ad.user_id 
+       join video v on v.id=ad.video_id
+       where u.id=? order by ad.created_at desc`,
+      [id]
+    );
+    return rows;
+  }
 
+  async readCommentsByUser(id) {
+    const [rows] = await this.database.query(
+      `select v.title, c.comment, u.username, c.created_at, c.id from commenting c
+         join user u on u.id=c.user_id
+         join video v on v.id=c.video_id
+         where u.id=? order by c.created_at`,
+      [id]
+    );
+    return rows;
+  }
+
+  async readRatesByUser(id) {
+    const [rows] = await this.database.query(
+      `select v.title, r.rating, u.username, r.created_at from rating r
+       join user u on u.id=r.user_id
+       join video v on v.id=r.video_id
+       where u.id = ? order by r.created_at`,
+      [id]
+    );
+    return rows;
+  }
   // async update(user) {
   //   ...
   // }
-
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an user by its ID
 
   async delete(id) {
     const [rows] = await this.database.query(
       `delete from ${this.table} where id = ?`,
       [id]
+    );
+    return rows.affectedRows;
+  }
+
+  async deleteFavorite(userId, id) {
+    const [rows] = await this.database.query(
+      `delete from add_favorite where user_id = ? and id = ?`,
+      [userId, id]
     );
     return rows.affectedRows;
   }
