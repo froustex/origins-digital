@@ -28,13 +28,17 @@ export async function action({ request }) {
           "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
       }),
     });
+    const data = await response.json();
     if (!response.ok) {
-      console.error(response);
+      throw new Error(
+        data?.message || "Unknown error while trying to register"
+      );
     }
+    return redirect("/login");
   } catch (err) {
     console.error(err);
+    return null;
   }
-  return redirect("/login");
 }
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;

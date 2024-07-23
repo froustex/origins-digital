@@ -53,6 +53,11 @@ const readRates = async (req, res, next) => {
 const add = async (req, res, next) => {
   const user = req.body;
   try {
+    const userExists = await tables.user.readByEmail(req.body.email);
+    if (userExists) {
+      res.status(409).json({ message: "Email already taken, please log in." });
+      return;
+    }
     const insertId = await tables.user.create(user);
     res.status(201).json({ insertId });
   } catch (err) {

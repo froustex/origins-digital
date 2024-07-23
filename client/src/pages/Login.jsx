@@ -5,6 +5,7 @@ import {
   useNavigate,
   useActionData,
   useNavigation,
+  useRouteError,
 } from "react-router-dom";
 import logo from "../assets/images/origins-digital-logo.png";
 import { useAuth } from "../hooks/useAuth";
@@ -19,10 +20,10 @@ export async function action({ request }) {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    if (!response.ok) {
-      console.error(response);
-    }
     const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data?.message || "Uknown error while trying to log in.");
+    }
     const userData = {
       id: data?.user?.id,
       username: data?.user?.username,
@@ -41,8 +42,7 @@ function Login() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const actionData = useActionData();
-
-  const actionData = useActionData();
+  const error = useRouteError();
   const emailRef = useRef();
   const navigation = useNavigation();
   const isSbumitting = navigation.state === "submitting";
@@ -68,6 +68,7 @@ function Login() {
         />
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
+        {error && <p>error.message</p>}
         <Form
           method="POST"
           className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]"
