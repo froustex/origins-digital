@@ -21,6 +21,42 @@ const read = async (req, res, next) => {
   }
 };
 
+const readByAverage = async (req, res, next) => {
+  try {
+    const result = await tables.video.readByAverageRate(req.params.id);
+    if (!result) {
+      res.sendStatus(404);
+    }
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const readComments = async (req, res, next) => {
+  try {
+    const result = await tables.video.readCommentsByVideo(req.params.id);
+    if (!result) {
+      res.sendStatus(404);
+    }
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const readCategories = async (req, res, next) => {
+  try {
+    const result = await tables.video.readCategoriesByVideo(req.params.id);
+    if (!result) {
+      res.senStatus(404);
+    }
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const edit = async (req, res, next) => {
   const video = req.body;
   const { id } = req.params;
@@ -32,10 +68,56 @@ const edit = async (req, res, next) => {
   }
 };
 
-const add = async (req, res, next) => {
+const editCategoriesByVideo = async (req, res, next) => {
+  const data = req.body;
+  const { id } = req.params;
   try {
-    const video = req.body;
-    const insertId = await tables.video.create(video);
+    await tables.video.updateCategoriesByVideo(data, id);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const add = async (req, res, next) => {
+  let insertedCategoryId;
+  try {
+    const insertedVideoId = await tables.video.create(req.body);
+    const categoryId = await tables.category.readByName(req.body.category);
+
+    if (!insertedVideoId || !categoryId) {
+      throw new Error("couldn't get category or video id");
+    } else {
+      insertedCategoryId = await tables.addCategory.create(
+        categoryId.id,
+        insertedVideoId
+      );
+    }
+
+    if (!insertedCategoryId) {
+      res.sendStatus(422);
+    }
+
+    res.status(201).json({ insertedCategoryId });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addRate = async (req, res, next) => {
+  try {
+    const rate = req.body;
+    const insertId = await tables.video.createRate(rate);
+    res.status(201).json({ insertId });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addComment = async (req, res, next) => {
+  try {
+    const comment = req.body;
+    const insertId = await tables.video.createComment(comment);
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);
@@ -51,10 +133,40 @@ const destroy = async (req, res, next) => {
   }
 };
 
+const destroyComment = async (req, res, next) => {
+  const { videoId } = req.params;
+  const { id } = req.params;
+  try {
+    await tables.video.deleteVideoComment(videoId, id);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const destroyCategory = async (req, res, next) => {
+  const { videoId } = req.params;
+  const { id } = req.params;
+  try {
+    await tables.video.deleteVideoCategory(videoId, id);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   browse,
   add,
+  addRate,
+  addComment,
   read,
+  readByAverage,
+  readComments,
+  readCategories,
   edit,
+  editCategoriesByVideo,
   destroy,
+  destroyComment,
+  destroyCategory,
 };

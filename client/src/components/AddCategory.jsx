@@ -36,7 +36,6 @@ export default function AddCategory() {
       <input
         className="mr-2"
         type="text"
-        name="category"
         placeholder="create new category"
         ref={categoryRef}
       />

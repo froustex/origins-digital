@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
-import { Link, Form, useNavigate, useActionData } from "react-router-dom";
+import {
+  Link,
+  Form,
+  useNavigate,
+  useActionData,
+  useNavigation,
+} from "react-router-dom";
 import logo from "../assets/images/origins-digital-logo.png";
 import { useAuth } from "../hooks/useAuth";
 
@@ -32,11 +38,14 @@ export async function action({ request }) {
 }
 
 function Login() {
-  const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const actionData = useActionData();
 
   const actionData = useActionData();
   const emailRef = useRef();
+  const navigation = useNavigation();
+  const isSbumitting = navigation.state === "submitting";
 
   useEffect(() => {
     emailRef.current.focus();
@@ -87,7 +96,13 @@ function Login() {
             />
           </div>
 
-          <button type="submit">Login</button>
+          <button
+            type="submit"
+            className={isSbumitting ? `bg-gray-300` : `bg-primary`}
+            disabled={isSbumitting}
+          >
+            {isSbumitting ? "Logging in..." : "Login"}
+          </button>
         </Form>
         <p className="text-white">
           Don't you have an accout ?{" "}
