@@ -8,6 +8,7 @@ import App from "./App";
 import Home, { loader as homeLoader } from "./pages/Home";
 import Login, { action as loginAction } from "./pages/Login";
 import Register, { action as registerAction } from "./pages/Register";
+import Error from "./pages/Error";
 
 import AuthProvider from "./hooks/useAuth";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -27,6 +28,7 @@ import Video from "./pages/Video";
 const router = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",

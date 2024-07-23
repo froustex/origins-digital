@@ -100,7 +100,7 @@ function Register() {
   }, [user, email, pwd, matchPwd]);
 
   return (
-    <main className="relative flex flex-col items-center justify-center h-screen bg-black lg:flex-row">
+    <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden bg-black lg:flex-row">
       <Link
         className="absolute hidden text-primary top-4 left-10 lg:flex lg:items-center"
         to="/"
