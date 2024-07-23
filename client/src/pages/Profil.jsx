@@ -1,6 +1,17 @@
 import { useLoaderData } from "react-router-dom";
-import photo from "../assets/images/profil-photo.png";
+import { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import edit from "../assets/images/profil-edit-icon.svg";
+import ProfilVideoBanner from "../components/ProfilVideoBanner";
+
+const settings = {
+  slidesToShow: 4,
+  slidesToScroll: 1,
+};
 
 export async function getVideos() {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`);
@@ -16,36 +27,51 @@ export function loader() {
 }
 
 export default function Profil() {
+  const [videoIndex, setVideoIndex] = useState(0);
+
+  const handleClick = (selectedVideo) => {
+    setVideoIndex(selectedVideo);
+  };
   const videos = useLoaderData();
+
+  const { title, source, description } = videos[videoIndex];
 
   return (
     <main>
-      <section className="flex items-center justify-center w-full gap-4 h-60 bg-zinc-900">
-        <div className="">
-          <img src={photo} alt="profil" />
-        </div>
-        <div>
-          <h1 className="text-white">Juliette</h1>
-          <div className="flex gap-2">
-            <p className="text-white">juliett@mail.com</p>
-            <img src={edit} alt="" />
-          </div>
-        </div>
+      <section className="flex items-center justify-end w-full gap-2 pr-6 min-h-12 bg-sky-600 ">
+        <p className="text-2xl text-white">juliette@mail.com</p>
+        <img src={edit} alt="icon" />
       </section>
-      <section className="w-full">
-        <div className="flex flex-wrap gap-2 w-96 h-96">
-          {videos.map((video) => (
-            <div key={video.id} className="rounded">
-              <div className="flex flex-col items-start justify-center h-56 rounded">
-                <video className="rounded max-h-64 w-80" controls>
-                  <source src={video.source} />
-                </video>
-                <p className="font-semibold text-black text-l">{video.title}</p>
+      <section className="flex flex-col items-center justify-center w-full mt-6 m-h-1/2">
+        <article className="w-1/2 max-h-1/3">
+          <ProfilVideoBanner
+            className="self-center"
+            title={title}
+            source={source}
+            description={description}
+          />
+        </article>
+        <div className="flex justify-center w-full mt-4 mb-4 max-h-26">
+          <Slider
+            slidesToShow={settings.slidesToShow}
+            slidesToScroll={settings.slidesToScroll}
+            className="w-3/4 p-6"
+          >
+            {videos.map((video, index) => (
+              <div key={video.id} className="flex flex-col rounded ">
+                <img src={video.thumbnail} alt=" " />
+                <FontAwesomeIcon
+                  className="text-white "
+                  onClick={() => {
+                    handleClick(index);
+                  }}
+                  icon={faPlay}
+                />
+                <p className="font-semibold text-white text-l">{video.title}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </Slider>
         </div>
-        <div className="w-2/4 h-2/4" />
       </section>
     </main>
   );
