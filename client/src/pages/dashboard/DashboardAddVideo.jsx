@@ -32,7 +32,7 @@ export const action = async ({ request }) => {
       body: formData,
     });
     if (res.status !== 201) {
-      return toast.error("Video uploaded successfully", {
+      return toast.error("Error while upploading the video", {
         position: "bottom-right",
       });
     }
