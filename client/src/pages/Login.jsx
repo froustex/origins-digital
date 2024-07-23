@@ -21,7 +21,7 @@ export async function action({ request }) {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    if (!response.ok) {
+    if (response.status === 422) {
       throw new Error(data?.message || "Uknown error while trying to log in.");
     }
     const userData = {
@@ -33,8 +33,7 @@ export async function action({ request }) {
     localStorage.setItem("username", JSON.stringify(userData));
     return userData;
   } catch (err) {
-    console.error(err);
-    return null;
+    throw new Error(err?.message);
   }
 }
 
@@ -68,7 +67,11 @@ function Login() {
         />
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
-        {error && <p>error.message</p>}
+        {error && (
+          <p className="text-white max-w-[95%] mb-2 text-red-600">
+            {error.message}
+          </p>
+        )}
         <Form
           method="POST"
           className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]"

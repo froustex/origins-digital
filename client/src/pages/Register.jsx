@@ -1,5 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import {
+  Link,
+  Form,
+  redirect,
+  useNavigation,
+  useRouteError,
+} from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -36,8 +42,7 @@ export async function action({ request }) {
     }
     return redirect("/login");
   } catch (err) {
-    console.error(err);
-    return null;
+    throw new Error(err.message);
   }
 }
 
@@ -49,6 +54,8 @@ const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 function Register() {
   const userRef = useRef();
   const errRef = useRef();
+
+  const error = useRouteError();
 
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
@@ -111,6 +118,11 @@ function Register() {
         />
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
+        {error && (
+          <p className="text-white max-w-[95%] mb-2 text-red-600">
+            {error.message}
+          </p>
+        )}
         <p
           ref={errRef}
           className={
