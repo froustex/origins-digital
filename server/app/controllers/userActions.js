@@ -57,10 +57,19 @@ const add = async (req, res, next) => {
       res.status(409).json({ message: "Email already taken, please log in." });
       return;
     }
+    
     const user = req.body;
-    if (!user) {
+    if (
+      !user ||
+      !user.username ||
+      !user.email ||
+      !user.password ||
+      !user.admin
+    ) {
       res.sendStatus(400);
+      return;
     }
+
     const insertId = await tables.user.create(user);
     res.status(201).json({ insertId });
   } catch (err) {

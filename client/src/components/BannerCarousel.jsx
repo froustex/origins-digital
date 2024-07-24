@@ -57,7 +57,6 @@ export default function BannerCarousel({ videos }) {
               </div>
 
               <img
-                fetchPriority="high"
                 className="object-cover w-full h-full"
                 src={video.thumbnail}
                 alt={`${video.title} thumbnail`}

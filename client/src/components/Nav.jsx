@@ -86,8 +86,7 @@ export default function Nav() {
           <div className="hidden smallScreen:flex smallScreen:items-center">
             <NavLink
               className="mr-4 nav-link"
-              to="/login"
-              state={{ from: pathname }}
+              to={`/login?redirectTo=${pathname}`}
             >
               Login
             </NavLink>

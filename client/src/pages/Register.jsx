@@ -11,6 +11,7 @@ import {
   faTimes,
   faInfoCircle,
   faArrowLeft,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/origins-digital-logo.png";
@@ -119,7 +120,11 @@ function Register() {
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
         {error && (
-          <p className="text-white max-w-[95%] mb-2 text-red-600">
+          <p className="max-w-[95%] mb-2 text-red-500 flex gap-2">
+            <FontAwesomeIcon
+              className="pt-1 text-red-400"
+              icon={faTriangleExclamation}
+            />
             {error.message}
           </p>
         )}

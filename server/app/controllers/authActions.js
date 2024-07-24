@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
     } else {
       res.status(422).json({
         message:
-          "We couldn't fin an account matching the email and password you entered. Please check your email and password and try again.",
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
       });
     }
   } catch (err) {
