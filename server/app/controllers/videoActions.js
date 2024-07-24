@@ -128,6 +128,18 @@ const addComment = async (req, res, next) => {
   }
 };
 
+const addFavoriteVideo = async (req, res, next) => {
+  try {
+    const insertId = await tables.video.createFavorite(
+      req.body.userId,
+      Number(req.params.id)
+    );
+    res.status(201).json({ insertId });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const destroy = async (req, res, next) => {
   try {
     await tables.video.delete(req.params.id);
@@ -164,6 +176,7 @@ module.exports = {
   add,
   addRate,
   addComment,
+  addFavoriteVideo,
   read,
   readByAverage,
   readComments,
