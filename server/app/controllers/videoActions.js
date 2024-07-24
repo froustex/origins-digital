@@ -1,3 +1,5 @@
+const fsExtra = require("fs-extra");
+const path = require("path");
 const tables = require("../../database/tables");
 
 const browse = async (req, res, next) => {
@@ -99,6 +101,8 @@ const add = async (req, res, next) => {
     }
 
     res.status(201).json({ insertedCategoryId });
+
+    fsExtra.emptyDirSync(path.join(__dirname, "..", "assets", "uploads"));
   } catch (err) {
     next(err);
   }

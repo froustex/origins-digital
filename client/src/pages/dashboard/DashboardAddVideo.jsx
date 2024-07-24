@@ -31,8 +31,9 @@ export const action = async ({ request }) => {
       method: "POST",
       body: formData,
     });
+    const data = await res.json();
     if (res.status !== 201) {
-      return toast.error("Video uploaded successfully", {
+      return toast.error(data?.message, {
         position: "bottom-right",
       });
     }
@@ -73,16 +74,19 @@ export default function DashboardAddVideo() {
           type="text"
           name="title"
           placeholder="title"
+          required
         />
         <textarea
           className="px-2 py-2 resize-none min-h-[8rem]"
           name="description"
           placeholder="description"
+          required
         />
         <div className="flex flex-col items-center justify-between gap-y-8 sm:gap-0 sm:flex-row">
           <select
             className="px-2 py-4 rounded-lg w-full sm:w-[50%]"
             name="category"
+            required
           >
             <option value="">category</option>
             {categories &&

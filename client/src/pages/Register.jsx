@@ -1,10 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import {
+  Link,
+  Form,
+  redirect,
+  useNavigation,
+  useRouteError,
+} from "react-router-dom";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
   faArrowLeft,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/origins-digital-logo.png";
@@ -28,13 +35,16 @@ export async function action({ request }) {
           "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
       }),
     });
+    const data = await response.json();
     if (!response.ok) {
-      console.error(response);
+      throw new Error(
+        data?.message || "Unknown error while trying to register"
+      );
     }
+    return redirect("/login");
   } catch (err) {
-    console.error(err);
+    throw new Error(err.message);
   }
-  return redirect("/login");
 }
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -45,6 +55,8 @@ const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 function Register() {
   const userRef = useRef();
   const errRef = useRef();
+
+  const error = useRouteError();
 
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
@@ -89,7 +101,7 @@ function Register() {
   }, [user, email, pwd, matchPwd]);
 
   return (
-    <main className="relative flex flex-col items-center justify-center h-screen bg-black lg:flex-row">
+    <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden bg-black lg:flex-row">
       <Link
         className="absolute hidden text-primary top-4 left-10 lg:flex lg:items-center"
         to="/"
@@ -107,6 +119,15 @@ function Register() {
         />
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
+        {error && (
+          <p className="max-w-[95%] mb-2 text-red-500 flex gap-2">
+            <FontAwesomeIcon
+              className="pt-1 text-red-400"
+              icon={faTriangleExclamation}
+            />
+            {error.message}
+          </p>
+        )}
         <p
           ref={errRef}
           className={

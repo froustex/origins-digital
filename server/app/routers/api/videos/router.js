@@ -27,7 +27,7 @@ router.get("/:id", read);
 
 router.put("/:id", edit);
 
-router.post("/", uploadMulter.single("file"), uploadVideo, add);
+router.post("/", uploadMulter, uploadVideo, add);
 
 router.delete("/:id", destroy);
 

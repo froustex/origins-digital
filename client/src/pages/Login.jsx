@@ -5,7 +5,11 @@ import {
   useNavigate,
   useActionData,
   useNavigation,
+  useRouteError,
+  useLocation,
 } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/origins-digital-logo.png";
 import { useAuth } from "../hooks/useAuth";
 
@@ -19,10 +23,10 @@ export async function action({ request }) {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    if (!response.ok) {
-      console.error(response);
-    }
     const data = await response.json();
+    if (response.status === 422) {
+      throw new Error(data?.message || "Uknown error while trying to log in.");
+    }
     const userData = {
       id: data?.user?.id,
       username: data?.user?.username,
@@ -32,8 +36,7 @@ export async function action({ request }) {
     localStorage.setItem("username", JSON.stringify(userData));
     return userData;
   } catch (err) {
-    console.error(err);
-    return null;
+    throw new Error(err?.message);
   }
 }
 
@@ -41,10 +44,11 @@ function Login() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const actionData = useActionData();
-
-  const actionData = useActionData();
+  const error = useRouteError();
   const emailRef = useRef();
   const navigation = useNavigation();
+  const { search } = useLocation();
+  const redirectTo = search ? search.slice(12) : "/";
   const isSbumitting = navigation.state === "submitting";
 
   useEffect(() => {
@@ -54,7 +58,7 @@ function Login() {
   useEffect(() => {
     if (actionData) {
       setAuth(actionData);
-      navigate("/", { replace: true });
+      navigate(redirectTo, { replace: true });
     }
   }, [actionData, setAuth, navigate]);
 
@@ -68,6 +72,15 @@ function Login() {
         />
       </Link>
       <section className="h-full w-full md:mt-4 lg:w-[45%] min-h-[400px] flex flex-col justify-center items-center p-4 px-8 md:px-16 lg:pl-16 bg-black">
+        {error && (
+          <p className="max-w-[95%] mb-2 text-red-400 flex gap-2">
+            <FontAwesomeIcon
+              className="pt-1 text-red-400"
+              icon={faTriangleExclamation}
+            />
+            {error.message}
+          </p>
+        )}
         <Form
           method="POST"
           className="flex flex-col w-full max-w-[650px] pb-4 max-h-[800px]"

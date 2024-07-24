@@ -6,7 +6,10 @@ const login = async (req, res, next) => {
   try {
     const user = await tables.user.readByEmail(req.body.email);
     if (!user) {
-      res.sendStatus(422);
+      res.status(422).json({
+        message:
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
       return;
     }
     const verified = await argon2.verify(
@@ -27,7 +30,10 @@ const login = async (req, res, next) => {
       );
       res.json({ token, user });
     } else {
-      res.sendStatus(422);
+      res.status(422).json({
+        message:
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
     }
   } catch (err) {
     next(err);

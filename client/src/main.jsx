@@ -8,6 +8,7 @@ import App from "./App";
 import Home, { loader as homeLoader } from "./pages/Home";
 import Login, { action as loginAction } from "./pages/Login";
 import Register, { action as registerAction } from "./pages/Register";
+import Error from "./pages/Error";
 
 import AuthProvider from "./hooks/useAuth";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -20,13 +21,14 @@ import DashboardVideos, {
 import DashboardVideo from "./pages/dashboard/DashboardVideo";
 import DashboardAddVideo, {
   loader as dashboardAddVideoLoader,
-  action as dashboardAddVideoAction
+  action as dashboardAddVideoAction,
 } from "./pages/dashboard/DashboardAddVideo";
 import Video from "./pages/Video";
 
 const router = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -49,11 +51,13 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     action: loginAction,
+    errorElement: <Login />,
   },
   {
     path: "/register",
     element: <Register />,
     action: registerAction,
+    errorElement: <Register />,
   },
   {
     path: "/dashboard",
@@ -77,7 +81,7 @@ const router = createBrowserRouter([
         path: "addVideo",
         element: <DashboardAddVideo />,
         loader: dashboardAddVideoLoader,
-        action: dashboardAddVideoAction
+        action: dashboardAddVideoAction,
       },
     ],
   },
