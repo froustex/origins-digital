@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import errorImg from "../assets/images/404.jpg";
+import errorImg from "../assets/images/404-monster.svg";
 
 export default function Error() {
   return (
