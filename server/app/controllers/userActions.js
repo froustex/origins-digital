@@ -57,14 +57,14 @@ const add = async (req, res, next) => {
       res.status(409).json({ message: "Email already taken, please log in." });
       return;
     }
-    
+
     const user = req.body;
     if (
       !user ||
       !user.username ||
       !user.email ||
-      !user.password ||
-      !user.admin
+      !user.hashedPassword ||
+      user.isAdmin === null
     ) {
       res.sendStatus(400);
       return;
