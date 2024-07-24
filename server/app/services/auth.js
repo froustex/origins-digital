@@ -21,14 +21,7 @@ const hashPassword = async (req, res, next) => {
 
 const verifyToken = (req, res, next) => {
   try {
-    const authorizationHeader = req.get("Authorization");
-    if (!authorizationHeader) {
-      throw new Error("Authorization header is missing.");
-    }
-    const [type, token] = authorizationHeader.split(" ");
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not bearer type.");
-    }
+    const token = req.cookies?.token;
     req.auth = jwt.verify(token, process.env.APP_SECRET);
     next();
   } catch (err) {
@@ -37,4 +30,17 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-module.exports = { hashPassword, verifyToken };
+const verifyAdmin = (req, res, next) => {
+  try {
+    if (!req.auth.isAdmin) {
+      res.sendStatus(403);
+      return;
+    }
+    next();
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(401);
+  }
+};
+
+module.exports = { hashPassword, verifyToken, verifyAdmin };
