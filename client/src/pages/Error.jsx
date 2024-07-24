@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import errorImg from "../assets/images/404-monster.svg";
+import errorImg from "../assets/images/404-cat.svg";
 
 export default function Error() {
   return (
     <div className="flex flex-col justify-between w-screen h-screen">
       <Header />
-      <main className="flex flex-col items-center mt-24 grow">
+      <main className="flex flex-col items-center mt-20 grow">
         <img
-          className="max-h-[18rem]"
+          className="max-h-[22rem]"
           src={errorImg}
           alt="error illustration"
         />
