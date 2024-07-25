@@ -115,6 +115,7 @@ const router = createBrowserRouter([
       {
         path: "videos/:id",
         element: <DashboardVideo />,
+        loader: videoLoader,
       },
       {
         path: "addVideo",

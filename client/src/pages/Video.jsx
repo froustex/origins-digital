@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+
 import { useLoaderData } from "react-router-dom";
+
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,17 +11,23 @@ import { useAuth } from "../hooks/useAuth";
 
 export const loader = async ({ params }) => {
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/videos/${params.id}`
-    );
-    if (!res.ok) {
-      throw new Error("Error while fetching videos");
+    const [avgData, commentsData, videoData] = await Promise.all([
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}`),
+    ]);
+    if (!avgData.ok || !commentsData.ok || !videoData.ok) {
+      throw new Error("Failed to fetch data!");
     }
-    const data = await res.json();
-    return data;
+    const [avg, comments, video] = await Promise.all([
+      avgData.json(),
+      commentsData.json(),
+      videoData.json(),
+    ]);
+    return { avg, comments, video };
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("Error loading data: ", error);
+    throw error;
   }
 };
 
@@ -27,7 +35,9 @@ export default function Video() {
   const [formatedDate, setFormatedDate] = useState();
 
   const { auth } = useAuth();
-  const video = useLoaderData();
+
+  const { avg, comments, video } = useLoaderData();
+  const avgData = Object.values(avg);
 
   useEffect(() => {
     const date = new Date(video.created_at);
@@ -70,7 +80,15 @@ export default function Video() {
         <p className="mt-4 text-sm text-gray-500 sm:mt-6 sm:text-base">
           {formatedDate}
         </p>
+        <p className="text-sm sm:text-base">Average User Rating : {avgData}</p>
       </section>
+      {comments[0].map((comment) => (
+        <div key={comment.id}>
+          <p>{comment.comment}</p>
+          <p>{comment.username}</p>
+          <p>{new Date(comment.created_at).toDateString()}</p>
+        </div>
+      ))}
       <ToastContainer />
     </section>
   );
