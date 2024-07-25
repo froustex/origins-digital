@@ -1,20 +1,65 @@
-import { Form } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../hooks/useAuth";
 
 export default function AddComment() {
   const { auth } = useAuth();
+  const [comment, setComment] = useState("");
+  const navigate = useNavigate();
+  const userId = auth.id;
+  const { id } = useParams();
+
+  async function handleAddComment(e) {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/videos/comments`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            comment,
+            userId,
+            id,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.status !== 201) {
+        throw new Error("error while sending comment");
+      } else {
+        setComment("");
+        toast.success("Comment added successfully", {
+          position: "bottom-right",
+        });
+        setTimeout(() => {
+          navigate(0);
+        }, 5000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
-    <Form className="flex flex-col w-full gap-4 mb-8 sm:gap-0 sm:flex-row">
+    <form
+      onSubmit={handleAddComment}
+      className="flex flex-col w-full gap-4 mb-8 sm:gap-0 sm:flex-row"
+    >
       <textarea
+        onChange={(e) => setComment(e.target.value)}
         type="text"
         name="text"
+        value={comment}
         placeholder="add a comment..."
         className={
           auth
             ? `w-[90%] bg-transparent border-b border-gray-600 rounded-none resize-none`
             : `w-[90%] bg-transparent border-b border-gray-600 rounded-none resize-none cursor-not-allowed`
         }
-        disabled={auth}
+        disabled={!auth}
       />
       <button
         className={
@@ -23,10 +68,10 @@ export default function AddComment() {
             : `inline-block sm:block self-start sm:self-end p-1 px-4 m-0 sm:ml-2 text-white h-fit bg-gray-400 w-fit sm:w-[10%]`
         }
         type="submit"
-        disabled={auth}
+        disabled={!auth}
       >
         Send
       </button>
-    </Form>
+    </form>
   );
 }

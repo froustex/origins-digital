@@ -38,7 +38,7 @@ class VideoRepository extends AbstractRepository {
   async createComment(comment) {
     const [result] = await this.database.query(
       `insert into commenting (comment, user_id, video_id) values(?,?,?)`,
-      [comment.comment, comment.user_id, comment.video_id]
+      [comment.comment, comment.userId, comment.id]
     );
     return result.insertId;
   }
