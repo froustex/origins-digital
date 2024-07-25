@@ -6,7 +6,7 @@ function App() {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex flex-col justify-between min-h-screen sm:block">
+    <div className="flex flex-col justify-between min-h-screen">
       <Header />
       <main
         className={
