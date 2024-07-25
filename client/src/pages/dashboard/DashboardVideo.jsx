@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useLoaderData } from "react-router-dom";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,6 +8,10 @@ export default function DashboardVideo() {
 
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  const data = useLoaderData();
+  const comments = data.comments[0];
+  const avgRate = Object.values(data.avg);
 
   useEffect(() => {
     const date = new Date(state.created_at);
@@ -59,8 +63,18 @@ export default function DashboardVideo() {
           <p className="mt-4 text-sm text-gray-500 sm:mt-6 sm:text-base">
             {formatedDate}
           </p>
+          <p className="text-sm sm:text-base">
+            Average User Rating : {avgRate}
+          </p>
         </section>
       </div>
+      {comments.map((comment) => (
+        <div key={comment.id}>
+          <p>{comment.comment}</p>
+          <p>{comment.username}</p>
+          <p>{new Date(comment.created_at).toDateString()}</p>
+        </div>
+      ))}
     </section>
   );
 }
