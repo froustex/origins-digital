@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns";
 import AddComment from "./AddComment";
 
 export default function Comments({ comments }) {
@@ -15,7 +16,9 @@ export default function Comments({ comments }) {
               />
               <p>{comment.username}</p>
               <p className="self-center ml-2 text-xs">
-                {new Date(comment.created_at).toLocaleDateString()}
+                {formatDistanceToNow(new Date(comment.created_at), {
+                  addSuffix: true,
+                })}
               </p>
             </div>
             <p>{comment.comment}</p>

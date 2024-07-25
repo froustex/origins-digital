@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-
 import { useLoaderData } from "react-router-dom";
 
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { formatDistanceToNow } from "date-fns";
 import AddToFavorite from "../components/AddToFavorite";
 import { useAuth } from "../hooks/useAuth";
 import Comments from "../components/Comments";
@@ -33,17 +32,14 @@ export const loader = async ({ params }) => {
 };
 
 export default function Video() {
-  const [formatedDate, setFormatedDate] = useState();
-
   const { auth } = useAuth();
 
   const { avg, comments, video } = useLoaderData();
   const avgData = Object.values(avg);
 
-  useEffect(() => {
-    const date = new Date(video.created_at);
-    setFormatedDate(date.toDateString());
-  }, []);
+  const diffDate = formatDistanceToNow(new Date(video.created_at), {
+    addSuffix: true,
+  });
 
   return (
     <section className="page">
@@ -83,7 +79,7 @@ export default function Video() {
         <h2 className="mb-2 text-sm font-semibold sm:text-lg">Description</h2>
         <p className="text-sm sm:text-base">{video.description}</p>
         <p className="mt-4 text-sm text-gray-500 sm:mt-6 sm:text-sm">
-          {formatedDate}
+          {diffDate}
         </p>
         <p className="text-xs font-semibold sm:text-sm">
           Average User Rating : {avgData}
