@@ -77,16 +77,6 @@ const add = async (req, res, next) => {
   }
 };
 
-const addFavoriteVideo = async (req, res, next) => {
-  const favorite = req.body;
-  try {
-    const insertId = await tables.user.createFavorite(favorite);
-    res.status(201).json({ insertId });
-  } catch (err) {
-    next(err);
-  }
-};
-
 const destroy = async (req, res, next) => {
   try {
     await tables.user.delete(req.params.id);
@@ -114,7 +104,6 @@ module.exports = {
   readRates,
   // edit,
   add,
-  addFavoriteVideo,
   destroy,
   destroyFavorite,
 };
