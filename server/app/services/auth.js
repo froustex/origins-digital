@@ -25,8 +25,8 @@ const verifyToken = (req, res, next) => {
     req.auth = jwt.verify(token, process.env.APP_SECRET);
     next();
   } catch (err) {
-    console.error(err);
     res.sendStatus(401);
+    next(err);
   }
 };
 
@@ -38,8 +38,8 @@ const verifyAdmin = (req, res, next) => {
     }
     next();
   } catch (err) {
-    console.error(err);
     res.sendStatus(401);
+    next(err);
   }
 };
 
