@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 
 export default function AddToFavorite({ videoId }) {
   const [isFav, setIsFav] = useState(false);
@@ -28,7 +27,6 @@ export default function AddToFavorite({ videoId }) {
       }
     };
     getFavs();
-    console.log(favList);
   }, [isFav]);
 
   const handleAddFavorite = async () => {
@@ -49,9 +47,10 @@ export default function AddToFavorite({ videoId }) {
           position: "bottom-right",
         });
       }
-      setIsFav(true);
+      return setIsFav(true);
     } catch (error) {
       console.error(error);
+      return null;
     }
   };
 
@@ -69,9 +68,10 @@ export default function AddToFavorite({ videoId }) {
           position: "bottom-right",
         });
       }
-      setIsFav(false);
+      return setIsFav(false);
     } catch (error) {
       console.error(error);
+      return null;
     }
   };
 
@@ -86,7 +86,7 @@ export default function AddToFavorite({ videoId }) {
         />
       ) : (
         <FontAwesomeIcon
-          className="p-2 text-xs text-red-600 rounded-full cursor-pointer sm:text-base md:text-xl hover:bg-gray-200 hover:text-red-600"
+          className="p-2 text-xs rounded-full cursor-pointer text-primary sm:text-base md:text-xl hover:bg-gray-200 hover:text-red-600"
           icon={faHeart}
           title="add to favorite"
           onClick={handleAddFavorite}
