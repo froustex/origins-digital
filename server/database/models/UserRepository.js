@@ -20,13 +20,6 @@ class UserRepository extends AbstractRepository {
     return result.insertId;
   }
 
-  async createFavorite(favorite) {
-    const [result] = await this.database.query(
-      `insert into add_favorite (user_id, video_id) values (?, ?)`,
-      [favorite.userId, favorite.videoId]
-    );
-    return result.insertId;
-  }
 
   async read(id) {
     const [rows] = await this.database.query(

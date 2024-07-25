@@ -7,11 +7,21 @@ export default function NavModal({ showModal, setShowModal }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAuth();
     localStorage.clear();
     setShowModal(false);
-    navigate("/");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Couldn't log out");
+      }
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
   return (
     <div

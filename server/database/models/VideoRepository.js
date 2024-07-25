@@ -19,6 +19,14 @@ class VideoRepository extends AbstractRepository {
     return result.insertId;
   }
 
+  async createFavorite(userId, videoId) {
+    const [result] = await this.database.query(
+      `insert into add_favorite (user_id, video_id) values (?, ?)`,
+      [userId, videoId]
+    );
+    return result.insertId;
+  }
+
   async createRate(rate) {
     const [result] = await this.database.query(
       `insert into rating (rating, user_id, video_id) values(?,?,?)`,

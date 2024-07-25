@@ -22,6 +22,7 @@ export async function action({ request }) {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
     const data = await response.json();
     if (response.status === 422) {
@@ -58,7 +59,11 @@ function Login() {
   useEffect(() => {
     if (actionData) {
       setAuth(actionData);
-      navigate(redirectTo, { replace: true });
+      if (!actionData.isAdmin) {
+        navigate(redirectTo, { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
     }
   }, [actionData, setAuth, navigate]);
 

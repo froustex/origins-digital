@@ -14,7 +14,6 @@ const {
   readComments,
   readRates,
   add,
-  addFavoriteVideo,
   destroy,
   destroyFavorite,
 } = require("../../../controllers/userActions");
@@ -34,8 +33,6 @@ router.get("/:id/favorites", readFavorites);
 router.get("/:id/comments", readComments);
 
 router.get("/:id/rates", readRates);
-
-router.post("/:id/favorites", addFavoriteVideo);
 
 router.delete("/:userId/favorites/:id", destroyFavorite);
 
