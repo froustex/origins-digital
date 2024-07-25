@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/images/avatar.png";
@@ -45,13 +45,6 @@ export default function UserCard({ user }) {
         </div>
       </div>
       <div>
-        <button type="button">
-          <FontAwesomeIcon
-            className="hover:text-primary"
-            aria-label="edit"
-            icon={faPen}
-          />
-        </button>
         <button type="button" onClick={handleDelete}>
           <FontAwesomeIcon
             className="hover:text-primary"

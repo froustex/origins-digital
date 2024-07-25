@@ -87,7 +87,7 @@ export default function Dashboard() {
             Log out
           </button>
         </aside>
-        <div className="overflow-y-scroll w-full sm:w-[85%]">
+        <div className="sm:overflow-y-scroll w-full sm:w-[85%]">
           <Outlet />
         </div>
       </main>

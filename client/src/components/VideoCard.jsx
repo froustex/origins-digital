@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 export default function VideoCard({ video }) {
@@ -12,7 +11,7 @@ export default function VideoCard({ video }) {
 
   return (
     <div
-      className="relative shadow-lg rounded-xl h-[10rem] w-full sm:w-[16rem] overflow-hidden cursor-pointer overflow-y-scroll"
+      className="relative shadow-lg rounded-xl h-[10rem] w-full sm:w-[16rem] overflow-hidden cursor-pointer"
       onClick={() =>
         navigate(`/dashboard/videos/${video.id}`, { state: video })
       }
@@ -31,15 +30,3 @@ export default function VideoCard({ video }) {
     </div>
   );
 }
-
-VideoCard.propTypes = {
-  video: PropTypes.shape({
-    created_at: PropTypes.string,
-    description: PropTypes.string,
-    id: PropTypes.number,
-    isPrivate: PropTypes.number,
-    source: PropTypes.string,
-    thumbnail: PropTypes.string,
-    title: PropTypes.string,
-  }).isRequired,
-};

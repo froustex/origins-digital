@@ -37,7 +37,7 @@ export default function BannerCarousel({ videos }) {
               key={video.id}
               className={
                 currentVideo === id
-                  ? `block h-full w-screen overflow-hidden cursor-pointer overflow-y-scroll ease-in-out`
+                  ? `block h-full w-screen overflow-hidden cursor-pointer ease-in-out`
                   : `hidden`
               }
               onClick={() => navigate(`/videos/${video.id}`, { state: video })}

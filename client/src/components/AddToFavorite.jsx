@@ -1,10 +1,13 @@
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { faHeart, faHeartCrack } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
 
 export default function AddToFavorite({ videoId }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const { auth } = useAuth();
 
   const handleFavorite = async () => {
@@ -25,7 +28,7 @@ export default function AddToFavorite({ videoId }) {
           position: "bottom-right",
         });
       }
-
+      setIsFavorite(true);
       return toast.success("Video added successfully", {
         position: "bottom-right",
       });
@@ -37,12 +40,20 @@ export default function AddToFavorite({ videoId }) {
 
   return (
     <div className="flex justify-end">
-      <FontAwesomeIcon
-        className="p-2 text-xs text-gray-700 rounded-full cursor-pointer sm:text-base md:text-xl hover:bg-gray-200 hover:text-primary"
-        icon={faBookmark}
-        title="add to favorite"
-        onClick={handleFavorite}
-      />
+      {isFavorite ? (
+        <FontAwesomeIcon
+          className="p-2 text-xs text-gray-700 rounded-full cursor-pointer sm:text-base md:text-xl hover:bg-gray-200 hover:text-primary"
+          icon={faHeartCrack}
+          title="remove from favorite"
+        />
+      ) : (
+        <FontAwesomeIcon
+          className="p-2 text-xs text-gray-700 rounded-full cursor-pointer sm:text-base md:text-xl hover:bg-gray-200 hover:text-red-600"
+          icon={faHeart}
+          title="add to favorite"
+          onClick={handleFavorite}
+        />
+      )}
     </div>
   );
 }
