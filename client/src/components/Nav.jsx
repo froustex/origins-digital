@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
@@ -11,12 +11,24 @@ export default function Nav() {
 
   const { setAuth, auth } = useAuth();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {}, [auth]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAuth();
     localStorage.clear();
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Couldn't log out");
+      }
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

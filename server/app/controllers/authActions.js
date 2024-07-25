@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const jwt = require("jsonwebtoken");
 const argon2 = require("argon2");
 const tables = require("../../database/tables");
@@ -5,6 +6,7 @@ const tables = require("../../database/tables");
 const login = async (req, res, next) => {
   try {
     const user = await tables.user.readByEmail(req.body.email);
+
     if (!user) {
       res.status(422).json({
         message:
@@ -12,10 +14,12 @@ const login = async (req, res, next) => {
       });
       return;
     }
+
     const verified = await argon2.verify(
       user.hashed_password,
       req.body.password
     );
+
     if (verified) {
       delete user.hashed_password;
       const token = jwt.sign(
@@ -28,7 +32,14 @@ const login = async (req, res, next) => {
           expiresIn: "1h",
         }
       );
-      res.json({ token, user });
+
+      res.cookie("token", token, {
+        secure: process.env.NODE_ENV !== "development",
+        httpOnly: true,
+        expires: dayjs().add(30, "days").toDate(),
+      });
+
+      res.json({ user });
     } else {
       res.status(422).json({
         message:
@@ -40,4 +51,8 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+const isLoggedIn = ({ res }) => res.sendStatus(200);
+
+const logout = ({ res }) => res.clearCookie("token").sendStatus(200);
+
+module.exports = { login, isLoggedIn, logout };
