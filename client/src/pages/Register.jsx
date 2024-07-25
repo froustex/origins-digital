@@ -271,7 +271,7 @@ function Register() {
               !validMatch ||
               isSubmiting
             }
-            className={isSubmiting ? `bg-gray-300` : `bg-primary`}
+            className={isSubmiting ? `button bg-gray-300` : `button bg-primary`}
           >
             {isSubmiting ? "Registering in..." : "Register"}
           </button>

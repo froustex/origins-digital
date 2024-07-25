@@ -116,7 +116,9 @@ function Login() {
 
           <button
             type="submit"
-            className={isSbumitting ? `bg-gray-300` : `bg-primary`}
+            className={
+              isSbumitting ? `button bg-gray-300` : `button bg-primary`
+            }
             disabled={isSbumitting}
           >
             {isSbumitting ? "Logging in..." : "Login"}

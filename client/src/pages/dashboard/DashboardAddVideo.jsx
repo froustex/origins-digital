@@ -110,8 +110,8 @@ export default function DashboardAddVideo() {
         <button
           className={
             isSubmiting
-              ? `bg-gray-300`
-              : `text-white bg-primary hover:bg-primary/80`
+              ? `bg-gray-300 button`
+              : `text-white bg-primary hover:bg-primary/80 button`
           }
           type="submit"
           disabled={isSubmiting}
