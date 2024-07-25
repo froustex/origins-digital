@@ -50,7 +50,7 @@ class VideoRepository extends AbstractRepository {
 
   async readByAverageRate(id) {
     const [rows] = await this.database.query(
-      `select avg(rating) from rating join video on rating.video_id = video.id where video.id = ?`,
+      `select round(avg(rating), 2) from rating join video on rating.video_id = video.id where video.id = ?`,
       [id]
     );
     return rows[0];

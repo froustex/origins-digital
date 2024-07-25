@@ -1,14 +1,37 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useLoaderData } from "react-router-dom";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../hooks/useAuth";
+
+export const loader = async ({ params }) => {
+  try {
+    const [avgData, commentsData] = await Promise.all([
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`),
+    ]);
+    if (!avgData.ok || !commentsData.ok) {
+      throw new Error("Failed to fetch data!");
+    }
+    const [avg, comments] = await Promise.all([
+      avgData.json(),
+      commentsData.json(),
+    ]);
+    return { avg, comments };
+  } catch (error) {
+    console.error("Error loading data: ", error);
+    throw error;
+  }
+};
 
 export default function Video() {
   const [formatedDate, setFormatedDate] = useState();
 
   const { auth } = useAuth();
   const { state } = useLocation();
+
+  const { avg, comments } = useLoaderData();
+  const avgData = Object.values(avg);
 
   useEffect(() => {
     const date = new Date(state.created_at);
@@ -50,7 +73,15 @@ export default function Video() {
         <p className="mt-4 text-sm text-gray-500 sm:mt-6 sm:text-base">
           {formatedDate}
         </p>
+        <p className="text-sm sm:text-base">Average User Rating : {avgData}</p>
       </section>
+      {comments[0].map((comment) => (
+        <div key={comment.id}>
+          <p>{comment.comment}</p>
+          <p>{comment.username}</p>
+          <p>{new Date(comment.created_at).toDateString()}</p>
+        </div>
+      ))}
     </section>
   );
 }
