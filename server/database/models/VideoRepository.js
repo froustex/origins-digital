@@ -66,7 +66,7 @@ class VideoRepository extends AbstractRepository {
 
   async readCommentsByVideo(id) {
     const [rows] = await this.database.query(
-      `select c.id, c.comment, u.username, c.created_at from commenting c 
+      `select c.id, c.comment, u.avatar,u.username, c.created_at from commenting c 
       join user u on u.id=c.user_id 
       join video v on v.id=c.video_id where v.id = ? order by c.created_at desc`,
       [id]

@@ -20,7 +20,6 @@ class UserRepository extends AbstractRepository {
     return result.insertId;
   }
 
-
   async read(id) {
     const [rows] = await this.database.query(
       `select id, username, email, hashed_password, is_admin, avatar from ${this.table} where id = ?`,
@@ -32,7 +31,7 @@ class UserRepository extends AbstractRepository {
 
   async readAll() {
     const [rows] = await this.database.query(
-      `select id, username, email, avatar, created_at from ${this.table}`
+      `select id, username, email, avatar, created_at, is_admin from ${this.table}`
     );
 
     return rows;

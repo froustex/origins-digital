@@ -53,7 +53,7 @@ export default function Carousel({ videos, autoplaying }) {
           <div
             key={video.id}
             id={video.id}
-            className="relative shadow-lg rounded-xl h-[10rem] w-full sm:min-w-[16rem] overflow-hidden cursor-pointer overflow-y-scroll mr-[100px] box-border inline-block sm:mx-4"
+            className="relative shadow-lg rounded-xl h-[10rem] w-full sm:min-w-[16rem] overflow-hidden cursor-pointer mr-[100px] box-border inline-block sm:mx-4"
             onClick={() => navigate(`/videos/${video.id}`, { state: video })}
             role="presentation"
             style={{ marginRight: "40px" }}
