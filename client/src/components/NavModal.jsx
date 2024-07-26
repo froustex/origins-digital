@@ -27,7 +27,7 @@ export default function NavModal({ showModal, setShowModal }) {
     <div
       className={
         showModal
-          ? `absolute z-50 flex items-center justify-center w-screen h-screen text-xl font-semibold bg-white`
+          ? `absolute z-50 flex items-center justify-center w-screen h-screen text-2xl font-semibold bg-zinc-900 text-white`
           : `hidden`
       }
     >
@@ -36,7 +36,7 @@ export default function NavModal({ showModal, setShowModal }) {
         width="32"
         height="32"
         viewBox="0 0 24 24"
-        className="absolute cursor-pointer top-5 right-5"
+        className="absolute cursor-pointer top-5 left-5"
         onClick={() => setShowModal(false)}
       >
         <path

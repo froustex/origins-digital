@@ -15,6 +15,8 @@ export default function Nav({ setOpenNavModal }) {
       setTitle("Users");
     } else if (location.pathname === "/dashboard/videos") {
       setTitle("Videos");
+    } else if (location.pathname === "/dashboard/addVideo") {
+      setTitle("Addvideos");
     }
   }, [location.pathname]);
 
@@ -26,7 +28,7 @@ export default function Nav({ setOpenNavModal }) {
         onClick={() => setOpenNavModal(true)}
       />
       <p className="text-white">{title}</p>
-      <img src={auth?.avatar} className="w-8 h-8 rounded-full" />
+      <img src={auth?.avatar} className="w-8 h-8 rounded-full" alt="avatar" />
     </nav>
   );
 }

@@ -3,7 +3,6 @@ import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
-import avatar from "../assets/images/avatar.png";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
@@ -65,11 +64,15 @@ export default function Nav() {
               onKeyDown={(e) =>
                 e.key === "Enter" ? setShowOptions(true) : null
               }
-              onClick={() => setShowOptions(true)}
+              onClick={() => setShowOptions(!showOptions)}
               role="button"
               tabIndex={0}
             >
-              <img className="w-full h-full" src={avatar} alt="profil avatar" />
+              <img
+                className="w-full h-full"
+                src={auth?.avatar}
+                alt="profil avatar"
+              />
             </div>
             <div
               className={
