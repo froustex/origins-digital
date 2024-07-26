@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../hooks/useAuth";
 
-function ProfilVideoBanner({ title, source, description, id, videoId }) {
+function ProfilVideoBanner({ title, source, description, videoId }) {
   const auth = useAuth();
   const userId = auth.auth.id;
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function ProfilVideoBanner({ title, source, description, id, videoId }) {
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/users/${userId}/favorites/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/favorites/${videoId}`,
         {
           method: "DELETE",
         }

@@ -105,7 +105,6 @@ export default function Profil() {
               title={currentVideo.title}
               source={currentVideo.source}
               description={currentVideo.description}
-              id={currentVideo.id}
               videoId={currentVideo.videoId}
             />
           </article>
