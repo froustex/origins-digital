@@ -1,10 +1,10 @@
 import { formatDistanceToNow } from "date-fns";
 import AddComment from "./AddComment";
 
-export default function Comments({ comments }) {
+export default function Comments({ comments, location }) {
   return (
     <div className="flex flex-col w-full">
-      <AddComment />
+      <AddComment location={location} />
       <div className="flex flex-col w-full gap-4">
         {comments.map((comment) => (
           <div className="w-full p-4 bg-gray-200 rounded-lg" key={comment.id}>
