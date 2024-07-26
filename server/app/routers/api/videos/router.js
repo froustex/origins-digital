@@ -12,6 +12,7 @@ const {
   add,
   addRate,
   addComment,
+  addFavoriteVideo,
   destroy,
   destroyComment,
   readCategories,
@@ -27,9 +28,11 @@ router.get("/:id", read);
 
 router.put("/:id", edit);
 
-router.post("/", uploadMulter.single("file"), uploadVideo, add);
+router.post("/", uploadMulter, uploadVideo, add);
 
 router.delete("/:id", destroy);
+
+router.post("/:id/favorites", addFavoriteVideo);
 
 router.get("/:id/avgrate", readByAverage);
 

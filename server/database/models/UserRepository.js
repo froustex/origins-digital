@@ -20,14 +20,6 @@ class UserRepository extends AbstractRepository {
     return result.insertId;
   }
 
-  async createFavorite(favorite) {
-    const [result] = await this.database.query(
-      `insert into add_favorite (user_id, video_id) values (?, ?)`,
-      [favorite.userId, favorite.videoId]
-    );
-    return result.insertId;
-  }
-
   async read(id) {
     const [rows] = await this.database.query(
       `select id, username, email, hashed_password, is_admin, avatar from ${this.table} where id = ?`,
@@ -39,7 +31,7 @@ class UserRepository extends AbstractRepository {
 
   async readAll() {
     const [rows] = await this.database.query(
-      `select id, username, email, avatar, created_at from ${this.table}`
+      `select id, username, email, avatar, created_at, is_admin from ${this.table}`
     );
 
     return rows;
@@ -97,10 +89,10 @@ class UserRepository extends AbstractRepository {
     return rows.affectedRows;
   }
 
-  async deleteFavorite(userId, id) {
+  async deleteFavorite(userId, videoId) {
     const [rows] = await this.database.query(
-      `delete from add_favorite where user_id = ? and id = ?`,
-      [userId, id]
+      `delete from add_favorite where user_id = ? and video_id = ?`,
+      [userId, videoId]
     );
     return rows.affectedRows;
   }

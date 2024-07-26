@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
-import avatar from "../assets/images/avatar.png";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
@@ -11,12 +10,24 @@ export default function Nav() {
 
   const { setAuth, auth } = useAuth();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {}, [auth]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAuth();
     localStorage.clear();
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Couldn't log out");
+      }
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -48,11 +59,15 @@ export default function Nav() {
               onKeyDown={(e) =>
                 e.key === "Enter" ? setShowOptions(true) : null
               }
-              onClick={() => setShowOptions(true)}
+              onClick={() => setShowOptions(!showOptions)}
               role="button"
               tabIndex={0}
             >
-              <img className="w-full h-full" src={avatar} alt="profil avatar" />
+              <img
+                className="w-full h-full"
+                src={auth?.avatar}
+                alt="profil avatar"
+              />
             </div>
             <div
               className={
@@ -81,8 +96,7 @@ export default function Nav() {
           <div className="hidden smallScreen:flex smallScreen:items-center">
             <NavLink
               className="mr-4 nav-link"
-              to="/login"
-              state={{ from: pathname }}
+              to={`/login?redirectTo=${pathname}`}
             >
               Login
             </NavLink>

@@ -1,3 +1,5 @@
+const fsExtra = require("fs-extra");
+const path = require("path");
 const tables = require("../../database/tables");
 
 const browse = async (req, res, next) => {
@@ -99,6 +101,8 @@ const add = async (req, res, next) => {
     }
 
     res.status(201).json({ insertedCategoryId });
+
+    fsExtra.emptyDirSync(path.join(__dirname, "..", "assets", "uploads"));
   } catch (err) {
     next(err);
   }
@@ -118,6 +122,18 @@ const addComment = async (req, res, next) => {
   try {
     const comment = req.body;
     const insertId = await tables.video.createComment(comment);
+    res.status(201).json({ insertId });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addFavoriteVideo = async (req, res, next) => {
+  try {
+    const insertId = await tables.video.createFavorite(
+      req.body.userId,
+      Number(req.params.id)
+    );
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);
@@ -160,6 +176,7 @@ module.exports = {
   add,
   addRate,
   addComment,
+  addFavoriteVideo,
   read,
   readByAverage,
   readComments,

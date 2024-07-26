@@ -18,11 +18,21 @@ export default function Dashboard() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAuth();
     localStorage.clear();
     setOpenNavModal(false);
-    navigate("/");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Couldn't log out");
+      }
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -77,7 +87,7 @@ export default function Dashboard() {
             Log out
           </button>
         </aside>
-        <div className="overflow-y-scroll w-full sm:w-[85%]">
+        <div className="sm:overflow-y-scroll w-full sm:w-[85%]">
           <Outlet />
         </div>
       </main>

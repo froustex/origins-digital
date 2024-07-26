@@ -19,6 +19,14 @@ class VideoRepository extends AbstractRepository {
     return result.insertId;
   }
 
+  async createFavorite(userId, videoId) {
+    const [result] = await this.database.query(
+      `insert into add_favorite (user_id, video_id) values (?, ?)`,
+      [userId, videoId]
+    );
+    return result.insertId;
+  }
+
   async createRate(rate) {
     const [result] = await this.database.query(
       `insert into rating (rating, user_id, video_id) values(?,?,?)`,
@@ -50,7 +58,7 @@ class VideoRepository extends AbstractRepository {
 
   async readByAverageRate(id) {
     const [rows] = await this.database.query(
-      `select avg(rating) from rating join video on rating.video_id = video.id where video.id = ?`,
+      `select round(avg(rating), 2) from rating join video on rating.video_id = video.id where video.id = ?`,
       [id]
     );
     return rows[0];
@@ -58,7 +66,7 @@ class VideoRepository extends AbstractRepository {
 
   async readCommentsByVideo(id) {
     const [rows] = await this.database.query(
-      `select c.id, c.comment, u.username, c.created_at from commenting c 
+      `select c.id, c.comment, u.avatar,u.username, c.created_at from commenting c 
       join user u on u.id=c.user_id 
       join video v on v.id=c.video_id where v.id = ? order by c.created_at desc`,
       [id]

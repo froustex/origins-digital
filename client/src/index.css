@@ -28,7 +28,7 @@
   input[type="email"],
   button,
   textarea {
-    @apply p-2.5 border-0 outline-none rounded-lg;
+    @apply p-2.5 outline-none rounded-lg;
   }
 
   .img-container {
@@ -52,7 +52,7 @@
     @apply mt-4;
   }
 
-  form > button {
+  form > .button {
     @apply bg-primary min-h-[50px] text-white text-2xl font-semibold md:font-bold;
   }
 

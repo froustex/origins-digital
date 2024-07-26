@@ -13,8 +13,8 @@ function App() {
       <main
         className={
           pathname === "/"
-            ? `min-h-full overflow-scroll sm:block`
-            : `flex grow min-h-full overflow-scroll sm:block`
+            ? `min-h-full sm:block`
+            : `flex grow min-h-full sm:block`
         }
       >
         <Outlet />
