@@ -117,6 +117,9 @@ export default function Profil() {
           </p>
         </div>
       )}
+      <div className="w-fullh-14 bg-primary">
+        <h1 className="pl-8 text-white">Comments </h1>
+      </div>
     </div>
   );
 }
