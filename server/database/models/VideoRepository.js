@@ -30,7 +30,7 @@ class VideoRepository extends AbstractRepository {
   async createRate(rate) {
     const [result] = await this.database.query(
       `insert into rating (rating, user_id, video_id) values(?,?,?)`,
-      [rate.rating, rate.user_id, rate.video_id]
+      [rate.rating, rate.userId, rate.id]
     );
     return result.insertId;
   }
@@ -38,7 +38,7 @@ class VideoRepository extends AbstractRepository {
   async createComment(comment) {
     const [result] = await this.database.query(
       `insert into commenting (comment, user_id, video_id) values(?,?,?)`,
-      [comment.comment, comment.user_id, comment.video_id]
+      [comment.comment, comment.userId, comment.id]
     );
     return result.insertId;
   }
@@ -71,7 +71,7 @@ class VideoRepository extends AbstractRepository {
       join video v on v.id=c.video_id where v.id = ? order by c.created_at desc`,
       [id]
     );
-    return [rows];
+    return rows;
   }
 
   async readCategoriesByVideo(id) {

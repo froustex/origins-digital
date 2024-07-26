@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns";
 import AddComment from "./AddComment";
 
 export default function Comments({ comments }) {
@@ -5,7 +6,7 @@ export default function Comments({ comments }) {
     <div className="flex flex-col w-full">
       <AddComment />
       <div className="flex flex-col w-full gap-4">
-        {comments[0].map((comment) => (
+        {comments.map((comment) => (
           <div className="w-full p-4 bg-gray-200 rounded-lg" key={comment.id}>
             <div className="flex items-center mb-2">
               <img
@@ -15,7 +16,9 @@ export default function Comments({ comments }) {
               />
               <p>{comment.username}</p>
               <p className="self-center ml-2 text-xs">
-                {new Date(comment.created_at).toLocaleDateString()}
+                {formatDistanceToNow(new Date(comment.created_at), {
+                  addSuffix: true,
+                })}
               </p>
             </div>
             <p>{comment.comment}</p>
