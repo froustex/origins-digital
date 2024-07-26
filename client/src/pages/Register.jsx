@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/origins-digital-logo.png";
+import avatar from "../assets/images/avatar.png";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -31,8 +32,7 @@ export async function action({ request }) {
         email,
         password,
         isAdmin: false,
-        avatar:
-          "https://www.flaticon.com/free-icon/panda_1326377?term=avatar&page=1&position=25&origin=search&related_id=1326377",
+        avatar,
       }),
     });
     const data = await response.json();

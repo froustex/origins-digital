@@ -3,7 +3,6 @@ import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import NavModal from "./NavModal";
 import logo from "../assets/images/origins-digital-logo.png";
-import avatar from "../assets/images/avatar.png";
 
 export default function Nav() {
   const [showModal, setShowModal] = useState(false);
@@ -37,11 +36,6 @@ export default function Nav() {
       <nav className="relative flex items-center justify-between px-5 py-5 text-white bg-black/80 backdro-blur-sm">
         <img className="w-24" src={logo} alt="origins-digital-logo" />
         <div className="hidden smallScreen:flex smallScreen:items-center smallScreen:gap-12">
-          <input
-            className="hidden py-2 text-black placeholder:text-black md:block sm:h-fit sm:self-center sm:p-1 sm:px-4 sm:placeholder-white sm:rounded-lg"
-            type="text"
-            placeholder="Search"
-          />
           <ul className="flex items-center gap-5">
             <li>
               <NavLink className="nav-link" to="/">
@@ -65,11 +59,15 @@ export default function Nav() {
               onKeyDown={(e) =>
                 e.key === "Enter" ? setShowOptions(true) : null
               }
-              onClick={() => setShowOptions(true)}
+              onClick={() => setShowOptions(!showOptions)}
               role="button"
               tabIndex={0}
             >
-              <img className="w-full h-full" src={avatar} alt="profil avatar" />
+              <img
+                className="w-full h-full"
+                src={auth?.avatar}
+                alt="profil avatar"
+              />
             </div>
             <div
               className={
