@@ -34,7 +34,7 @@ const readFavorites = async (req, res, next) => {
 
 const readComments = async (req, res, next) => {
   try {
-    const comments = await tables.user.readFavorites(req.params.id);
+    const comments = await tables.user.readCommentsByUser(req.params.id);
     res.json(comments);
   } catch (err) {
     next(err);

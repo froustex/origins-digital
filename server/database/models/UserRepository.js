@@ -61,7 +61,7 @@ class UserRepository extends AbstractRepository {
       `select v.title, c.comment, u.username, c.created_at, c.id from commenting c
          join user u on u.id=c.user_id
          join video v on v.id=c.video_id
-         where u.id=? order by c.created_at`,
+         where u.id= ? order by v.title`,
       [id]
     );
     return rows;
