@@ -30,7 +30,7 @@ class VideoRepository extends AbstractRepository {
   async createRate(rate) {
     const [result] = await this.database.query(
       `insert into rating (rating, user_id, video_id) values(?,?,?)`,
-      [rate.rating, rate.user_id, rate.video_id]
+      [rate.rating, rate.userId, rate.id]
     );
     return result.insertId;
   }
