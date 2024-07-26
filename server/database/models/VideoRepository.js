@@ -71,7 +71,7 @@ class VideoRepository extends AbstractRepository {
       join video v on v.id=c.video_id where v.id = ? order by c.created_at desc`,
       [id]
     );
-    return [rows];
+    return rows;
   }
 
   async readCategoriesByVideo(id) {

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../hooks/useAuth";
 
 export default function AddComment() {
@@ -31,12 +29,7 @@ export default function AddComment() {
         throw new Error("error while sending comment");
       } else {
         setComment("");
-        toast.success("Comment added successfully", {
-          position: "bottom-right",
-        });
-        setTimeout(() => {
-          navigate(0);
-        }, 5000);
+        navigate(0);
       }
     } catch (err) {
       console.error(err);
@@ -52,6 +45,7 @@ export default function AddComment() {
         onChange={(e) => setComment(e.target.value)}
         type="text"
         name="text"
+        required
         value={comment}
         placeholder="add a comment..."
         className={

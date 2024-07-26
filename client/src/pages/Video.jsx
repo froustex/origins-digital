@@ -8,6 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 import AddToFavorite from "../components/AddToFavorite";
 import { useAuth } from "../hooks/useAuth";
 import Comments from "../components/Comments";
+import AddRates from "../components/AddRates";
 
 export const loader = async ({ params }) => {
   try {
@@ -74,7 +75,13 @@ export default function Video() {
           </h2>
         </section>
       ) : null}
-      {auth ? <AddToFavorite videoId={video.id} /> : null}
+
+      {auth ? (
+        <div className="flex items-center justify-between">
+          <AddRates stars={5} />
+          <AddToFavorite videoId={video.id} />
+        </div>
+      ) : null}
       <section className="flex flex-col p-4 mb-2 bg-gray-200 rounded-lg sm:mb-4 md:mb-6">
         <h2 className="mb-2 text-sm font-semibold sm:text-lg">Description</h2>
         <p className="text-sm sm:text-base">{video.description}</p>

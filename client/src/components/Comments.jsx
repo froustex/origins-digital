@@ -6,7 +6,7 @@ export default function Comments({ comments }) {
     <div className="flex flex-col w-full">
       <AddComment />
       <div className="flex flex-col w-full gap-4">
-        {comments[0].map((comment) => (
+        {comments.map((comment) => (
           <div className="w-full p-4 bg-gray-200 rounded-lg" key={comment.id}>
             <div className="flex items-center mb-2">
               <img
