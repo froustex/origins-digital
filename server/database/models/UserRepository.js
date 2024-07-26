@@ -47,7 +47,7 @@ class UserRepository extends AbstractRepository {
 
   async readFavorites(id) {
     const [rows] = await this.database.query(
-      `select v.title, u.username, ad.id, ad.created_at from add_favorite ad
+      `select v.title, v.id as videoId, u.username, ad.id, ad.created_at from add_favorite ad
        join user u on u.id=ad.user_id 
        join video v on v.id=ad.video_id
        where u.id=? order by ad.created_at desc`,
@@ -89,10 +89,10 @@ class UserRepository extends AbstractRepository {
     return rows.affectedRows;
   }
 
-  async deleteFavorite(userId, id) {
+  async deleteFavorite(userId, videoId) {
     const [rows] = await this.database.query(
-      `delete from add_favorite where user_id = ? and id = ?`,
-      [userId, id]
+      `delete from add_favorite where user_id = ? and video_id = ?`,
+      [userId, videoId]
     );
     return rows.affectedRows;
   }

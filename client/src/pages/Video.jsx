@@ -20,12 +20,12 @@ export const loader = async ({ params }) => {
     if (!avgData.ok || !commentsData.ok || !videoData.ok) {
       throw new Error("Failed to fetch data!");
     }
-    const [avg, comments, video] = await Promise.all([
+    const [avg, comments, video, favorites] = await Promise.all([
       avgData.json(),
       commentsData.json(),
       videoData.json(),
     ]);
-    return { avg, comments, video };
+    return { avg, comments, video, favorites };
   } catch (error) {
     console.error("Error loading data: ", error);
     throw error;
