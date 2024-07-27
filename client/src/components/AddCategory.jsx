@@ -1,11 +1,11 @@
 import { useRef } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { useRevalidator } from "react-router-dom";
 
 export default function AddCategory() {
   const categoryRef = useRef();
-  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function AddCategory() {
       );
       if (res.status === 201) {
         categoryRef.current.value = "";
-        navigate(0);
+        revalidator.revalidate();
       }
     } catch (error) {
       console.error(error);

@@ -1,4 +1,4 @@
-import { useLoaderData, useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,12 +20,12 @@ export const loader = async ({ params }) => {
     if (!avgData.ok || !commentsData.ok || !videoData.ok) {
       throw new Error("Failed to fetch data!");
     }
-    const [avg, comments, video, favorites] = await Promise.all([
+    const [avg, comments, video] = await Promise.all([
       avgData.json(),
       commentsData.json(),
       videoData.json(),
     ]);
-    return { avg, comments, video, favorites };
+    return { avg, comments, video };
   } catch (error) {
     console.error("Error loading data: ", error);
     throw error;
@@ -37,7 +37,6 @@ export default function Video() {
 
   const { avg, comments, video } = useLoaderData();
   const avgData = Object.values(avg);
-  const { pathname } = useLocation();
 
   const diffDate = formatDistanceToNow(new Date(video.created_at), {
     addSuffix: true,
@@ -93,7 +92,7 @@ export default function Video() {
           Average User Rating : {avgData}
         </p>
       </section>
-      <Comments comments={comments} location={pathname} />
+      <Comments comments={comments} />
       <ToastContainer />
     </section>
   );

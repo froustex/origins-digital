@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useRevalidator } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-export default function AddComment({ location }) {
-  const { auth } = useAuth();
+export default function AddComment() {
   const [comment, setComment] = useState("");
-  const navigate = useNavigate();
-  const userId = auth?.id;
+  const { auth } = useAuth();
   const { id } = useParams();
+  const userId = auth?.id;
+
+  const revalidator = useRevalidator();
 
   async function handleAddComment(e) {
     e.preventDefault();
@@ -29,7 +30,7 @@ export default function AddComment({ location }) {
         throw new Error("error while sending comment");
       } else {
         setComment("");
-        navigate(location);
+        revalidator.revalidate();
       }
     } catch (err) {
       console.error(err);
