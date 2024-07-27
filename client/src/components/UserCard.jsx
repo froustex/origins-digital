@@ -23,7 +23,7 @@ export default function UserCard({ user }) {
         }
       );
       if (res.status === 204) {
-        navigate(0);
+        navigate("/dashboard");
       }
     } catch (err) {
       throw new Error("error while trying to delete user");

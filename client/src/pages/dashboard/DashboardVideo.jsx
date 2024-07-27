@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useLoaderData } from "react-router-dom";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Comments from "../../components/Comments";
 
 export default function DashboardVideo() {
   const [formatedDate, setFormatedDate] = useState();
@@ -10,7 +11,7 @@ export default function DashboardVideo() {
   const navigate = useNavigate();
 
   const data = useLoaderData();
-  const comments = data.comments[0];
+  const { comments } = data;
   const avgRate = Object.values(data.avg);
 
   useEffect(() => {
@@ -68,13 +69,7 @@ export default function DashboardVideo() {
           </p>
         </section>
       </div>
-      {comments.map((comment) => (
-        <div key={comment.id}>
-          <p>{comment.comment}</p>
-          <p>{comment.username}</p>
-          <p>{new Date(comment.created_at).toDateString()}</p>
-        </div>
-      ))}
+      <Comments comments={comments} />
     </section>
   );
 }
