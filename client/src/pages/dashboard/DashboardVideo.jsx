@@ -10,7 +10,7 @@ export default function DashboardVideo() {
   const navigate = useNavigate();
 
   const data = useLoaderData();
-  const comments = data.comments[0];
+  const { comments } = data;
   const avgRate = Object.values(data.avg);
 
   useEffect(() => {

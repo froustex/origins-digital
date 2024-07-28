@@ -47,7 +47,7 @@ class UserRepository extends AbstractRepository {
 
   async readFavorites(id) {
     const [rows] = await this.database.query(
-      `select v.title, v.id as videoId, u.username, ad.id, ad.created_at from add_favorite ad
+      `select v.title, v.id as videoId, u.username, ad.created_at from add_favorite ad
        join user u on u.id=ad.user_id 
        join video v on v.id=ad.video_id
        where u.id=? order by ad.created_at desc`,
@@ -69,13 +69,24 @@ class UserRepository extends AbstractRepository {
 
   async readRatesByUser(id) {
     const [rows] = await this.database.query(
-      `select v.title, r.rating, u.username, r.created_at from rating r
+      `select v.title, v.id, r.rating, u.username, r.created_at from rating r
        join user u on u.id=r.user_id
        join video v on v.id=r.video_id
        where u.id = ? order by r.created_at`,
       [id]
     );
     return rows;
+  }
+
+  async readRateByUserByVideo(userId, videoId) {
+    const [rows] = await this.database.query(
+      `select r.rating from rating r
+       join user u on u.id=r.user_id
+       join video v on v.id = r.video_id
+       where u.id = ? and v.id = ?`,
+      [userId, videoId]
+    );
+    return rows[0];
   }
   // async update(user) {
   //   ...

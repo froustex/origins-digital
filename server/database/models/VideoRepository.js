@@ -21,7 +21,7 @@ class VideoRepository extends AbstractRepository {
 
   async createFavorite(userId, videoId) {
     const [result] = await this.database.query(
-      `insert into add_favorite (user_id, video_id) values (?, ?)`,
+      `insert ignore into add_favorite (user_id, video_id) values (?, ?)`,
       [userId, videoId]
     );
     return result.insertId;
@@ -29,10 +29,10 @@ class VideoRepository extends AbstractRepository {
 
   async createRate(rate) {
     const [result] = await this.database.query(
-      `insert into rating (rating, user_id, video_id) values(?,?,?)`,
+      `insert into rating (rating, user_id, video_id) values(?,?,?) on duplicate key update rating = values(rating), created_at = current_timestamp`,
       [rate.rating, rate.userId, rate.id]
     );
-    return result.insertId;
+    return result.affectedRows;
   }
 
   async createComment(comment) {
