@@ -11,7 +11,7 @@ export default function VideoCard({ video }) {
 
   return (
     <div
-      className="relative shadow-lg rounded-xl h-[10rem] w-full sm:w-[16rem] overflow-hidden cursor-pointer"
+      className="relative shadow-lg rounded-xl h-[10rem] min-h-[10rem] w-full sm:w-[16rem] overflow-hidden cursor-pointer"
       onClick={() =>
         navigate(`/dashboard/videos/${video.id}`, { state: video })
       }
