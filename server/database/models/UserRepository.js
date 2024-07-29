@@ -47,7 +47,7 @@ class UserRepository extends AbstractRepository {
 
   async readFavorites(id) {
     const [rows] = await this.database.query(
-      `select v.title, v.id as videoId, u.username, ad.created_at from add_favorite ad
+      `select v.*, v.id as videoId, u.username, ad.id, ad.created_at from add_favorite ad
        join user u on u.id=ad.user_id 
        join video v on v.id=ad.video_id
        where u.id=? order by ad.created_at desc`,
@@ -58,7 +58,7 @@ class UserRepository extends AbstractRepository {
 
   async readCommentsByUser(id) {
     const [rows] = await this.database.query(
-      `select v.title, c.comment, u.username, c.created_at, c.id from commenting c
+      `select v.*, v.id as videoId, c.comment, u.username, c.created_at, c.id from commenting c
          join user u on u.id=c.user_id
          join video v on v.id=c.video_id
          where u.id= ? order by v.title`,

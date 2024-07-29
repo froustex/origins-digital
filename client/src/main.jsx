@@ -20,14 +20,19 @@ import DashboardUsers, {
   loader as dashboardUsersLoader,
 } from "./pages/dashboard/DashboardUsers";
 import DashboardVideos, {
-  loader as dashboardVideosLoard,
+  loader as dashboardVideosLoader,
 } from "./pages/dashboard/DashboardVideos";
-import DashboardVideo from "./pages/dashboard/DashboardVideo";
+import DashboardVideo, {
+  loader as dashboardVideoLoader,
+} from "./pages/dashboard/DashboardVideo";
 import DashboardAddVideo, {
   loader as dashboardAddVideoLoader,
   action as dashboardAddVideoAction,
 } from "./pages/dashboard/DashboardAddVideo";
 import Video, { loader as videoLoader } from "./pages/Video";
+import DashboardUser, {
+  loader as dashboardUserLoader,
+} from "./pages/dashboard/DashboardUser";
 
 const checkAuth = async () => {
   try {
@@ -101,6 +106,7 @@ const router = createBrowserRouter([
   protectedRoute({
     path: "/dashboard",
     element: <Dashboard />,
+    errorElement: <Error />,
     children: [
       {
         path: "",
@@ -108,14 +114,19 @@ const router = createBrowserRouter([
         loader: dashboardUsersLoader,
       },
       {
+        path: "users/:id",
+        element: <DashboardUser />,
+        loader: dashboardUserLoader,
+      },
+      {
         path: "videos",
         element: <DashboardVideos />,
-        loader: dashboardVideosLoard,
+        loader: dashboardVideosLoader,
       },
       {
         path: "videos/:id",
         element: <DashboardVideo />,
-        loader: videoLoader,
+        loader: dashboardVideoLoader,
       },
       {
         path: "addVideo",
