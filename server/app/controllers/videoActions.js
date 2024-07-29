@@ -111,8 +111,8 @@ const add = async (req, res, next) => {
 const addRate = async (req, res, next) => {
   try {
     const rate = req.body;
-    const insertId = await tables.video.createRate(rate);
-    res.status(201).json({ insertId });
+    await tables.video.createRate(rate);
+    res.status(201).json({ message: "votre note a été ajoutée" });
   } catch (err) {
     next(err);
   }

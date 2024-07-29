@@ -13,6 +13,7 @@ const {
   readFavorites,
   readComments,
   readRates,
+  readRateOfOneVideo,
   add,
   destroy,
   destroyFavorite,
@@ -33,6 +34,8 @@ router.get("/:id/favorites", readFavorites);
 router.get("/:id/comments", readComments);
 
 router.get("/:id/rates", readRates);
+
+router.get("/:id/videos/:videoId/rate", readRateOfOneVideo);
 
 router.delete("/:userId/favorites/:id", destroyFavorite);
 

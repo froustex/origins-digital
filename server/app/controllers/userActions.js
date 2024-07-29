@@ -50,6 +50,22 @@ const readRates = async (req, res, next) => {
   }
 };
 
+const readRateOfOneVideo = async (req, res, next) => {
+  try {
+    const rate = await tables.user.readRateByUserByVideo(
+      req.params.id,
+      req.params.videoId
+    );
+    if (!rate) {
+      res.sendStatus(404);
+    } else {
+      res.json(rate);
+    }
+  } catch (err) {
+    next();
+  }
+};
+
 const add = async (req, res, next) => {
   try {
     const userExists = await tables.user.readByEmail(req.body.email);
@@ -102,6 +118,7 @@ module.exports = {
   readFavorites,
   readComments,
   readRates,
+  readRateOfOneVideo,
   // edit,
   add,
   destroy,
