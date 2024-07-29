@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../hooks/useAuth";
 
-function ProfilVideoBanner({ title, source, description, videoId }) {
+function ProfilVideoBanner({ title, source, videoId }) {
   const auth = useAuth();
   const userId = auth.auth.id;
   const navigate = useNavigate();
@@ -41,11 +41,8 @@ function ProfilVideoBanner({ title, source, description, videoId }) {
       </video>
       <div className="absolute p-4">
         <Link to={`/videos/${videoId}`}>
-          <h2 className="text-xs text-white md:text-2xl">{title}</h2>
+          <h2 className="text-xs text-white underline md:text-2xl">{title}</h2>
         </Link>
-        <p className="w-3/5 mt-2 text-xs text-white sm:text-sm md:text-base">
-          {description}
-        </p>
         <button
           type="button"
           className="mt-0"
