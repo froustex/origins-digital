@@ -8,8 +8,8 @@ function AddRates({ stars }) {
   const { auth } = useAuth();
   const userId = auth.id;
   const { id } = useParams();
-  const [test, setTest] = useState();
-  const [rating, setRating] = useState(test);
+  const [rate, setRate] = useState();
+  const [rating, setRating] = useState(rate);
   const [hover, setHover] = useState(0);
 
   async function refreshRate() {
@@ -21,7 +21,7 @@ function AddRates({ stars }) {
       if (!response.ok) {
         throw new Error("Failing fetching data");
       } else {
-        return setTest(newRate.rating);
+        return setRate(newRate.rating);
       }
     } catch (err) {
       throw new Error(err);
@@ -75,7 +75,7 @@ function AddRates({ stars }) {
             icon={faStar}
             key={star}
             className={
-              star <= (hover || rating || test)
+              star <= (hover || rating || rate)
                 ? `text-yellow-600 text-xl`
                 : `text-xl text-black`
             }
@@ -83,7 +83,7 @@ function AddRates({ stars }) {
             onMouseMove={() => handleMouseEnter(star)}
             onMouseLeave={() => handleMouseLeave()}
             size={40}
-            value={test}
+            value={rate}
           />
         );
       })}
