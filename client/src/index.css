@@ -85,6 +85,18 @@
   .errmsg {
     @apply bg-pink-300 text-red-800 text-xs font-bold p-[0.5rem] mt-[0.8rem];
   }
+
+  .about-article {
+    @apply mb-8;
+  }
+
+  .about-article h2 {
+    @apply mb-6 text-2xl md:text-4xl;
+  }
+
+  .about-article p {
+    @apply text-lg;
+  }
 }
 
 /* the slides */

@@ -47,7 +47,7 @@ class UserRepository extends AbstractRepository {
 
   async readFavorites(id) {
     const [rows] = await this.database.query(
-      `select v.*, v.id as videoId, u.username, ad.id, ad.created_at from add_favorite ad
+      `select v.*, v.id as videoId, u.username, ad.created_at from add_favorite ad
        join user u on u.id=ad.user_id 
        join video v on v.id=ad.video_id
        where u.id=? order by ad.created_at desc`,
