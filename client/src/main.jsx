@@ -34,6 +34,7 @@ import Video, { loader as videoLoader } from "./pages/Video";
 import DashboardUser, {
   loader as dashboardUserLoader,
 } from "./pages/dashboard/DashboardUser";
+import About from "./pages/About";
 
 const checkAuth = async () => {
   try {
@@ -86,6 +87,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
+        element: <About />,
       },
       {
         path: "/profil",
