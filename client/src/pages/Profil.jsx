@@ -161,7 +161,7 @@ export default function Profil() {
                   </p>
                 </div>
                 <div className="flex items-center justify-start gap-2">
-                  <Link to={`/videos/${comment.video_id}`}>
+                  <Link to={`/videos/${comment.videoId}`}>
                     <h3 className="underline font-xs text-primary ">
                       {comment.title}
                     </h3>
