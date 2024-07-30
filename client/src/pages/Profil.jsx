@@ -129,19 +129,19 @@ export default function Profil() {
             </article>
           </section>
         ) : (
-          <div className="flex items-center justify-center grow min-h-80">
+          <div className="flex items-start justify-center mt-5 grow min-h-80">
             <p className="text-center text-white">
               You don't have any favorite video to show
             </p>
           </div>
         )}
       </div>
-      <section className="w-full mb-5">
+      <section className="w-full mb-5 min-h-80">
         <div className="flex items-center w-full mb-5 h-14 bg-primary">
           <h1 className="px-6 text-white"> My Comments </h1>
         </div>
         {comments.length !== 0 ? (
-          <div className="flex flex-col justify-center w-full gap-3 px-4 sm:flex-row sm:flex-wrap">
+          <div className="flex flex-col justify-center w-full gap-3 px-4 sm:flex-row sm:flex-wrap ">
             {comments.map((comment) => (
               <div
                 className="w-full p-4 bg-gray-200 rounded-lg h-30 lg:w-1/3"
@@ -175,7 +175,7 @@ export default function Profil() {
                     }}
                   >
                     <FontAwesomeIcon
-                      className="text-base rounded-full cursor-pointer text-primary sm:text-l hover:text-white hover:bg-primary"
+                      className="text-base rounded-full cursor-pointer text-primary sm:text-xl hover:text-orange-600"
                       icon={faTrash}
                     />
                   </button>

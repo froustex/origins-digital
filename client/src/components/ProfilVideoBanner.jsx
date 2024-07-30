@@ -50,7 +50,7 @@ function ProfilVideoBanner({ title, source, videoId }) {
           onClick={handleDelete}
         >
           <FontAwesomeIcon
-            className="p-2 text-base text-white rounded-full cursor-pointer sm:text-3xl hover:bg-gray-200 hover:text-primary"
+            className="p-2 text-base text-white rounded-full cursor-pointer sm:text-3xl hover:text-orange-600"
             icon={faTrash}
           />
         </button>
