@@ -29,6 +29,7 @@ import DashboardAddVideo, {
   loader as dashboardAddVideoLoader,
   action as dashboardAddVideoAction,
 } from "./pages/dashboard/DashboardAddVideo";
+import Profil, { loader as profilLoader } from "./pages/Profil";
 import Video, { loader as videoLoader } from "./pages/Video";
 import DashboardUser, {
   loader as dashboardUserLoader,
@@ -88,6 +89,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/profil",
+        element: <Profil />,
+        loader: profilLoader,
       },
     ],
   },

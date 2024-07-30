@@ -112,6 +112,16 @@ const destroyFavorite = async (req, res, next) => {
   }
 };
 
+const destroyComment = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await tables.user.deleteComment(id);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   browse,
   read,
@@ -123,4 +133,5 @@ module.exports = {
   add,
   destroy,
   destroyFavorite,
+  destroyComment,
 };

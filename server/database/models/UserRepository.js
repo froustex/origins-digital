@@ -107,6 +107,14 @@ class UserRepository extends AbstractRepository {
     );
     return rows.affectedRows;
   }
+
+  async deleteComment(id) {
+    const [rows] = await this.database.query(
+      `delete from commenting where id = ?`,
+      [id]
+    );
+    return rows.affectedRows;
+  }
 }
 
 module.exports = UserRepository;

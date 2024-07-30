@@ -17,6 +17,7 @@ const {
   add,
   destroy,
   destroyFavorite,
+  destroyComment,
 } = require("../../../controllers/userActions");
 
 const { hashPassword } = require("../../../services/auth");
@@ -38,5 +39,7 @@ router.get("/:id/rates", readRates);
 router.get("/:id/videos/:videoId/rate", readRateOfOneVideo);
 
 router.delete("/:userId/favorites/:id", destroyFavorite);
+
+router.delete("/:userId/comments/:id", destroyComment);
 
 module.exports = router;
