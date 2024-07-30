@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useRevalidator, Link } from "react-router-dom";
 import { useState } from "react";
 import Slider from "react-slick";
 import { formatDistanceToNow } from "date-fns";
@@ -75,7 +75,7 @@ export default function Profil() {
     ],
   };
 
-  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
   const handleDelete = async (commentId) => {
     try {
@@ -88,7 +88,7 @@ export default function Profil() {
       if (res.status !== 204) {
         throw new Error("A problem occurred while loading the videos.");
       } else {
-        navigate(0);
+        revalidator.revalidate();
       }
     } catch (error) {
       console.error(error);
@@ -97,16 +97,16 @@ export default function Profil() {
 
   return (
     <div className="flex flex-col items-start justify-between w-full h-full">
-      <div className="flex items-center w-full h-full overflow-x-hidden lg:mt-24">
+      <div className="flex items-center justify-start w-full h-14 bg-primary">
+        <h1 className="pl-4 text-white"> My Favorites </h1>
+      </div>
+      <div className="flex items-center w-full h-full overflow-x-hidden">
         {videos.length !== 0 ? (
           <section className="flex flex-col items-center justify-center w-full h-full">
-            <div className="relative flex items-center justify-start w-full mb-2 h-14 bg-primary">
-              <h1 className="pl-4 text-white"> My Favorites </h1>
-            </div>
             {videos.length >= 4 ? (
-              <div className="flex justify-center gap-6 lg:w-2/3 lg:absolute lg:top-20 sm-mr-2.5 sm:ml-2.5  items-center mt-5 flex-row w-full">
+              <div className="flex justify-center gap-6 lg:w-2/3 sm-mr-2.5 sm:ml-2.5  items-center flex-row w-full">
                 <Slider
-                  className="flex justify-center gap-6 lg:w-2/3 lg:absolute sm-mr-2.5 sm:ml-2.5 items-center mt-5 sm:flex-row w-2/3"
+                  className="flex justify-center gap-6 lg:w-2/3  sm:mr-2.5 sm:ml-2.5 items-center mt-5 sm:flex-row w-2/3"
                   slidesToShow={settings.slidesToShow}
                   slidesToScroll={settings.slidesToScroll}
                   responsive={settings.responsive}
@@ -115,18 +115,11 @@ export default function Profil() {
                 </Slider>
               </div>
             ) : (
-              <div className="flex justify-center gap-6 lg:w-2/3 lg:absolute sm-mr-2.5 sm:ml-2.5 flex-wrap items-center mt-5 lg:top-28 sm:flex-row">
+              <div className="flex justify-center gap-6 lg:w-2/3 sm-mr-2.5 sm:ml-2.5 flex-wrap items-center mt-5 sm:flex-row">
                 {renderVideos}
               </div>
             )}
-            <article
-              className={
-                videos.length >= 4
-                  ? `h-auto mt-5 lg:mt-20 lg:w-full xl:w-1/2 sm:w-full md:w-full min-h-60 mb-20
-                  `
-                  : `h-auto mt-5 lg:mt-60 xl:mt-20 lg:w-full xl:w-1/2 sm:w-full md:w-full min-h-60 mb-20`
-              }
-            >
+            <article className="h-auto mt-5 mb-5 lg:w-full xl:w-1/2 sm:w-full md:w-full min-h-60 ">
               <ProfilVideoBanner
                 title={currentVideo.title}
                 source={currentVideo.source}
@@ -136,23 +129,22 @@ export default function Profil() {
             </article>
           </section>
         ) : (
-          <div className="flex items-center justify-center grow min-h-36">
+          <div className="flex items-center justify-center grow min-h-80">
             <p className="text-center text-white">
-              Oupppss! <br />
-              You don't have any favorite video to show in your favorites
+              You don't have any favorite video to show
             </p>
           </div>
         )}
       </div>
-      <section className="w-full mb-10">
-        <div className="flex items-center w-full mb-10 h-14 bg-primary">
-          <h1 className="pl-4 text-white"> My Comments </h1>
+      <section className="w-full mb-5">
+        <div className="flex items-center w-full mb-5 h-14 bg-primary">
+          <h1 className="px-6 text-white"> My Comments </h1>
         </div>
         {comments.length !== 0 ? (
-          <div className="flex flex-wrap justify-center w-full gap-3">
+          <div className="flex flex-col justify-center w-full gap-3 px-4 sm:flex-row sm:flex-wrap">
             {comments.map((comment) => (
               <div
-                className="w-1/3 p-6 bg-gray-200 rounded-lg h-28"
+                className="w-full p-4 bg-gray-200 rounded-lg h-30 lg:w-1/3"
                 key={comment.id}
               >
                 <div className="flex items-center ">
@@ -168,10 +160,12 @@ export default function Profil() {
                     })}
                   </p>
                 </div>
-                <div className="flex items-center justify-start">
-                  <h3 className="text-lg underline font-xs text-primary ">
-                    {comment.title}
-                  </h3>
+                <div className="flex items-center justify-start gap-2">
+                  <Link to={`/videos/${comment.video_id}`}>
+                    <h3 className="underline font-xs text-primary ">
+                      {comment.title}
+                    </h3>
+                  </Link>
                   <button
                     type="button"
                     className="mt-0"
@@ -187,15 +181,14 @@ export default function Profil() {
                   </button>
                 </div>
 
-                <p className="overflow-scroll">{comment.comment}</p>
+                <p className="text-xs lg:text-sm">{comment.comment}</p>
               </div>
             ))}
           </div>
         ) : (
           <div>
             <p className="text-center text-white">
-              Oupppss! <br />
-              You don't have any comment to show{" "}
+              You don't have any comment to show
             </p>
           </div>
         )}

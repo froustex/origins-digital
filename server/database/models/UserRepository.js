@@ -58,7 +58,7 @@ class UserRepository extends AbstractRepository {
 
   async readCommentsByUser(id) {
     const [rows] = await this.database.query(
-      `select v.title, c.comment, u.username, c.created_at, c.id from commenting c
+      `select v.title, c.video_id, c.comment, u.username, c.created_at, c.id from commenting c
          join user u on u.id=c.user_id
          join video v on v.id=c.video_id
          where u.id= ? order by v.title`,

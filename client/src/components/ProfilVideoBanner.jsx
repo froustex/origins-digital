@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useRevalidator, Link } from "react-router-dom";
 
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import { useAuth } from "../hooks/useAuth";
 function ProfilVideoBanner({ title, source, videoId }) {
   const auth = useAuth();
   const userId = auth.auth.id;
-  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
   const videoRef = useRef();
 
@@ -27,7 +27,7 @@ function ProfilVideoBanner({ title, source, videoId }) {
       if (res.status !== 204) {
         throw new Error("A problem occurred while loading the videos.");
       } else {
-        navigate(0);
+        revalidator.revalidate();
       }
     } catch (error) {
       console.error(error);
