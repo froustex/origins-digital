@@ -1,33 +1,51 @@
+import { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import BannerCarousel from "../components/BannerCarousel";
 
 export const loader = async () => {
   try {
-    const [videosData, bestVideosData] = await Promise.all([
+    const [videosData, bestVideosData, categoriesData] = await Promise.all([
       fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
         credentials: "include",
       }),
       fetch(`${import.meta.env.VITE_API_URL}/api/videos/best`, {
         credentials: "include",
       }),
+      fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+        credentials: "include",
+      }),
     ]);
-    if (!videosData.ok || !bestVideosData.ok) {
+    if (!videosData.ok || !bestVideosData.ok || !categoriesData.ok) {
       throw new Error("Error while fetching dashboard video data");
     }
-    const [videos, bestVideos] = await Promise.all([
+    const [videos, bestVideos, categories] = await Promise.all([
       videosData.json(),
       bestVideosData.json(),
+      categoriesData.json(),
     ]);
-    return { videos, bestVideos };
+    return { videos, bestVideos, categories };
   } catch (error) {
     throw new Error(error);
   }
 };
 
 export default function Home() {
-  const { videos, bestVideos } = useLoaderData();
+  const [filteredVideos, setFilteredVideos] = useState();
+  const { videos, bestVideos, categories } = useLoaderData();
   const lastAddedVideos = videos.slice(0, 5);
+
+  const categoryRef = useRef();
+
+  const handleCategory = () => {
+    if (categoryRef.current.value) {
+      setFilteredVideos(
+        videos.filter((video) => video.name === categoryRef.current.value)
+      );
+    } else {
+      setFilteredVideos(videos);
+    }
+  };
 
   return (
     <div className="relative px-6 py-6 bg-zinc-900 sm:py-8">
@@ -40,11 +58,25 @@ export default function Home() {
         <select
           className="p-1 mb-4 border-2 border-gray-200 rounded-lg h-fit w-fit"
           name="filter"
+          ref={categoryRef}
+          onChange={handleCategory}
         >
           <option value="">category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
         </select>
-        <h2 className="mb-4 text-xl text-white sm:mb-6">Filtered Category</h2>
-        <Carousel videos={videos} autoplaying={false} />
+        <h2 className="mb-4 text-xl text-white sm:mb-6">
+          {categoryRef.current?.value
+            ? categoryRef.current.value
+            : "All videos"}
+        </h2>
+        <Carousel
+          videos={filteredVideos ? filteredVideos : videos}
+          autoplaying={false}
+        />
       </section>
     </div>
   );
