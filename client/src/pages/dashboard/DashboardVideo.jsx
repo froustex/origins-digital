@@ -7,9 +7,16 @@ import Comments from "../../components/Comments";
 export const loader = async ({ params }) => {
   try {
     const [videoData, commentsData, avgRateData] = await Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}`, {
+        credentials: "include",
+      }),
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`,
+        { credentials: "include" }
+      ),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`, {
+        credentials: "include",
+      }),
     ]);
     if (!videoData.ok || !commentsData.ok || !avgRateData.ok) {
       throw new Error("Error while fetching dashboard video data");
@@ -44,6 +51,7 @@ export default function DashboardVideo() {
         `${import.meta.env.VITE_API_URL}/api/videos/${video.id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (res.status !== 204) {

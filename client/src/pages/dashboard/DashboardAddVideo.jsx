@@ -11,7 +11,9 @@ import AddCategory from "../../components/AddCategory";
 
 export const loader = async () => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+      credentials: "include",
+    });
     const data = await res.json();
     if (res.status !== 200) {
       throw new Error("error while trying to get all categories");
@@ -27,10 +29,14 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
-      method: "POST",
-      body: formData,
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/videos`,
+      {
+        method: "POST",
+        body: formData,
+      },
+      { credentials: "include" }
+    );
     const data = await res.json();
     if (res.status !== 201) {
       return toast.error(data?.message, {
@@ -42,7 +48,7 @@ export const action = async ({ request }) => {
       position: "bottom-right",
     });
   } catch (error) {
-    console.error(error);
+    console.error({ message: "error while adding new video" });
   }
   return null;
 };

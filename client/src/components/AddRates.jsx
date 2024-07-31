@@ -15,7 +15,8 @@ function AddRates({ stars }) {
   async function refreshRate() {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/users/${userId}/videos/${id}/rate`
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/videos/${id}/rate`,
+        { credentials: "include" }
       );
       const newRate = await response.json();
       if (!response.ok) {

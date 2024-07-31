@@ -3,7 +3,9 @@ import VideoCard from "../../components/VideoCard";
 
 export const loader = async () => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
+      credentials: "include",
+    });
     const data = await res.json();
     if (res.status !== 200) {
       throw new Error("Problem while fetching videos");

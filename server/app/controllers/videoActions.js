@@ -51,8 +51,26 @@ const readCategories = async (req, res, next) => {
   try {
     const result = await tables.video.readCategoriesByVideo(req.params.id);
     if (!result) {
-      res.senStatus(404);
+      res.sendStatus(404);
     }
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const readVideosByCategories = async (req, res, next) => {
+  try {
+    const result = await tables.video.readAllVideosByCategories();
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const readBestVideos = async (req, res, next) => {
+  try {
+    const result = await tables.video.readBestRatedVideos();
     res.json(result);
   } catch (err) {
     next(err);
@@ -84,6 +102,16 @@ const editCategoriesByVideo = async (req, res, next) => {
 const add = async (req, res, next) => {
   let insertedCategoryId;
   try {
+    if (
+      !req.body.title ||
+      !req.body.description ||
+      !req.body.thumbnail ||
+      req.body.isPrivate == null ||
+      !req.body.source
+    ) {
+      res.sendStatus(400);
+      return;
+    }
     const insertedVideoId = await tables.video.create(req.body);
     const categoryId = await tables.category.readByName(req.body.category);
 
@@ -121,8 +149,12 @@ const addRate = async (req, res, next) => {
 const addComment = async (req, res, next) => {
   try {
     const comment = req.body;
-    const insertId = await tables.video.createComment(comment);
-    res.status(201).json({ insertId });
+    if (req.body.comment.length < 6) {
+      res.sendStatus(411);
+    } else {
+      const insertId = await tables.video.createComment(comment);
+      res.status(201).json({ insertId });
+    }
   } catch (err) {
     next(err);
   }
@@ -181,6 +213,8 @@ module.exports = {
   readByAverage,
   readComments,
   readCategories,
+  readVideosByCategories,
+  readBestVideos,
   edit,
   editCategoriesByVideo,
   destroy,

@@ -10,8 +10,12 @@ export const loader = async () => {
   try {
     const { id } = JSON.parse(localStorage.getItem("username"));
     const [videosData, commentsData] = await Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}/favorites`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}/comments`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}/favorites`, {
+        credentials: "include",
+      }),
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}/comments`, {
+        credentials: "include",
+      }),
     ]);
     if (!videosData.ok || !commentsData.ok) {
       throw new Error("Failed to fetch data!");
@@ -83,6 +87,7 @@ export default function Profil() {
         `${import.meta.env.VITE_API_URL}/api/users/${id}/comments/${commentId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (res.status !== 204) {

@@ -43,8 +43,24 @@ class VideoRepository extends AbstractRepository {
     return result.insertId;
   }
 
-  async readAll() {
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+  async readAllVideosByCategories() {
+    const [rows] = await this.database.query(
+      `select v.*, c.name from add_category ad 
+         join category c on c.id = ad.category_id 
+         join video v on v.id = ad.video_id
+         group by v.title
+         order by v.created_at`
+    );
+    return rows;
+  }
+
+  async readBestRatedVideos() {
+    const [rows] = await this.database.query(
+      `select v.*, AVG(r.rating) average_rating from rating r 
+       join video v on v.id = r.video_id 
+       group by v.title 
+       order by average_rating desc limit 5;`
+    );
     return rows;
   }
 
@@ -81,7 +97,7 @@ class VideoRepository extends AbstractRepository {
       join video v on v.id = ad.video_id where v.id= ? order by c.name`,
       [id]
     );
-    return [rows];
+    return rows;
   }
 
   async update(video, id) {

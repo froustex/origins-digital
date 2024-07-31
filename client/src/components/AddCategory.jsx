@@ -21,6 +21,7 @@ export default function AddCategory() {
           body: JSON.stringify({
             category: formatedCategory,
           }),
+          credentials: "include",
         }
       );
       if (res.status === 201) {
