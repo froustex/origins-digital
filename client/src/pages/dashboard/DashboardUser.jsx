@@ -7,9 +7,16 @@ import VideoCard from "../../components/VideoCard";
 export const loader = async ({ params }) => {
   try {
     const [userData, favoritesData, commentsData] = await Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${params.id}`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${params.id}/favorites`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${params.id}/comments`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${params.id}`, {
+        credentials: "include",
+      }),
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${params.id}/favorites`,
+        { credentials: "include" }
+      ),
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${params.id}/comments`, {
+        credentials: "include",
+      }),
     ]);
 
     if (!userData.ok || !favoritesData.ok || !commentsData.ok) {
@@ -38,6 +45,7 @@ export default function DashboardUser() {
         {
           method: "delete",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
         }
       );
       if (res.status !== 204) {

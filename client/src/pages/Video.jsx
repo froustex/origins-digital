@@ -13,9 +13,16 @@ import AddRates from "../components/AddRates";
 export const loader = async ({ params }) => {
   try {
     const [avgData, commentsData, videoData] = await Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`),
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}`),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}/avgrate`, {
+        credentials: "include",
+      }),
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/videos/${params.id}/comments`,
+        { credentials: "include" }
+      ),
+      fetch(`${import.meta.env.VITE_API_URL}/api/videos/${params.id}`, {
+        credentials: "include",
+      }),
     ]);
     if (!avgData.ok || !commentsData.ok || !videoData.ok) {
       throw new Error("Failed to fetch data!");

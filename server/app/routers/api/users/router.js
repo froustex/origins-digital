@@ -21,25 +21,26 @@ const {
 } = require("../../../controllers/userActions");
 
 const { hashPassword } = require("../../../services/auth");
+const { verifyToken, verifyAdmin } = require("../../../services/auth");
 
-router.get("/", browse);
+router.get("/", verifyToken, verifyAdmin, browse);
 
-router.get("/:id", read);
+router.get("/:id", verifyToken, verifyAdmin, read);
 
 router.post("/", hashPassword, add);
 
-router.delete("/:id", destroy);
+router.delete("/:id", verifyToken, verifyAdmin, destroy);
 
-router.get("/:id/favorites", readFavorites);
+router.get("/:id/favorites", verifyToken, readFavorites);
 
-router.get("/:id/comments", readComments);
+router.get("/:id/comments", verifyToken, readComments);
 
-router.get("/:id/rates", readRates);
+router.get("/:id/rates", verifyToken, readRates);
 
-router.get("/:id/videos/:videoId/rate", readRateOfOneVideo);
+router.get("/:id/videos/:videoId/rate", verifyToken, readRateOfOneVideo);
 
-router.delete("/:userId/favorites/:id", destroyFavorite);
+router.delete("/:userId/favorites/:id", verifyToken, destroyFavorite);
 
-router.delete("/:userId/comments/:id", destroyComment);
+router.delete("/:userId/comments/:id", verifyToken, destroyComment);
 
 module.exports = router;

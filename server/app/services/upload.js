@@ -16,6 +16,10 @@ const options = {
 
 const upload = async (req, res, next) => {
   try {
+    if (!req.file) {
+      res.sendStatus(404);
+      return;
+    }
     const uploaded = await cloudinary.uploader.upload(req.file.path, options);
     if (uploaded) {
       const url = `${uploaded.url.substring(0, uploaded.url.length - 3)}jpg`;

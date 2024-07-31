@@ -11,6 +11,7 @@ export default function UserCard({ user }) {
         `${import.meta.env.VITE_API_URL}/api/users/${user.id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (res.status === 204) {

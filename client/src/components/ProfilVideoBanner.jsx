@@ -22,6 +22,7 @@ function ProfilVideoBanner({ title, source, videoId }) {
         `${import.meta.env.VITE_API_URL}/api/users/${userId}/favorites/${videoId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (res.status !== 204) {

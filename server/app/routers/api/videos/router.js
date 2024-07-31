@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  browse,
   read,
   readByAverage,
   readComments,
@@ -17,37 +16,52 @@ const {
   destroyComment,
   readCategories,
   destroyCategory,
+  readVideosByCategories,
+  readBestVideos,
 } = require("../../../controllers/videoActions");
 
 const uploadMulter = require("../../../services/multerOptions");
 const uploadVideo = require("../../../services/upload");
+const { verifyToken, verifyAdmin } = require("../../../services/auth");
 
-router.get("/", browse);
+router.get("/", readVideosByCategories);
+
+router.get("/best", readBestVideos);
 
 router.get("/:id", read);
 
-router.put("/:id", edit);
+router.put("/:id", verifyToken, verifyAdmin, edit);
 
-router.post("/", uploadMulter, uploadVideo, add);
+router.post("/", verifyToken, verifyAdmin, uploadMulter, uploadVideo, add);
 
-router.delete("/:id", destroy);
+router.delete("/:id", verifyToken, verifyAdmin, destroy);
 
-router.post("/:id/favorites", addFavoriteVideo);
+router.post("/:id/favorites", verifyToken, addFavoriteVideo);
 
 router.get("/:id/avgrate", readByAverage);
 
-router.post("/rates", addRate);
+router.post("/rates", verifyToken, addRate);
 
 router.get("/:id/comments", readComments);
 
-router.post("/comments", addComment);
+router.post("/comments", verifyToken, addComment);
 
-router.delete("/:videoId/comments/:id", destroyComment);
+router.delete("/:videoId/comments/:id", verifyToken, destroyComment);
 
 router.get("/:id/categories", readCategories);
 
-router.delete("/:videoId/categories/:id", destroyCategory);
+router.delete(
+  "/:videoId/categories/:id",
+  verifyToken,
+  verifyAdmin,
+  destroyCategory
+);
 
-router.put("/:id/categories/:id", editCategoriesByVideo);
+router.put(
+  "/:id/categories/:id",
+  verifyToken,
+  verifyAdmin,
+  editCategoriesByVideo
+);
 
 module.exports = router;

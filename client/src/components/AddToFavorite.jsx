@@ -15,7 +15,8 @@ export default function AddToFavorite({ videoId }) {
     const getFavs = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users/${auth.id}/favorites`
+          `${import.meta.env.VITE_API_URL}/api/users/${auth.id}/favorites`,
+          { credentials: "include" }
         );
         const data = await res.json();
         if (!res.ok) {
@@ -39,6 +40,7 @@ export default function AddToFavorite({ videoId }) {
           body: JSON.stringify({
             userId: auth?.id,
           }),
+          credentials: "include",
         }
       );
 

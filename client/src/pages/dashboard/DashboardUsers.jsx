@@ -3,7 +3,9 @@ import UserCard from "../../components/UserCard";
 
 export const loader = async () => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
+      credentials: "include",
+    });
     const data = await res.json();
     if (res.status !== 200) {
       throw new Error("Error while getting users");
