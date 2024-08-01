@@ -15,13 +15,19 @@ const settings = {
   cssEase: "linear",
   responsive: [
     {
-      breakpoint: 500,
+      breakpoint: 700,
       settings: {
         slidesToShow: 1,
       },
     },
     {
-      breakpoint: 800,
+      breakpoint: 1000,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 1250,
       settings: {
         slidesToShow: 3,
       },

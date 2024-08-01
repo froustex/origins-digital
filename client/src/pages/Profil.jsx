@@ -47,7 +47,7 @@ export default function Profil() {
         onClick={() => {
           handleClick(index);
         }}
-        className="border rounded cursor-pointer h-36"
+        className="object-cover h-40 border rounded cursor-pointer w-80 "
         src={video.thumbnail}
         alt=" "
       />
@@ -55,7 +55,7 @@ export default function Profil() {
   ));
 
   const settings = {
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
       {
@@ -105,11 +105,11 @@ export default function Profil() {
       <div className="flex items-center justify-start w-full h-14 bg-primary">
         <h1 className="pl-4 text-white"> My Favorites </h1>
       </div>
-      <div className="flex items-center w-full h-full overflow-x-hidden">
+      <div className="flex items-center justify-center w-full h-full overflow-x-hidden">
         {videos.length !== 0 ? (
-          <section className="flex flex-col items-center justify-center w-full h-full">
+          <div className="flex flex-col items-center justify-center w-full h-full">
             {videos.length >= 4 ? (
-              <div className="flex justify-center gap-6 lg:w-2/3 sm-mr-2.5 sm:ml-2.5  items-center flex-row w-full">
+              <div className="flex flex-row items-center justify-center w-full gap-2">
                 <Slider
                   className="flex justify-center gap-6 lg:w-2/3  sm:mr-2.5 sm:ml-2.5 items-center mt-5 sm:flex-row w-2/3"
                   slidesToShow={settings.slidesToShow}
@@ -124,15 +124,15 @@ export default function Profil() {
                 {renderVideos}
               </div>
             )}
-            <article className="h-auto mt-5 mb-5 lg:w-full xl:w-1/2 sm:w-full md:w-full min-h-60 ">
+            <div className="mt-5 mb-5 lg:w-full xl:w-1/2 sm:w-full md:w-full">
               <ProfilVideoBanner
                 title={currentVideo.title}
                 source={currentVideo.source}
                 description={currentVideo.description}
                 videoId={currentVideo.videoId}
               />
-            </article>
-          </section>
+            </div>
+          </div>
         ) : (
           <div className="flex items-start justify-center mt-5 grow min-h-80">
             <p className="text-center text-white">
@@ -141,7 +141,7 @@ export default function Profil() {
           </div>
         )}
       </div>
-      <section className="w-full mb-5 min-h-80">
+      <div className="w-full mb-5 min-h-80">
         <div className="flex items-center w-full mb-5 h-14 bg-primary">
           <h1 className="px-6 text-white"> My Comments </h1>
         </div>
@@ -197,7 +197,7 @@ export default function Profil() {
             </p>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 }
