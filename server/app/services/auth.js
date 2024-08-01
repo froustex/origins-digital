@@ -22,6 +22,10 @@ const hashPassword = async (req, res, next) => {
 const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies?.token;
+    if (!token) {
+      res.sendStatus(403);
+      return;
+    }
     req.auth = jwt.verify(token, process.env.APP_SECRET);
     next();
   } catch (err) {
