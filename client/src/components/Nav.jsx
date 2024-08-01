@@ -51,11 +51,9 @@ export default function Nav() {
         </div>
         {auth ? (
           <div className="hidden smallScreen:flex smallScreen:items-center">
-            <NavLink className="mr-4 nav-link" to="/profil">
-              {auth?.username}
-            </NavLink>
+            {auth?.username}
             <div
-              className="w-8 h-8 overflow-hidden rounded-full cursor-pointer"
+              className="w-8 h-8 ml-2 overflow-hidden rounded-full cursor-pointer"
               onKeyDown={(e) =>
                 e.key === "Enter" ? setShowOptions(true) : null
               }
