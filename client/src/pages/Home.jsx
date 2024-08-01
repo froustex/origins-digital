@@ -5,26 +5,38 @@ import BannerCarousel from "../components/BannerCarousel";
 
 export const loader = async () => {
   try {
-    const [videosData, bestVideosData, categoriesData] = await Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
-        credentials: "include",
-      }),
-      fetch(`${import.meta.env.VITE_API_URL}/api/videos/best`, {
-        credentials: "include",
-      }),
-      fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
-        credentials: "include",
-      }),
-    ]);
-    if (!videosData.ok || !bestVideosData.ok || !categoriesData.ok) {
+    const [videosData, videosByCategoryData, bestVideosData, categoriesData] =
+      await Promise.all([
+        fetch(`${import.meta.env.VITE_API_URL}/api/videos/all`, {
+          credentials: "include",
+        }),
+        fetch(`${import.meta.env.VITE_API_URL}/api/videos`, {
+          credentials: "include",
+        }),
+        fetch(`${import.meta.env.VITE_API_URL}/api/videos/best`, {
+          credentials: "include",
+        }),
+        fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+          credentials: "include",
+        }),
+      ]);
+    if (
+      !videosData.ok ||
+      !videosByCategoryData.ok ||
+      !bestVideosData.ok ||
+      !categoriesData.ok
+    ) {
       throw new Error("Error while fetching dashboard video data");
     }
-    const [videos, bestVideos, categories] = await Promise.all([
-      videosData.json(),
-      bestVideosData.json(),
-      categoriesData.json(),
-    ]);
-    return { videos, bestVideos, categories };
+    const [videos, videoByCategory, bestVideos, categories] = await Promise.all(
+      [
+        videosData.json(),
+        videosByCategoryData.json(),
+        bestVideosData.json(),
+        categoriesData.json(),
+      ]
+    );
+    return { videos, videoByCategory, bestVideos, categories };
   } catch (error) {
     throw new Error(error);
   }
@@ -32,18 +44,20 @@ export const loader = async () => {
 
 export default function Home() {
   const [filteredVideos, setFilteredVideos] = useState();
-  const { videos, bestVideos, categories } = useLoaderData();
+  const { videos, videoByCategory, bestVideos, categories } = useLoaderData();
   const lastAddedVideos = videos.slice(0, 5);
 
   const categoryRef = useRef();
 
   const handleCategory = () => {
-    if (categoryRef.current.value) {
+    if (categoryRef.current?.value) {
       setFilteredVideos(
-        videos.filter((video) => video.name === categoryRef.current.value)
+        videoByCategory.filter(
+          (video) => video.name === categoryRef.current?.value
+        )
       );
     } else {
-      setFilteredVideos(videos);
+      setFilteredVideos();
     }
   };
 
@@ -70,13 +84,14 @@ export default function Home() {
         </select>
         <h2 className="mb-4 text-xl text-white sm:mb-6">
           {categoryRef.current?.value
-            ? categoryRef.current.value
+            ? categoryRef.current?.value
             : "All videos"}
         </h2>
-        <Carousel
-          videos={filteredVideos ? filteredVideos : videos}
-          autoplaying={false}
-        />
+        {filteredVideos ? (
+          <Carousel videos={filteredVideos} autoplaying={false} />
+        ) : (
+          <Carousel videos={videos} autoplaying={false} />
+        )}
       </section>
     </div>
   );

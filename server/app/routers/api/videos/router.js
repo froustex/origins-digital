@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  browse,
   read,
   readByAverage,
   readComments,
@@ -23,6 +24,8 @@ const {
 const uploadMulter = require("../../../services/multerOptions");
 const uploadVideo = require("../../../services/upload");
 const { verifyToken, verifyAdmin } = require("../../../services/auth");
+
+router.get("/all", browse);
 
 router.get("/", readVideosByCategories);
 

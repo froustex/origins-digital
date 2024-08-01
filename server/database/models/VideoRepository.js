@@ -43,6 +43,11 @@ class VideoRepository extends AbstractRepository {
     return result.insertId;
   }
 
+  async readAll() {
+    const [rows] = await this.database.query(`select * from video`);
+    return rows;
+  }
+
   async readAllVideosByCategories() {
     const [rows] = await this.database.query(
       `select v.*, c.name 
