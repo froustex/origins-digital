@@ -34,14 +34,14 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
       }
     >
       <FontAwesomeIcon
-        className="absolute text-white cursor-pointer top-5 left-5 hover:text-primary"
+        className="absolute text-white cursor-pointer top-5 left-5 hover:text-white/70"
         icon={faXmark}
         onClick={() => setOpenNavModal(false)}
       />
       <ul className="flex flex-col items-center justify-center w-full gap-12 text-white">
         <li>
           <NavLink
-            className="hover:text-primary"
+            className="hover:text-white/70"
             to="/dashboard"
             onClick={() => setOpenNavModal(false)}
           >
@@ -50,7 +50,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         </li>
         <li>
           <NavLink
-            className="hover:text-primary"
+            className="hover:text-white/70"
             to="/dashboard/videos"
             onClick={() => setOpenNavModal(false)}
           >
@@ -59,7 +59,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         </li>
         <li>
           <NavLink
-            className="hover:text-primary"
+            className="hover:text-white/70"
             to="/dashboard/addVideo"
             onClick={() => setOpenNavModal(false)}
           >
@@ -68,7 +68,7 @@ export default function NavModal({ openNavModal, setOpenNavModal }) {
         </li>
       </ul>
       <button
-        className="inline-block mt-8 text-2xl text-white hover:text-black"
+        className="inline-block mt-8 text-2xl text-white hover:text-white/70"
         type="button"
         onClick={handleLogout}
       >

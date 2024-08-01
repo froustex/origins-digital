@@ -47,23 +47,20 @@ export default function Dashboard() {
             </div>
             <ul className="flex flex-col justify-center gap-8 text-sm font-semibold text-white">
               <li>
-                <NavLink className="hover:text-primary/60" to="/dashboard">
+                <NavLink className="hover:text-white/70" to="/dashboard">
                   <FontAwesomeIcon className="mr-4 text-xl" icon={faUser} />
                   <span className="hidden md:inline">Users</span>
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  className="hover:text-primary/60"
-                  to="/dashboard/videos"
-                >
+                <NavLink className="hover:text-white/70" to="/dashboard/videos">
                   <FontAwesomeIcon className="mr-4 text-xl" icon={faTv} />
                   <span className="hidden md:inline">Videos</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  className="hover:text-primary/60"
+                  className="hover:text-white/70"
                   to="/dashboard/addVideo"
                 >
                   <FontAwesomeIcon
@@ -76,7 +73,7 @@ export default function Dashboard() {
             </ul>
           </div>
           <button
-            className="p-0 text-base text-white hover:text-black text-start"
+            className="p-0 text-base text-white hover:text-white/70 text-start"
             type="button"
             onClick={handleLogout}
           >

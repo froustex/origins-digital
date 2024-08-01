@@ -79,7 +79,7 @@ export default function AddToFavorite({ videoId }) {
     <div className="flex justify-end">
       {favList && favList.some((fav) => fav.videoId === videoId) ? (
         <FontAwesomeIcon
-          className="p-2 text-base text-gray-700 rounded-full cursor-pointer md:text-xl hover:bg-gray-200 hover:text-primary"
+          className="p-2 text-base text-red-600 rounded-full cursor-pointer md:text-xl hover:bg-gray-200 hover:text-primary"
           icon={faHeartCrack}
           title="remove from favorite"
           onClick={handleRemoveFavorite}

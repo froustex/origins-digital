@@ -36,12 +36,18 @@ function ProfilVideoBanner({ title, source, videoId }) {
 
   return (
     <div className="flex flex-col">
-      <video className="relative w-full" ref={videoRef} controls>
+      <video
+        className="relative w-full xl:h-[500px] max-h-[500px]"
+        ref={videoRef}
+        controls
+      >
         <source src={source} />
       </video>
       <div className="absolute p-4">
         <Link to={`/videos/${videoId}`}>
-          <h2 className="text-xs text-white underline md:text-2xl">{title}</h2>
+          <h2 className="text-xs underline text-white/70 hover:text-white md:text-2xl">
+            {title}
+          </h2>
         </Link>
         <button
           type="button"
@@ -50,7 +56,7 @@ function ProfilVideoBanner({ title, source, videoId }) {
           onClick={handleDelete}
         >
           <FontAwesomeIcon
-            className="p-2 text-base text-white rounded-full cursor-pointer sm:text-3xl hover:text-orange-600"
+            className="p-2 text-base text-white rounded-full cursor-pointer sm:text-3xl hover:text-primary hover:bg-white"
             icon={faTrash}
           />
         </button>
