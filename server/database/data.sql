@@ -1,4 +1,3 @@
-USE origins_dev;
 
 INSERT INTO
     video (
