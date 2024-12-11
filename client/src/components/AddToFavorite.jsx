@@ -8,7 +8,6 @@ import { useAuth } from "../hooks/useAuth";
 export default function AddToFavorite({ videoId }) {
   const [isFav, setIsFav] = useState(false);
   const [favList, setFavList] = useState();
-
   const { auth } = useAuth();
 
   useEffect(() => {

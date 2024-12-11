@@ -47,7 +47,7 @@ export async function action({ request }) {
   }
 }
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[A-za-z][A-Za-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -131,8 +131,7 @@ function Register() {
         <p
           ref={errRef}
           className={
-            user &&
-            (!validName || !validEmail || !validPwd || (!validMatch && errMsg))
+            user && (!validName || !validEmail || !validPwd || !validMatch)
               ? "errmsg"
               : "hide"
           }

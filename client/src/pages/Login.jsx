@@ -25,6 +25,7 @@ export async function action({ request }) {
       credentials: "include",
     });
     const data = await response.json();
+
     if (response.status === 422) {
       throw new Error(data?.message || "Uknown error while trying to log in.");
     }

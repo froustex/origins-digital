@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,6 @@ function AddRates({ stars }) {
   const userId = auth.id;
   const { id } = useParams();
   const [rate, setRate] = useState();
-  const [rating, setRating] = useState(rate);
   const [hover, setHover] = useState(0);
 
   async function refreshRate() {
@@ -46,9 +45,7 @@ function AddRates({ stars }) {
         }
       );
       if (response.status !== 201) {
-        throw new Error("error while sending comment");
-      } else {
-        setRating(getCurrentIndex);
+        throw new Error("error while sending rate");
       }
     } catch (err) {
       console.error(err);
@@ -61,10 +58,8 @@ function AddRates({ stars }) {
   }
 
   function handleMouseLeave() {
-    setHover(rating);
+    setHover(rate);
   }
-
-  useEffect(() => {}, [rating]);
 
   return (
     <div className="flex items-center gap-4">
@@ -76,7 +71,7 @@ function AddRates({ stars }) {
             icon={faStar}
             key={star}
             className={
-              star <= (hover || rating || rate)
+              star <= (hover || rate)
                 ? `text-yellow-600 text-xl`
                 : `text-xl text-black`
             }

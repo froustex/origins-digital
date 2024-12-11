@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLoaderData } from "react-router-dom";
+import { useNavigate, useLoaderData, useRevalidator } from "react-router-dom";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../../components/Comments";
@@ -35,10 +35,18 @@ export const loader = async ({ params }) => {
 export default function DashboardVideo() {
   const [formatedDate, setFormatedDate] = useState();
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
   const { video, comments, avgRate } = useLoaderData();
   const rate = Object.values(avgRate)[0];
+
+  const [newVideo, setNewVideo] = useState({
+    title: video.title,
+    description: video.description,
+  });
 
   useEffect(() => {
     const date = new Date(video.created_at);
@@ -64,13 +72,77 @@ export default function DashboardVideo() {
     }
   };
 
-  return (
+  const handleEditToggle = () => {
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/videos/${video.id}`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newVideo),
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Error updating video");
+      }
+      const updatedVideo = res.status !== 204 ? await res.json() : newVideo;
+      setNewVideo(updatedVideo);
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+    }
+    return revalidator.revalidate();
+  };
+
+  return isEditing ? (
+    <form onSubmit={handleUpdate} className="flex flex-col w-full gap-8 mt-8">
+      <div>
+        <label htmlFor="title">Title</label>
+        <input
+          className="px-2 py-2 rounded-lg"
+          type="text"
+          id="title"
+          value={newVideo.title}
+          onChange={(e) => setNewVideo({ ...newVideo, title: e.target.value })}
+        />
+      </div>
+      <div>
+        <label htmlFor="description">Description</label>
+        <textarea
+          className="px-2 py-2 resize-none min-h-[8rem]"
+          id="description"
+          value={newVideo.description}
+          onChange={(e) =>
+            setNewVideo({ ...newVideo, description: e.target.value })
+          }
+        />
+      </div>
+      <button
+        className="bg-gray-300 button"
+        type="button"
+        onClick={handleEditToggle}
+      >
+        Cancel
+      </button>
+      <button className="bg-gray-300 button" type="submit">
+        Update Video
+      </button>
+    </form>
+  ) : (
     <section className="page">
       <div>
-        <h1 className="mb-4 sm:mb-8">{video.title}</h1>
-        <div className="w-full mb-2 rounded-lg verflow-hidden sm:mb-4">
+        <h1 className="mb-4 sm:mb-8">{newVideo.title}</h1>
+        <div className="w-full mb-2 rounded-lg overflow-hidden sm:mb-4">
           <video className="min-w-full max-h-[25rem] rounded-lg" controls>
-            <track kind={video.description} />
+            <track kind={newVideo.description} />
             <source src={video.source} />
           </video>
         </div>
@@ -78,6 +150,7 @@ export default function DashboardVideo() {
           <FontAwesomeIcon
             className="p-2 text-xs text-gray-700 rounded-full cursor-pointer sm:text-base hover:bg-gray-200 hover:text-primary"
             icon={faPen}
+            onClick={handleEditToggle}
           />
           <FontAwesomeIcon
             className="p-2 text-xs text-gray-700 rounded-full cursor-pointer sm:text-base hover:bg-gray-200 hover:text-primary"

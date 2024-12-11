@@ -1,5 +1,7 @@
 const tables = require("../../database/tables");
 
+const userSchema = require("../services/userValidation");
+
 const browse = async (req, res, next) => {
   try {
     const users = await tables.user.readAll();
@@ -68,6 +70,16 @@ const readRateOfOneVideo = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
+    const { error } = userSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+      res.status(400).json({
+        message: "Validation error",
+        details: error.details.map((err) => err.message),
+      });
+      return;
+    }
+
     const userExists = await tables.user.readByEmail(req.body.email);
     if (userExists) {
       res.status(409).json({ message: "Email already taken, please log in." });
@@ -75,17 +87,6 @@ const add = async (req, res, next) => {
     }
 
     const user = req.body;
-    if (
-      !user ||
-      !user.username ||
-      !user.email ||
-      !user.hashedPassword ||
-      user.isAdmin === null
-    ) {
-      res.sendStatus(400);
-      return;
-    }
-
     const insertId = await tables.user.create(user);
     res.status(201).json({ insertId });
   } catch (err) {
